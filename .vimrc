@@ -78,6 +78,10 @@ set wildignore=*.o,*~,*.pyc
 "Always show current position
 set ruler
 
+" Show line numbers
+set number
+set numberwidth=4
+
 " Height of the command bar
 set cmdheight=2
 
@@ -122,9 +126,10 @@ set tm=500
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
-syntax enable
 
-colorscheme navajo-night
+syntax on
+colorscheme onedark
+
 set background=dark
 
 " Set extra options when running in GUI mode
