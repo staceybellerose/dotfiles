@@ -10,6 +10,7 @@ export LSCOLORS=GxFxCxDxBxegedabagaced
 
 # Use MacVim as editor
 alias vi="mvim"
+alias finder="open ."
 
 # taken from http://brettterpstra.com/2013/02/09/quick-tip-jumping-to-the-finder-location-in-terminal/
 cdf() {

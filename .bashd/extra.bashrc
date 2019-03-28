@@ -12,10 +12,6 @@ alias ll="ls -Flha"
 alias dir="ls -Flha"
 alias ls="ls -Fa"
 
-##
-# Colored Prompt Settings
-##
-
 # define colors
 C_DEFAULT="\[\e[m\]"
 C_WHITE="\[\e[1m\]"
@@ -43,7 +39,55 @@ C_BG_PURPLE="\[\e[45m\]"
 C_BG_CYAN="\[\e[46m\]"
 C_BG_LIGHTGRAY="\[\e[47m\]"
 
-function prompt_command {
+# get current branch in git repo
+function parse_git_branch() {
+	BRANCH=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
+	DEFAULT_COLOR="\033[0m"
+	GIT_PROMPT_COLOR="\033[37m"
+	if [ ! "${BRANCH}" == "" ]; then
+		status=`git status 2>&1 | tee`
+		dirty=`echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?"`
+		untracked=`echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?"`
+		ahead=`echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?"`
+		newfile=`echo -n "${status}" 2> /dev/null | grep "new file:" &> /dev/null; echo "$?"`
+		renamed=`echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?"`
+		deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`
+		bits=''
+		if [ "${renamed}" == "0" ]; then
+			bits=">${bits}"
+			GIT_PROMPT_COLOR="\033[32m" # green
+		fi
+		if [ "${ahead}" == "0" ]; then
+			bits="*${bits}"
+			GIT_PROMPT_COLOR="\033[34m" # blue
+		fi
+		if [ "${newfile}" == "0" ]; then
+			bits="+${bits}"
+			GIT_PROMPT_COLOR="\033[32m" # green
+		fi
+		if [ "${untracked}" == "0" ]; then
+			bits="?${bits}"
+			GIT_PROMPT_COLOR="\033[33m" # yellow
+		fi
+		if [ "${deleted}" == "0" ]; then
+			bits="x${bits}"
+			GIT_PROMPT_COLOR="\033[31m" # red
+		fi
+		if [ "${dirty}" == "0" ]; then
+			bits="!${bits}"
+			GIT_PROMPT_COLOR="\033[35m" # purple
+		fi
+		if [ ! "${bits}" == "" ]; then
+			bits=" ${bits}"
+		fi
+		echo -e "$GIT_PROMPT_COLOR[${BRANCH}${bits}]$DEFAULT_COLOR "
+	else
+		echo ""
+	fi
+}
+
+→function prompt_command {
+	EXIT=$?
 	local XTERM_TITLE="\e]2;\u@\H:\w\a"
  
 	local BGJOBS_COLOR="$C_DARKGRAY"
@@ -57,8 +101,16 @@ function prompt_command {
 	local USER_COLOR="$C_GREEN"
 	if [[ ${EUID} == 0 ]]; then USER_COLOR="$C_BG_RED$C_BLACK"; fi
  
-	PS1="$XTERM_TITLE$USER_COLOR\u$C_GREEN@\H:\[\e[m\] $C_CYAN\w$C_DEFAULT\n\
-$DOLLAR$BGJOBS \[\e[m\]"
+	local ARROW_COLOR="$C_GREEN"
+	if [[ $EXIT != 0 ]]; then ARROW_COLOR="$C_RED"; fi
+	arrow_character=$'\xe2\x86\x92'
+	local ARROW="$ARROW_COLOR$arrow_character "
+
+	local GIT="\`parse_git_branch\`"
+
+	local SHORTPATH="\`echo \"${PWD/$HOME/~}\" | sed \"s:\([^/]\)[^/]*/:\1/:g\"\`"
+
+	PS1="$XTERM_TITLE$ARROW$USER_COLOR\u$C_GREEN\[\e[m\] $C_CYAN$SHORTPATH$C_DEFAULT $GIT\n$DOLLAR$BGJOBS \[\e[m\]"
 }
 export PROMPT_COMMAND=prompt_command
 
