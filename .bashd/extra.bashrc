@@ -86,7 +86,7 @@ function parse_git_branch() {
 	fi
 }
 
-→function prompt_command {
+function prompt_command {
 	EXIT=$?
 	local XTERM_TITLE="\e]2;\u@\H:\w\a"
  
