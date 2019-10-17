@@ -12,7 +12,7 @@ License
 
 coloredlogcat.py is released under the Apache License, Version 2.0. See LICENSE.APACHE
 
-###Font licensing
+### Font licensing
 
 * MesloLG is licensed under the Apache License, Version 2.0.
 * Monoid is dual licensed under the MIT and the SIF Open Font License, Version 1.1.
