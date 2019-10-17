@@ -139,6 +139,7 @@ if has("gui_running")
 	set t_Co=256
 	set guitablabel=%M\ %t
 	winsize 160 60
+	set guifont=SourceCodeVariable-Roman:h14
 endif
 
 " Set utf8 as standard encoding and en_US as the standard language
