@@ -6,6 +6,7 @@
 
 export PATH=${PATH}:${HOME}/bin
 export LESS=-N
+export MANPAGER="/usr/bin/less -nis"
 export EDITOR=vi
 
 alias ll="ls -Flha"
