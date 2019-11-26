@@ -7,7 +7,12 @@
 ##
 
 # Adjust this to point to the correct location for the local Android SDK installation
-ANDROID_HOME=~/dev/android-sdk
+arch=$(uname -s)
+if [ "$arch" = "Darwin" ]; then
+	ANDROID_HOME=~/Library/Android/sdk
+else
+	ANDROID_HOME=~/dev/android-sdk
+fi
 
 if [ -d ${ANDROID_HOME} ]; then
   PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
