@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./src/utils.sh
+source ./bin/utils.sh
 
 toInstall=()
 toInstallCask=()
@@ -59,7 +59,22 @@ function checkNvm() {
     promptToInstall "$name" "$url" "0" "$app"
 }
 
+function installFonts() {
+    e_bold "Installing Fonts"
+    mkdir -p "${HOME}/Library/Fonts"
+    find ./fonts -iname "*.ttf" -exec bash -c '
+        source ./bin/utils.sh
+        file=`basename {}`
+        test -f ${HOME}/Library/Fonts/$file || {
+            cp {} ${HOME}/Library/Fonts && e_success "Installed $file" || e_error "Unable to install $file"
+        } ' \;
+}
+
 e_header "Mac Application Installer"
+
+installFonts
+
+e_bold "Installing Programs"
 
 # Command Line Tools
 checkInstall brew "Homebrew" "https://brew.sh/"
@@ -72,10 +87,10 @@ checkSubCommand findutils gfind "FindUtils" "https://www.gnu.org/software/findut
 checkSubCommand gnu-sed gsed "GNU sed" "https://www.gnu.org/software/sed/"
 checkSubCommand grep ggrep "grep" "https://www.gnu.org/software/grep/"
 checkSubCommand openssh scp "OpenSSH" "https://www.openssh.com/"
+checkSubCommand gnupg gpg "GNU Pretty Good Privacy" "https://gnupg.org/"
 checkNvm nvm "nvm" "https://github.com/nvm-sh/nvm"
 checkInstall automake "AutoMake" "https://www.gnu.org/software/automake/"
 checkInstall autoconf "AutoConf" "https://www.gnu.org/software/autoconf"
-checkInstall gnupg "GNU Pretty Good Privacy" "https://gnupg.org/"
 checkInstall git "Git" "https://git-scm.com/"
 checkInstall wget "Wget" "https://www.gnu.org/software/wget/"
 checkInstall node "Node.js" "https://nodejs.org/en/"
@@ -191,6 +206,27 @@ defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
 
 # Save to disk (not to iCloud) by default
 defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+
+# Disable automatic capitalization as it’s annoying when typing code
+defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+
+# Disable smart dashes as they’re annoying when typing code
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+
+# Disable automatic period substitution as it’s annoying when typing code
+defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+
+# Disable smart quotes as they’re annoying when typing code
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+
+# Disable auto-correct as it’s annoying when typing code
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+
+# Disable “natural” (Lion-style) scrolling
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+
+# Show the ~/Library folder
+chflags nohidden ~/Library && xattr -d com.apple.FinderInfo ~/Library
 
 # Show hidden files in Finder
 defaults write com.apple.Finder AppleShowAllFiles -bool true
