@@ -162,8 +162,8 @@ do
 done
 
 # Add NPM Packages
-e_bold "Configuring ${C_FORE_BLUE}npm"
-npm install http-server
+# e_bold "Configuring ${C_FORE_BLUE}npm"
+# npm install http-server
 
 # Configure OpenInTerminal and OpenInEditor
 if [ -d "/Applications/OpenInEditor-Lite.app" ]; then
@@ -226,7 +226,7 @@ defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 
 # Show the ~/Library folder
-chflags nohidden ~/Library && xattr -d com.apple.FinderInfo ~/Library
+chflags nohidden ~/Library && xattr -d com.apple.FinderInfo ~/Library &> /dev.null
 
 # Show hidden files in Finder
 defaults write com.apple.Finder AppleShowAllFiles -bool true
@@ -242,5 +242,3 @@ fi
 if [ -d "/Applications/OpenInTerminal-Lite.app" -o -d "/Applications/OpenInEditor-Lite.app" ]; then
     open "https://github.com/Ji4n1ng/OpenInTerminal/blob/master/Resources/README-Lite.md"
 fi
-
-exit 0

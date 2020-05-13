@@ -22,5 +22,3 @@ e_header "Linux Installer"
 
 installConfig
 installFonts
-
-exit 0

@@ -1,14 +1,31 @@
-dotfiles
-============
+# dotfiles
 
 Various shell initialization scripts, to sync between machines.
 
-To use, add the following line to the end of your .bash_profile or .bashrc file:
+## Installation
 
+Review `install.sh` and the install file for your OS (Darwin is for MacOS) to
+be sure you want your system to be configured identically to mine!
+
+Run `install.sh` to install everything automatically.
+
+### Manual Installation
+
+To install manually:
+
+* Copy the files in `bin` to `$HOME/bin`
+* Copy the files in `fonts` to the appropriate location (depends on OS)
+* Copy the files in `vim` to `$HOME/.vim`
+* Copy the files in `bashd` to `$HOME/.bashd`
+* Add the following line to the end of your .bash_profile or .bashrc file:
+
+```bash
     [ -f ~/.bashd/extra.bashrc ] && . ~/.bashd/extra.bashrc
+```
 
-License
-=======
+* Restart your terminal
+
+## License
 
 bin/coloredlogcat.py is released under the Apache License, Version 2.0. See LICENSE.APACHE
 

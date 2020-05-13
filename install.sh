@@ -6,6 +6,7 @@ function installBashd() {
     e_bold "Installing bashd files"
     mkdir -p ${HOME}/.bashd
     cp -a bashd/* ${HOME}/.bashd && e_success "Installed bashd files" || e_error "Unable to install bashd files"
+    echo "[ -f ~/.bashd/extra.bashrc ] && . ~/.bashd/extra.bashrc" >> ${HOME}/.bash_profile
 }
 
 function installVim() {
