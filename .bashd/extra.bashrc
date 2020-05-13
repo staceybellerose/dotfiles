@@ -4,14 +4,38 @@
 # Set up environment variables
 ##
 
-export PATH=${PATH}:${HOME}/bin
-export LESS=-N
-export MANPAGER="/usr/bin/less -nis"
+export PATH="${HOME}/bin:${PATH}"
+export MANPAGER="less -X"
 export EDITOR=vi
+# Increase Bash history size. Allow 32³ entries; the default is 500.
+export HISTSIZE='32768'
+export HISTFILESIZE="${HISTSIZE}"
 
+# define aliases
 alias ll="ls -Flha"
 alias dir="ls -Flha"
 alias ls="ls -Fa"
+alias ~="cd ~"
+alias path='echo -e ${PATH//:/\\n}'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# Case-insensitive globbing (used in pathname expansion)
+shopt -s nocaseglob;
+
+# Append to the Bash history file, rather than overwriting it
+shopt -s histappend;
+
+# Autocorrect typos in path names when using `cd`
+shopt -s cdspell;
+
+# Enable some Bash 4 features when possible:
+# * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
+# * Recursive globbing, e.g. `echo **/*.txt`
+for option in autocd globstar; do
+	shopt -s "$option" 2> /dev/null;
+done;
 
 # determine if we are within an X session
 function is_within_x {
@@ -21,7 +45,7 @@ function is_within_x {
 	fi
 }
 
-# define colors
+# define colors for prompt command
 C_DEFAULT="\[\e[m\]"
 C_WHITE="\[\e[1m\]"
 C_BLACK="\[\e[30m\]"
@@ -50,6 +74,8 @@ C_BG_LIGHTGRAY="\[\e[47m\]"
 
 # get current branch in git repo
 function parse_git_branch() {
+	# Check if the current directory is in a Git repository.
+	git rev-parse --is-inside-work-tree &>/dev/null || return;
 	BRANCH=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
 	DEFAULT_COLOR="\033[0m"
 	GIT_PROMPT_COLOR="\033[37m"
@@ -98,18 +124,18 @@ function parse_git_branch() {
 function prompt_command {
 	EXIT=$?
 	local XTERM_TITLE="\e]2;\u@\H:\w\a"
- 
+
 	local BGJOBS_COLOR="$C_DARKGRAY"
 	local BGJOBS=""
 	if [ "$(jobs | head -c1)" ]; then BGJOBS=" $BGJOBS_COLOR(bg:\j)"; fi
- 
+
 	local DOLLAR_COLOR="$C_GREEN"
 	if [[ ${EUID} == 0 ]] ; then DOLLAR_COLOR="$C_RED"; fi
 	local DOLLAR="$DOLLAR_COLOR\\\$"
- 
+
 	local USER_COLOR="$C_GREEN"
 	if [[ ${EUID} == 0 ]]; then USER_COLOR="$C_BG_RED$C_BLACK"; fi
- 
+
 	local ARROW_COLOR="$C_GREEN"
 	if [[ $EXIT != 0 ]]; then ARROW_COLOR="$C_RED"; fi
 	arrow_character=$'\xe2\x86\x92'
@@ -144,10 +170,19 @@ whiteboard () {
 	convert "$1" -morphology Convolve DoG:15,100,0 -negate -normalize -blur 0x1 -channel RBG -level 60%,91%,0.1 "$2"
 }
 
+# Normalize `open` across Linux, macOS, and Windows.
+if [ ! $(uname -s) = 'Darwin' ]; then
+	if grep -q Microsoft /proc/version; then
+		# Ubuntu on Windows using the Linux subsystem
+		alias open='explorer.exe';
+	else
+		alias open='xdg-open';
+	fi
+fi
+
 ##
 # Load any platform-specific resources
 ##
-
 arch=$(uname -s)
 machinearch=$(uname -m)
 [ -f $HOME/.bashd/extra_$arch.bashrc ] && . $HOME/.bashd/extra_$arch.bashrc

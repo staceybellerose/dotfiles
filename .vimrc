@@ -132,14 +132,28 @@ colorscheme onedark
 
 set background=dark
 
+if !exists("g:os")
+    if has("win64") || has("win32") || has("win16")
+        let g:os = "Windows"
+    else
+        let g:os = substitute(system('uname'), '\n', '', '')
+    endif
+endif
+
 " Set extra options when running in GUI mode
 if has("gui_running")
 	set guioptions-=T
 	set guioptions+=e
 	set t_Co=256
 	set guitablabel=%M\ %t
-	winsize 160 60
-	set guifont=SourceCodeVariable-Roman:h14
+	if g:os == "Darwin"
+		winsize 160 60
+		set guifont=SourceCodeVariable-Roman:h14
+	elseif g:os == "Linux"
+		set guifont=Source\ Code\ Variable\ 11
+	elseif g:os == "Windows"
+		set guifont=SourceCodeVariable-Roman:h14:cANSI
+	endif
 endif
 
 " Set utf8 as standard encoding and en_US as the standard language
