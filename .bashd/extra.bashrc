@@ -13,6 +13,14 @@ alias ll="ls -Flha"
 alias dir="ls -Flha"
 alias ls="ls -Fa"
 
+# determine if we are within an X session
+function is_within_x {
+	if xhost >& /dev/null
+	    then true
+	    else false
+	fi
+}
+
 # define colors
 C_DEFAULT="\[\e[m\]"
 C_WHITE="\[\e[1m\]"
@@ -109,9 +117,9 @@ function prompt_command {
 
 	local GIT="\`parse_git_branch\`"
 
-	local SHORTPATH="\`echo \"${PWD/$HOME/~}\" | sed \"s:\([^/]\)[^/]*/:\1/:g\"\`"
+	local SHORTPATH="\`echo \"${PWD/$HOME/\~}\" | sed \"s:\([^/]\)[^/]*/:\1/:g\"\`"
 
-	PS1="$XTERM_TITLE$ARROW$USER_COLOR\u$C_GREEN\[\e[m\] $C_CYAN$SHORTPATH$C_DEFAULT $GIT\n$DOLLAR$BGJOBS \[\e[m\]"
+	PS1="$XTERM_TITLE$ARROW$USER_COLOR\u@\h$C_GREEN\[\e[m\] $C_CYAN$SHORTPATH$C_DEFAULT $GIT\n$DOLLAR$BGJOBS \[\e[m\]"
 }
 export PROMPT_COMMAND=prompt_command
 
@@ -144,4 +152,6 @@ arch=$(uname -s)
 machinearch=$(uname -m)
 [ -f $HOME/.bashd/extra_$arch.bashrc ] && . $HOME/.bashd/extra_$arch.bashrc
 [ -f $HOME/.bashd/extra_${arch}_${machinearch}.bashrc ] && . $HOME/.bashd/extra_${arch}_${machinearch}.bashrc
+[ -f $HOME/.bashd/extra_x11.bashrc -a is_within_x ] && . $HOME/.bashd/extra_x11.bashrc
+true
 

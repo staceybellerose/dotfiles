@@ -1,0 +1,8 @@
+[Scheme]
+Name=One Dark
+ColorForeground=#ABB2BF
+ColorCursor=#ABB2BF
+ColorBackground=#282C34
+ColorPalette=rgb(40,44,52);rgb(190,80,70);rgb(114,160,80);rgb(194,155,82);rgb(60,140,207);rgb(162,79,187);rgb(51,146,158);rgb(130,137,151);rgb(62,68,81);rgb(224,108,117);rgb(152,195,121);rgb(229,192,123);rgb(97,175,239);rgb(198,120,221);rgb(86,182,194);rgb(171,178,191)
+TabActivityColor=#BE5046
+FontAllowBold=FALSE

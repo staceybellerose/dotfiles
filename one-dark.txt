@@ -1,0 +1,17 @@
+#BE5046 Dark Red / Tab Activity Color
+#E06C75 Light Red
+#72A050 Dark Green
+#98C379 Light Green
+#C29B52 Dark Orange
+#E5C07B Light Orange
+#3C8CCF Dark Blue
+#61AFEF Light Blue
+#A24FBB Dark Purple
+#C678DD Light Purple
+#33929E Dark Cyan
+#56B6C2 Light Cyan
+#181A1F Black / Border
+#282C34 Light Black / Background
+#3E4451 Dark Grey
+#828997 Light Grey
+#ABB2BF White / Foreground

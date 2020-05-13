@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Encoding=UTF-8
+TryExec=mousepad
+Exec=mousepad %F
+Icon=accessories-text-editor
+Name=Mousepad
+# MimeType=text/plain;

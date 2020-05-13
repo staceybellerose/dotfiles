@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Encoding=UTF-8
+TryExec=meld
+Exec=meld %F
+Icon=meld-version-control
+Name=Meld (diff)
+# MimeType=text/plain;

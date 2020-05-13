@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Encoding=UTF-8
+TryExec=notepadqq
+Exec=notepadqq %F
+Icon=notepadqq
+Name=NotepadQQ
+# MimeType=text/plain;
