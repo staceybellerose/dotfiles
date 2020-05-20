@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 # Script to make Microsoft Windows Internet Shortcuts (*.url) work on Linux.
 
 my $browser = 'sensible-browser';  # use the system default browser

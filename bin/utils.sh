@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 C_BOLD=$(tput bold)
 C_UNDERLINE=$(tput sgr 0 1)

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ##
 # Mac-specific Settings
@@ -40,26 +40,26 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 
 # taken from http://brettterpstra.com/2013/02/09/quick-tip-jumping-to-the-finder-location-in-terminal/
 cdf() {
-	target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
-	if [ "$target" != "" ]; then
-		cd "$target"; pwd
-	else
-		echo 'No Finder window found' >&2
-	fi
+    target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
+    if [ "$target" != "" ]; then
+        cd "$target"; pwd
+    else
+        echo 'No Finder window found' >&2
+    fi
 }
 
 # taken from https://natelandau.com/my-mac-osx-bash_profile/
 trash() {
-	command mv "$@" ~/.Trash
+    command mv "$@" ~/.Trash
 }
 
 showHiddenFiles() {
-	defaults write com.apple.finder AppleShowAllFiles -boolean true
-	killall Finder
+    defaults write com.apple.finder AppleShowAllFiles -boolean true
+    killall Finder
 }
 
 hideHiddenFiles() {
-	defaults write com.apple.finder AppleShowAllFiles -boolean false
-	killall Finder
+    defaults write com.apple.finder AppleShowAllFiles -boolean false
+    killall Finder
 }
 

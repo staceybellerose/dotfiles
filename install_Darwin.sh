@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 source ./bin/utils.sh
 
@@ -29,8 +29,8 @@ function promptToInstall() {
 }
 
 function checkInstall() {
-	app=$1; name=$2; url=$3
-	type -P $app &> /dev/null
+    app=$1; name=$2; url=$3
+    type -P $app &> /dev/null
     promptToInstall "$name" "$url" "0" "$app"
 }
 
@@ -131,16 +131,16 @@ echo "Those software will be installed: ${toinstall[@]} ${toInstallCask[@]}";
 read -p "Let's do it now? [y/${C_BOLD}n${C_RESET}]: " install
 if [ "$install" != "y" ]; then
     e_bold "Install cancelled."
-	exit 1
+    exit 1
 fi
 
 # Install the Command Line Tools and the Homebrew Bottles
 for i in "${toinstall[@]}"
 do
-	e_bold "Installing ${C_FORE_BLUE}$i"
-	if [ "$i" == "brew" ]; then
-		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-		brew doctor
+    e_bold "Installing ${C_FORE_BLUE}$i"
+    if [ "$i" == "brew" ]; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+        brew doctor
         brew update
         brew upgrade
     elif [ "$i" == "rvm" ]; then
@@ -151,13 +151,13 @@ do
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh)"
     else
         brew install $i
-	fi
+    fi
 done
 
 # Install the Homebrew Casks
 for i in "${toInstallCask[@]}"
 do
-	e_bold "Installing ${C_FORE_BLUE}$i"
+    e_bold "Installing ${C_FORE_BLUE}$i"
     brew cask install $i
 done
 
