@@ -21,6 +21,7 @@ alias finder="open ."
 alias f='open -a Finder ./'
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip="ipconfig getifaddr en0"
+alias ql="quicklook -p"
 
 # Canonical hex dump; some systems have this symlinked
 command -v hd > /dev/null || alias hd="hexdump -C"

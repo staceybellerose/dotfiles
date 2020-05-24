@@ -20,6 +20,8 @@ alias path='echo -e ${PATH//:/\\n}'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
+alias du='du -h'
+alias df='df -h'
 
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob;
