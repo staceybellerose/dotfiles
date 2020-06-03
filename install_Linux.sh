@@ -16,6 +16,7 @@ function installConfig() {
     cp -av config/* ${HOME}/.config && e_success "Installed config files" || e_error "Unable to install config files"
     mkdir -p ${HOME}/.local
     cp -av local/* ${HOME}/.local && e_success "Installed share files" || e_error "Unable to install share files"
+    cp -av dircolors ${HOME}/.dircolors && e_success "Installed dircolors file" || e_error "Unable to install dircolors file"
 }
 
 e_header "Linux Installer"
