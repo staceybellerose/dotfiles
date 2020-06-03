@@ -1,20 +1,29 @@
 #!/usr/bin/env bash
 
+arch=$(uname -s)
+
 ##
 # Set up environment variables
 ##
 
 export PATH="${HOME}/bin:${PATH}"
+export LESS="-aeiR"
 export MANPAGER="less -X"
 export EDITOR=vi
+export PAGER=less
+
 # Increase Bash history size. Allow 32³ entries; the default is 500.
 export HISTSIZE='32768'
 export HISTFILESIZE="${HISTSIZE}"
 
 # define aliases
+if [[ $arch == "Darwin" ]]; then
+    alias ls="command ls -GFa"
+else
+    alias ls="command ls -Fa --color=auto"
+fi
 alias ll="ls -Flha"
 alias dir="ls -Flha"
-alias ls="ls -Fa"
 alias ~="cd ~"
 alias path='echo -e ${PATH//:/\\n}'
 alias grep='grep --color=auto'
@@ -31,6 +40,9 @@ shopt -s histappend;
 
 # Autocorrect typos in path names when using `cd`
 shopt -s cdspell;
+
+# Check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
+shopt -s checkwinsize
 
 # Enable some Bash 4 features when possible:
 # * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
@@ -172,6 +184,99 @@ whiteboard () {
     convert "$1" -morphology Convolve DoG:15,100,0 -negate -normalize -blur 0x1 -channel RBG -level 60%,91%,0.1 "$2"
 }
 
+# taken from https://github.com/janmoesen/tilde/blob/master/.bash/commands
+#
+# Start your editor ($EDITOR, defaulting to "vim") on the last file specified.
+# This is useful to quickly view the last in a series of timestamped files,
+# e.g.:
+#   $ ls -1 *.sql
+#   20111021-112318.sql
+#   20111021-112328.sql
+#   20111021-112403.sql
+#   20111021-112500.sql
+#   20111021-112704.sql
+#   20111021-112724.sql
+#   20111021-112729.sql
+#   20111021-113949.sql
+#   $ vilast *.sql # will edit 20111021-113949.sql
+function vilast {
+	(($#)) && ${EDITOR:-vim} "${!#}";
+}
+# A quick way to invoke a read-only Vim on the last file. See "vilast".
+function viewlast {
+	(EDITOR=view vilast "$@");
+}
+# A quick way to show the last file in the Finder. See "vilast".
+function showlast {
+	(($#)) && show "${!#}";
+}
+# A quick way to "tail -f" the last file. See "vilast".
+function taillast {
+	(($#)) && tail -f "${!#}";
+}
+# A quick way to "cd" to the last directory. See "vilast".
+function cdlast {
+	for ((i = $#; i > 0; i--)); do
+		if [ -d "${!i}" ]; then
+			cd "${!i}";
+			return;
+		fi;
+	done;
+}
+
+# taken from https://github.com/janmoesen/tilde/blob/master/.bash/commands
+# Show a one-line process tree of the given process, defaulting to the current
+# shell. By specifying this as a function instead of a separate script, we
+# avoid the extra shell process.
+function process-tree {
+	pid="${1:-$$}";
+	orig_pid="$pid";
+	local commands=();
+	while [ "$pid" != "$ppid" ]; do
+		# Read the parent's process ID and the current process's command line.
+		{
+			read -d ' ' ppid;
+			read command;
+		} < <(ps c -p "$pid" -o ppid= -o command= | sed 's/^ *//');
+		# XXX This does not quite work yet with screen on OS x. Find out why.
+		# echo "PID: $pid // PPID: $ppid // CMD: $command" 1>&2;
+		# Stop when we have reached the first process, or an sshd/login process.
+		if [ -z "$ppid" ] || [ "$ppid" -eq 0 -o "$ppid" -eq 1 -o "$command" = 'login' -o "$command" = 'sshd' ]; then
+			# Include screen/xterm as the "root" process.
+			if [ "$command" = 'screen' -o "$command" = 'xterm' ]; then
+				commands=("$command" "${commands[@]}");
+			fi;
+			break;
+		fi;
+		# Insert the command in the front of the process array.
+		commands=("$command" "${commands[@]}");
+		# Prepare for the next iteration.
+		pid="$ppid";
+		ppid=;
+	done;
+	# Hide the first bash process.
+	set -- "${commands[@]}";
+	if [ "$1" = '-bash' -o "$1" = 'bash' ]; then
+		shift;
+		commands=("$@");
+	fi;
+	# Print the tree with the specified separator.
+	separator='→';
+	output="$(IFS="$separator"; echo "${commands[*]}")";
+	echo "${output//$separator/ $separator }";
+}
+
+# taken from https://github.com/janmoesen/tilde/blob/master/.bash/commands
+# Show the uptime (including load) and the top 10 processes by CPU usage.
+function top10 {
+	uptime;
+	if [[ "$OSTYPE" =~ ^darwin ]]; then
+		ps waux -r;
+	else
+		ps waux --sort='-%cpu';
+	fi | head -n 11 | cut -c "1-${COLUMNS:-80}";
+}
+
 # Normalize `open` across Linux, macOS, and Windows.
 if [ ! $(uname -s) = 'Darwin' ]; then
     if grep -q Microsoft /proc/version; then
@@ -185,7 +290,6 @@ fi
 ##
 # Load any platform-specific resources
 ##
-arch=$(uname -s)
 machinearch=$(uname -m)
 [ -f $HOME/.bashd/extra_$arch.bashrc ] && . $HOME/.bashd/extra_$arch.bashrc
 [ -f $HOME/.bashd/extra_${arch}_${machinearch}.bashrc ] && . $HOME/.bashd/extra_${arch}_${machinearch}.bashrc

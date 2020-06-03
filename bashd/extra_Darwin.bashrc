@@ -22,6 +22,7 @@ alias f='open -a Finder ./'
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip="ipconfig getifaddr en0"
 alias ql="quicklook -p"
+alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl"
 
 # Canonical hex dump; some systems have this symlinked
 command -v hd > /dev/null || alias hd="hexdump -C"
@@ -47,11 +48,6 @@ cdf() {
     else
         echo 'No Finder window found' >&2
     fi
-}
-
-# taken from https://natelandau.com/my-mac-osx-bash_profile/
-trash() {
-    command mv "$@" ~/.Trash
 }
 
 showHiddenFiles() {
