@@ -11,6 +11,9 @@ PATH="$(brew --prefix)/opt/grep/libexec/gnubin:$PATH"
 PATH="$(brew --prefix)/opt/findutils/libexec/gnubin:$PATH"
 export PATH
 
+# bash completions
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+
 # colored terminal
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced

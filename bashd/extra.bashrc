@@ -150,6 +150,9 @@ function prompt_command {
     local USER_COLOR="$C_GREEN"
     if [[ ${EUID} == 0 ]]; then USER_COLOR="$C_BG_RED$C_BLACK"; fi
 
+	local USER_STRING="\u@\h"
+	if [[ ${arch} == Darwin ]]; then USER_STRING="\u"; fi
+
     local ARROW_COLOR="$C_GREEN"
     if [[ $EXIT != 0 ]]; then ARROW_COLOR="$C_RED"; fi
     arrow_character=$'\xe2\x86\x92'
@@ -157,9 +160,9 @@ function prompt_command {
 
     local GIT="\`parse_git_branch\`"
 
-    local SHORTPATH="\`echo \"${PWD/$HOME/\~}\" | sed \"s:\([^/]\)[^/]*/:\1/:g\"\`"
+    local SHORTPATH="\`echo \"${PWD/$HOME/~}\" | sed \"s:\([^/]\)[^/]*/:\1/:g\"\`"
 
-    PS1="$XTERM_TITLE$ARROW$USER_COLOR\u@\h$C_GREEN\[\e[m\] $C_CYAN$SHORTPATH$C_DEFAULT $GIT\n$DOLLAR$BGJOBS \[\e[m\]"
+    PS1="$XTERM_TITLE$ARROW$USER_COLOR$USER_STRING$C_GREEN\[\e[m\] $C_CYAN$SHORTPATH$C_DEFAULT $GIT\n$DOLLAR$BGJOBS \[\e[m\]"
 }
 export PROMPT_COMMAND=prompt_command
 

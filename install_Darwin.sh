@@ -8,7 +8,7 @@ toInstallCask=()
 function initXCode() {
     if [[ -d "$('xcode-select' -print-path 2>/dev/null)" ]]; then
         e_bold "Initializing XCode Command Line Tools"
-        xcode-select --install
+        xcode-select --install 2>/dev/null
         # wait until XCode Command Line Tools are installed
         until xcode-select --print-path &> /dev/null; do
             sleep 5
@@ -76,6 +76,12 @@ function checkNvm() {
     promptToInstall "$name" "$url" "0" "$app"
 }
 
+function checkFile() {
+    app=$1; file=$2; name=$3; url=$4
+	test -f "$file"
+	promptToInstall "$name" "$url" "0" "$app"
+}
+
 function installFonts() {
     e_bold "Installing Fonts"
     mkdir -p "${HOME}/Library/Fonts"
@@ -124,6 +130,7 @@ checkInstall magick "ImageMagick" "https://imagemagick.org/"
 checkInstall cowsay "CowSay" "https://github.com/tnalpgge/rank-amateur-cowsay"
 checkInstall tree "Tree" "http://mama.indstate.edu/users/ice/tree/"
 checkInstall rsync "rsync" "https://rsync.samba.org/"
+checkFile bash-completion "/usr/local/etc/profile.d/bash_completion.sh" "Bash Completion" "https://salsa.debian.org/debian/bash-completion"
 
 # Homebrew Casks
 checkCask android-studio "Android Studio" "Android Studio.app" "https://developer.android.com/studio"
