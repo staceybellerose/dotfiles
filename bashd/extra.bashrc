@@ -17,13 +17,15 @@ export HISTSIZE='32768'
 export HISTFILESIZE="${HISTSIZE}"
 
 # define aliases
-if [[ $arch == "Darwin" ]]; then
-    alias ls="command ls -GFa"
+if command ls --color -d / &> /dev/null ; then
+    alias ls="command ls -Fa --color=auto" # GNU ls
+elif command ls -G -d / &> /dev/null ; then
+    alias ls="command ls -GFa" # BSD ls (and MacOS)
 else
-    alias ls="command ls -Fa --color=auto"
+    alias ls="command ls -Fa" # Solaris ls
 fi
-alias ll="ls -Flha"
-alias dir="ls -Flha"
+alias ll="ls -lh"
+alias dir="ls -lh"
 alias ~="cd ~"
 alias path='echo -e ${PATH//:/\\n}'
 alias grep='grep --color=auto'
