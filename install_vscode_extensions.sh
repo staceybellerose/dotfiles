@@ -43,6 +43,9 @@ function installAllVSCodeExtensions() {
         installVSCodeExtension oderwat.indent-rainbow # Indent Rainbow
         installVSCodeExtension eriklynd.json-tools # JSON Tools
         installVSCodeExtension DotJoshJohnson.xml # XML Tools
+        installVSCodeExtension redhat.vscode-yaml # YAML
+        installVSCodeExtension eamodio.gitlens # Git Lens
+        installVSCodeExtension ms-azuretools.vscode-docker # Docker
 
         # Ruby / Rails extensions
         installVSCodeExtension rebornix.ruby # Ruby
@@ -50,6 +53,7 @@ function installAllVSCodeExtensions() {
         installVSCodeExtension castwide.solargraph # Ruby Solargraph
         installVSCodeExtension kaiwood.endwise # endwise
         installVSCodeExtension ninoseki.vscode-gem-lens # Gem Lens
+        installVSCodeExtension karunamurti.haml # HAML
 
         # React/JS Extensions
         installVSCodeExtension dbaeumer.vscode-eslint # ESLint
@@ -89,6 +93,8 @@ function installAllVSCodeExtensions() {
         installVSCodeExtension dunstontc.viml # vim syntax highlighting
         installVSCodeExtension alexcvzz.vscode-sqlite # SQLite Databases
         installVSCodeExtension ionutvmi.path-autocomplete # Path Autocomplete
+        installVSCodeExtension adpyke.vscode-sql-formatter # SQL Formatter
+        installVSCodeExtension mikestead.dotenv # DotENV
 
         # Themes
         installVSCodeExtension zhuangtongfa.material-theme # One Dark Pro
