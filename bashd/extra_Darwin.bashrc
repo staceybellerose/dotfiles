@@ -4,13 +4,6 @@
 # Mac-specific Settings
 ##
 
-# use GNU programs instead of pre-installed Apple versions
-PATH="$(brew --prefix)/opt/coreutils/libexec/gnubin:$PATH"
-PATH="$(brew --prefix)/opt/gnu-sed/libexec/gnubin:$PATH"
-PATH="$(brew --prefix)/opt/grep/libexec/gnubin:$PATH"
-PATH="$(brew --prefix)/opt/findutils/libexec/gnubin:$PATH"
-export PATH
-
 # bash completions
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
 

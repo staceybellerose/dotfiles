@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 arch=$(uname -s)
+machinearch=$(uname -m)
 
 ##
 # Set up environment variables
@@ -16,9 +17,16 @@ export PAGER=less
 export HISTSIZE='32768'
 export HISTFILESIZE="${HISTSIZE}"
 
+# Load platform-specific paths
+
+[ -f $HOME/.bashd/path_$arch.bashrc ] && . $HOME/.bashd/path_$arch.bashrc
+[ -f $HOME/.bashd/path_${arch}_${machinearch}.bashrc ] && . $HOME/.bashd/path_${arch}_${machinearch}.bashrc
+
 # define aliases
 if command ls --color -d / &> /dev/null ; then
     alias ls="command ls -Fa --color=auto" # GNU ls
+    # load dircolors
+    [[ -r ~/.dircolors ]] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 elif command ls -G -d / &> /dev/null ; then
     alias ls="command ls -GFa" # BSD ls (and MacOS)
 else
@@ -295,7 +303,6 @@ fi
 ##
 # Load any platform-specific resources
 ##
-machinearch=$(uname -m)
 [ -f $HOME/.bashd/extra_$arch.bashrc ] && . $HOME/.bashd/extra_$arch.bashrc
 [ -f $HOME/.bashd/extra_${arch}_${machinearch}.bashrc ] && . $HOME/.bashd/extra_${arch}_${machinearch}.bashrc
 [ -f $HOME/.bashd/extra_x11.bashrc -a is_within_x ] && . $HOME/.bashd/extra_x11.bashrc

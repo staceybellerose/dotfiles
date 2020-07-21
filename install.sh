@@ -63,9 +63,10 @@ function installOSBin() {
     } || e_warning "No OS-specific bin files to install"
 }
 
-function installEditorConfig() {
-    e_bold "Installing editorconfig file"
+function installConfig() {
+    e_bold "Installing configuration files"
     cp -av editorconfig ${HOME} && e_success "Installed editorconfig file" || e_error "Unable to install editorconfig file"
+    cp -av dircolors ${HOME}/.dircolors && e_success "Installed dircolors file" || e_error "Unable to install dircolors file"
 }
 
 e_header "Dotfiles Installer"
@@ -104,7 +105,7 @@ installBashd
 installBin
 installOSBin
 installVim
-installEditorConfig
+installConfig
 if [[ $vscode -eq 1 ]]; then
     . ./install_vscode_extensions.sh
 fi
