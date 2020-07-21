@@ -46,6 +46,7 @@ function installAllVSCodeExtensions() {
         installVSCodeExtension redhat.vscode-yaml # YAML
         installVSCodeExtension eamodio.gitlens # Git Lens
         installVSCodeExtension ms-azuretools.vscode-docker # Docker
+        installVSCodeExtension aaron-bond.better-comments # Better Comments
 
         # Ruby / Rails extensions
         installVSCodeExtension rebornix.ruby # Ruby
@@ -80,8 +81,16 @@ function installAllVSCodeExtensions() {
         installVSCodeExtension rpinski.shebang-snippets # Shebang Snippets
         installVSCodeExtension ms-vscode.powershell # Powershell
 
-        # Other Language Extensions
+        # Kotlin Extensions
+        installVSCodeExtension sethjones.kotlin-on-vscode # Kotlin Extension Pack
         installVSCodeExtension mathiasfrohlich.Kotlin # Kotlin Extension
+        installVSCodeExtension fwcd.kotlin # Kotlin IDE
+        installVSCodeExtension formulahendry.code-runner # Code Runner
+        installVSCodeExtension richardwillis.vscode-gradle # Gradle Tasks
+        installVSCodeExtension naco-siren.gradle-language # Gradle Language Support
+        installVSCodeExtension esafirm.kotlin-formatter # Kotlin Formatter using ktlint
+
+        # Python Extensions
         installVSCodeExtension ms-python.python # Python Extension
 
         # Misc Extensions
