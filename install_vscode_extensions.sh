@@ -47,6 +47,9 @@ function installAllVSCodeExtensions() {
         installVSCodeExtension eamodio.gitlens # Git Lens
         installVSCodeExtension ms-azuretools.vscode-docker # Docker
         installVSCodeExtension aaron-bond.better-comments # Better Comments
+        installVSCodeExtension wmaurer.change-case # Change Case
+        installVSCodeExtension Tyriar.sort-lines # Sort Lines
+        installVSCodeExtension dakara.transformer # Text Transformer
 
         # Ruby / Rails extensions
         installVSCodeExtension rebornix.ruby # Ruby
