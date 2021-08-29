@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2034
 
 C_BOLD=$(tput bold)
 C_UNDERLINE=$(tput sgr 0 1)
@@ -24,25 +25,33 @@ C_FORE_WHITE=$(tput setaf 7)
 
 e_header() {
     printf "\n${C_BOLD}${C_FORE_MAGENTA}==========  %s  ==========${C_RESET}\n" "$@"
+    true
 }
 e_arrow() {
-    printf "➜ $@\n"
+    printf "➜ %s\n" "$@"
+    true
 }
 e_success() {
     printf "${C_FORE_GREEN}✔ %s${C_RESET}\n" "$@"
+    true
 }
 e_error() {
     printf "${C_FORE_RED}✖ %s${C_RESET}\n" "$@"
+    true
 }
 e_warning() {
     printf "${C_FORE_YELLOW}➜ %s${C_RESET}\n" "$@"
+    true
 }
 e_underline() {
     printf "${C_UNDERLINE}${C_BOLD}%s${C_RESET}\n" "$@"
+    true
 }
 e_bold() {
     printf "${C_BOLD}%s${C_RESET}\n" "$@"
+    true
 }
 e_note() {
     printf "${C_UNDERLINE}${C_BOLD}${C_FORE_BLUE}Note:${C_RESET}  ${C_FORE_BLUE}%s${C_RESET}\n" "$@"
+    true
 }
