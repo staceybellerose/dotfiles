@@ -4,6 +4,7 @@
 source ./bin/utils.sh
 
 arch=$(uname -s)
+machinearch=$(uname -m)
 TMPDIR=${TMPDIR:-/tmp}
 
 packages=1
@@ -107,7 +108,10 @@ installBashd
 installBin
 installOSBin
 installVim
-installConfig
+if [[ $config -eq 1 ]]
+then
+    installConfig
+fi
 if [[ $vscode -eq 1 ]]
 then
     . ./install_vscode_extensions.sh
@@ -115,6 +119,6 @@ fi
 
 # Process OS-specific files
 [ -f "./install_${arch}.sh" ] && . "./install_${arch}.sh" $packages $fonts $config $xcode
-
+[ -f "./install_${arch}_${machinearch}.sh" ] && . "./install_${arch}_${machinearch}.sh" $packages $fonts $config $xcode
 e_success "Done!"
 exit 0

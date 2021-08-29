@@ -164,7 +164,11 @@ function parse_git_branch() {
 
 function prompt_command {
     EXIT=$?
-    local XTERM_TITLE="\e]2;\u@\H:\w\a"
+    local XTERM_TITLE=""
+    if [[ $TERM == xterm* ]]
+    then
+        XTERM_TITLE="\[\e]2;\u@\H:\w\a\]"
+    fi
 
     local BGJOBS_COLOR="$C_DARKGRAY"
     local BGJOBS=""
@@ -202,7 +206,9 @@ function prompt_command {
 
     local GIT="\`parse_git_branch\`"
 
-    local SHORTPATH="\`echo \"${PWD/$HOME/~}\" | sed \"s:\([^/]\)[^/]*/:\1/:g\"\`"
+    local HOMEPATH
+    HOMEPATH=$(dirs +0)
+    local SHORTPATH="\`echo \"$HOMEPATH\" | sed \"s:\([^/]\)[^/]*/:\1/:g\"\`"
 
     PS1="$XTERM_TITLE$ARROW$USER_COLOR$USER_STRING$C_GREEN\[\e[m\] $C_CYAN$SHORTPATH$C_DEFAULT $GIT\n$DOLLAR$BGJOBS \[\e[m\]"
 }
