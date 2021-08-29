@@ -156,7 +156,7 @@ function parse_git_branch() {
         then
             bits=" ${bits}"
         fi
-        echo -e "${GIT_PROMPT_COLOR[${BRANCH}${bits}]}$DEFAULT_COLOR "
+        echo -e "${GIT_PROMPT_COLOR}[${BRANCH}${bits}]$DEFAULT_COLOR "
     else
         echo ""
     fi
