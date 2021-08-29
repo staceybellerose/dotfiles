@@ -32,6 +32,7 @@ command -v sha1sum > /dev/null || alias sha1sum="shasum"
 
 # Stuff I never really use but cannot delete either because of http://xkcd.com/530/
 alias stfu="osascript -e 'set volume output muted true'"
+alias unmute="osascript -e 'set volume output muted false'"
 alias pumpitup="osascript -e 'set volume output volume 100'"
 
 # For MacOS Catalina and above, do not show the warning that zsh is the new default shell

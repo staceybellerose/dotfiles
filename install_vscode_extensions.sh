@@ -11,7 +11,11 @@ function detectVSCode() {
     if [ -d "/Applications/Visual Studio Code.app" ]
     then
         code="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
-    elif [ -x "$(command -v codium)" ]; then
+    elif [ -x "$(command -v code)" ]
+    then
+        code="$(command -v code)"
+    elif [ -x "$(command -v codium)" ]
+    then
         code="$(command -v codium)"
     else
         e_error "Unable to detect VS Code"
@@ -53,6 +57,7 @@ function installAllVSCodeExtensions() {
         installVSCodeExtension wmaurer.change-case # Change Case
         installVSCodeExtension Tyriar.sort-lines # Sort Lines
         installVSCodeExtension dakara.transformer # Text Transformer
+        installVSCodeExtension fnando.linter # Linter
 
         # Ruby / Rails extensions
         installVSCodeExtension rebornix.ruby # Ruby
@@ -98,6 +103,7 @@ function installAllVSCodeExtensions() {
 
         # Python Extensions
         installVSCodeExtension ms-python.python # Python Extension
+        installVSCodeExtension ms-python.vscode-pylance # Pylance Extension
 
         # Misc Extensions
         installVSCodeExtension rafaelmaiolla.diff # diff syntax highlighting
@@ -110,9 +116,11 @@ function installAllVSCodeExtensions() {
         installVSCodeExtension ionutvmi.path-autocomplete # Path Autocomplete
         installVSCodeExtension adpyke.vscode-sql-formatter # SQL Formatter
         installVSCodeExtension mikestead.dotenv # DotENV
+        installVSCodeExtension ms-toolsai.jupyter # Jupyter Notebook support
 
         # Themes
         installVSCodeExtension zhuangtongfa.material-theme # One Dark Pro
+        installVSCodeExtension vscode-icons-team.vscode-icons # VS Code Icon Theme
         installVSCodeExtension PKief.material-icon-theme # Material Icon Theme
 
         # Clean up temp file
