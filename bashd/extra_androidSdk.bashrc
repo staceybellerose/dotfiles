@@ -7,16 +7,23 @@
 ##
 
 # Adjust this to point to the correct location for the local Android SDK installation
-arch=$(uname -s)
-if [ "$arch" = "Darwin" ]; then
-    ANDROID_HOME=~/Library/Android/sdk
-else
-    ANDROID_HOME=~/dev/android-sdk
-fi
+declare -a possibleSdks=(
+    "${HOME}/Library/Android/sdk"
+    "${HOME}/dev/android-sdk"
+    "${HOME}/Android/Sdk"
+)
+for dir in "${possibleSdks[@]}"
+do
+    if [ -d "$dir" ]
+    then
+        ANDROID_HOME=$dir
+    fi
+done
 
-if [ -d ${ANDROID_HOME} ]; then
+if [ -d "${ANDROID_HOME}" ]
+then
     PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
-    BUILD_TOOLS_VERSION=`ls -1 ${ANDROID_HOME}/build-tools/ | sort | tail -n 1 | tr -d '\r\n'`
+    BUILD_TOOLS_VERSION=$(ls -1 ${ANDROID_HOME}/build-tools/ | sort | tail -n 1 | tr -d '\r\n')
     PATH=${PATH}:${ANDROID_HOME}/build-tools/${BUILD_TOOLS_VERSION}
     export PATH
 fi
@@ -25,21 +32,24 @@ alias avdmgr="avdmanager"
 alias sdkmgr="sdkmanager"
 
 adbd () {
-    adb -s $(get_device) "$@"
+    adb -s "$(get_device)" "$@"
 }
 
 function get_device() {
-    local devices=$(adb devices | grep device$)
-    if [ $(wc -l <<< "$devices") -eq 1 ]; then
-        awk {'print $1'} <<< "$devices"
+    local -r devices=$(adb devices | grep device$)
+    if [ "$(wc -l <<< "$devices")" -eq 1 ]
+    then
+        awk '{print $1}' <<< "$devices"
     else
-        IFS=$'\n' devices=($devices)
+        IFS=$'\n' devices=("$devices")
         unset IFS
         local device
         PS3="Select a device # "
-        select device in "${devices[@]}"; do
-            if [ -n "$device" ]; then
-                awk {'print $1'} <<< "$device"
+        select device in "${devices[@]}"
+        do
+            if [ -n "$device" ]
+            then
+                awk '{print $1}' <<< "$device"
             fi
             break
         done
@@ -51,14 +61,14 @@ function logcat() {
     device=$(get_device)
     if [ -z "$1" ]
     then
-        adb -s $device logcat | coloredlogcat.py
+        adb -s "$device" logcat | coloredlogcat.py
     else
-            local filters=""
-            for f in $@
-            do
+        local filters=""
+        for f in "$@"
+        do
             export filters="$filters $f:*"
-            done
-            echo "filters $filters"
-        adb -s $device logcat $filters *:S | coloredlogcat.py
+        done
+        echo "filters $filters"
+        adb -s "$device" logcat "$filters" "*:S" | coloredlogcat.py
     fi
 }

@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC1091
 
 source ./bin/utils.sh
 
 TMPDIR=${TMPDIR:-/tmp}
 
-let installed=0
+(( installed=0 ))
 
 function detectVSCode() {
-    if [ -d "/Applications/Visual Studio Code.app" ]; then
+    if [ -d "/Applications/Visual Studio Code.app" ]
+    then
         code="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
     elif [ -x "$(command -v codium)" ]; then
         code="$(command -v codium)"
@@ -16,20 +18,21 @@ function detectVSCode() {
         return 1
     fi
     tmpfile=$$-vscode-extensions.log
-    "$code" --list-extensions 2>&1 > ${TMPDIR}/${tmpfile}
+    "$code" --list-extensions > "${TMPDIR}/${tmpfile}" 2>&1
     return 0
 }
 
 function installVSCodeExtension() {
     ext=$1
-    grep -q $ext ${TMPDIR}/${tmpfile} &>/dev/null || {
-        "$code" --install-extension $ext
-        let installed=$installed+1
+    grep -q "$ext" "${TMPDIR}/${tmpfile}" &>/dev/null || {
+        e_arrow "Installing $ext"
+        "$code" --install-extension "$ext" > /dev/null
+        (( installed++ ))
     }
 }
 
 function installVSCodeCleanup() {
-    rm ${TMPDIR}/${tmpfile}
+    rm "${TMPDIR}/${tmpfile}"
 }
 
 function installAllVSCodeExtensions() {

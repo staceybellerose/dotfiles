@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC1090,SC1091,SC2034
 
 arch=$(uname -s)
 machinearch=$(uname -m)
@@ -19,15 +20,22 @@ export HISTFILESIZE="${HISTSIZE}"
 
 # Load platform-specific paths
 
-[ -f $HOME/.bashd/path_$arch.bashrc ] && . $HOME/.bashd/path_$arch.bashrc
-[ -f $HOME/.bashd/path_${arch}_${machinearch}.bashrc ] && . $HOME/.bashd/path_${arch}_${machinearch}.bashrc
+[ -f "$HOME/.bashd/path_$arch.bashrc" ] && . "$HOME/.bashd/path_$arch.bashrc"
+[ -f "$HOME/.bashd/path_${arch}_${machinearch}.bashrc" ] && . "$HOME/.bashd/path_${arch}_${machinearch}.bashrc"
 
 # define aliases
-if command ls --color -d / &> /dev/null ; then
+if command ls --color -d / &> /dev/null
+then
     alias ls="command ls -Fa --color=auto" # GNU ls
     # load dircolors
-    [[ -r ~/.dircolors ]] && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-elif command ls -G -d / &> /dev/null ; then
+    if [[ -r ~/.dircolors ]]
+    then
+        eval "$(dircolors -b ~/.dircolors)"
+    else
+        eval "$(dircolors -b)"
+    fi
+elif command ls -G -d / &> /dev/null
+then
     alias ls="command ls -GFa" # BSD ls (and MacOS)
 else
     alias ls="command ls -Fa" # Solaris ls
@@ -57,7 +65,8 @@ shopt -s checkwinsize
 # Enable some Bash 4 features when possible:
 # * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
 # * Recursive globbing, e.g. `echo **/*.txt`
-for option in autocd globstar; do
+for option in autocd globstar
+do
     shopt -s "$option" 2> /dev/null;
 done;
 
@@ -100,46 +109,54 @@ C_BG_LIGHTGRAY="\[\e[47m\]"
 function parse_git_branch() {
     # Check if the current directory is in a Git repository.
     git rev-parse --is-inside-work-tree &>/dev/null || return;
-    BRANCH=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`
+    BRANCH=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
     DEFAULT_COLOR="\033[0m"
     GIT_PROMPT_COLOR="\033[37m"
-    if [ ! "${BRANCH}" == "" ]; then
-        status=`git status 2>&1 | tee`
-        dirty=`echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?"`
-        untracked=`echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?"`
-        ahead=`echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?"`
-        newfile=`echo -n "${status}" 2> /dev/null | grep "new file:" &> /dev/null; echo "$?"`
-        renamed=`echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?"`
-        deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`
+    if [ ! "${BRANCH}" == "" ]
+    then
+        status=$(git status 2>&1 | tee)
+        dirty=$(echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?")
+        untracked=$(echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?")
+        ahead=$(echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?")
+        newfile=$(echo -n "${status}" 2> /dev/null | grep "new file:" &> /dev/null; echo "$?")
+        renamed=$(echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?")
+        deleted=$(echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?")
         bits=''
-        if [ "${renamed}" == "0" ]; then
+        if [ "${renamed}" == "0" ]
+        then
             bits=">${bits}"
             GIT_PROMPT_COLOR="\033[32m" # green
         fi
-        if [ "${ahead}" == "0" ]; then
+        if [ "${ahead}" == "0" ]
+        then
             bits="*${bits}"
             GIT_PROMPT_COLOR="\033[34m" # blue
         fi
-        if [ "${newfile}" == "0" ]; then
+        if [ "${newfile}" == "0" ]
+        then
             bits="+${bits}"
             GIT_PROMPT_COLOR="\033[32m" # green
         fi
-        if [ "${untracked}" == "0" ]; then
+        if [ "${untracked}" == "0" ]
+        then
             bits="?${bits}"
             GIT_PROMPT_COLOR="\033[33m" # yellow
         fi
-        if [ "${deleted}" == "0" ]; then
+        if [ "${deleted}" == "0" ]
+        then
             bits="x${bits}"
             GIT_PROMPT_COLOR="\033[31m" # red
         fi
-        if [ "${dirty}" == "0" ]; then
+        if [ "${dirty}" == "0" ]
+        then
             bits="!${bits}"
             GIT_PROMPT_COLOR="\033[35m" # purple
         fi
-        if [ ! "${bits}" == "" ]; then
+        if [ ! "${bits}" == "" ]
+        then
             bits=" ${bits}"
         fi
-        echo -e "$GIT_PROMPT_COLOR[${BRANCH}${bits}]$DEFAULT_COLOR "
+        echo -e "${GIT_PROMPT_COLOR[${BRANCH}${bits}]}$DEFAULT_COLOR "
     else
         echo ""
     fi
@@ -151,20 +168,35 @@ function prompt_command {
 
     local BGJOBS_COLOR="$C_DARKGRAY"
     local BGJOBS=""
-    if [ "$(jobs | head -c1)" ]; then BGJOBS=" $BGJOBS_COLOR(bg:\j)"; fi
+    if [ "$(jobs | head -c1)" ]
+    then
+        BGJOBS=" $BGJOBS_COLOR(bg:\j)"
+    fi
 
     local DOLLAR_COLOR="$C_GREEN"
-    if [[ ${EUID} == 0 ]] ; then DOLLAR_COLOR="$C_RED"; fi
+    if [[ ${EUID} == 0 ]]
+    then
+        DOLLAR_COLOR="$C_RED"
+    fi
     local DOLLAR="$DOLLAR_COLOR\\\$"
 
     local USER_COLOR="$C_GREEN"
-    if [[ ${EUID} == 0 ]]; then USER_COLOR="$C_BG_RED$C_BLACK"; fi
+    if [[ ${EUID} == 0 ]]
+    then
+        USER_COLOR="$C_BG_RED$C_BLACK"
+    fi
 
-	local USER_STRING="\u@\h"
-	if [[ ${arch} == Darwin ]]; then USER_STRING="\u"; fi
+    local USER_STRING="\u@\h"
+    if [[ ${arch} == Darwin ]]
+    then
+        USER_STRING="\u"
+    fi
 
     local ARROW_COLOR="$C_GREEN"
-    if [[ $EXIT != 0 ]]; then ARROW_COLOR="$C_RED"; fi
+    if [[ $EXIT != 0 ]]
+    then
+        ARROW_COLOR="$C_RED"
+    fi
     arrow_character=$'\xe2\x86\x92'
     local ARROW="$ARROW_COLOR$arrow_character "
 
@@ -179,13 +211,13 @@ export PROMPT_COMMAND=prompt_command
 # taken from http://www.cyberciti.biz/faq/linux-unix-colored-man-pages-with-less-command/
 man() {
     env \
-    LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-    LESS_TERMCAP_md=$(printf "\e[1;31m") \
-    LESS_TERMCAP_me=$(printf "\e[0m") \
-    LESS_TERMCAP_se=$(printf "\e[0m") \
-    LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-    LESS_TERMCAP_ue=$(printf "\e[0m") \
-    LESS_TERMCAP_us=$(printf "\e[1;32m") \
+    LESS_TERMCAP_mb="$(printf "\e[1;31m")" \
+    LESS_TERMCAP_md="$(printf "\e[1;31m")" \
+    LESS_TERMCAP_me="$(printf "\e[0m")" \
+    LESS_TERMCAP_se="$(printf "\e[0m")" \
+    LESS_TERMCAP_so="$(printf "\e[1;44;33m")" \
+    LESS_TERMCAP_ue="$(printf "\e[0m")" \
+    LESS_TERMCAP_us="$(printf "\e[1;32m")" \
     man "$@"
 }
 
@@ -213,28 +245,31 @@ whiteboard () {
 #   20111021-113949.sql
 #   $ vilast *.sql # will edit 20111021-113949.sql
 function vilast {
-	(($#)) && ${EDITOR:-vim} "${!#}";
+    (($#)) && ${EDITOR:-vim} "${!#}"
 }
 # A quick way to invoke a read-only Vim on the last file. See "vilast".
 function viewlast {
-	(EDITOR=view vilast "$@");
+    (EDITOR=view vilast "$@")
 }
 # A quick way to show the last file in the Finder. See "vilast".
 function showlast {
-	(($#)) && show "${!#}";
+    (($#)) && show "${!#}"
 }
 # A quick way to "tail -f" the last file. See "vilast".
 function taillast {
-	(($#)) && tail -f "${!#}";
+    (($#)) && tail -f "${!#}"
 }
 # A quick way to "cd" to the last directory. See "vilast".
 function cdlast {
-	for ((i = $#; i > 0; i--)); do
-		if [ -d "${!i}" ]; then
-			cd "${!i}";
-			return;
-		fi;
-	done;
+    for ((i = $#; i > 0; i--))
+    do
+        if [ -d "${!i}" ]
+        then
+            # shellcheck disable=SC2164
+            cd "${!i}"
+            return
+        fi
+    done
 }
 
 # taken from https://github.com/janmoesen/tilde/blob/master/.bash/commands
@@ -242,69 +277,75 @@ function cdlast {
 # shell. By specifying this as a function instead of a separate script, we
 # avoid the extra shell process.
 function process-tree {
-	pid="${1:-$$}";
-	orig_pid="$pid";
-	local commands=();
-	while [ "$pid" != "$ppid" ]; do
-		# Read the parent's process ID and the current process's command line.
-		{
-			read -d ' ' ppid;
-			read command;
-		} < <(ps c -p "$pid" -o ppid= -o command= | sed 's/^ *//');
-		# XXX This does not quite work yet with screen on OS x. Find out why.
-		# echo "PID: $pid // PPID: $ppid // CMD: $command" 1>&2;
-		# Stop when we have reached the first process, or an sshd/login process.
-		if [ -z "$ppid" ] || [ "$ppid" -eq 0 -o "$ppid" -eq 1 -o "$command" = 'login' -o "$command" = 'sshd' ]; then
-			# Include screen/xterm as the "root" process.
-			if [ "$command" = 'screen' -o "$command" = 'xterm' ]; then
-				commands=("$command" "${commands[@]}");
-			fi;
-			break;
-		fi;
-		# Insert the command in the front of the process array.
-		commands=("$command" "${commands[@]}");
-		# Prepare for the next iteration.
-		pid="$ppid";
-		ppid=;
-	done;
-	# Hide the first bash process.
-	set -- "${commands[@]}";
-	if [ "$1" = '-bash' -o "$1" = 'bash' ]; then
-		shift;
-		commands=("$@");
-	fi;
-	# Print the tree with the specified separator.
-	separator='→';
-	output="$(IFS="$separator"; echo "${commands[*]}")";
-	echo "${output//$separator/ $separator }";
+    pid="${1:-$$}"
+    orig_pid="$pid"
+    local commands=()
+    while [ "$pid" != "$ppid" ]
+    do
+        # Read the parent's process ID and the current process's command line.
+        {
+            read -rd ' ' ppid
+            read -r command
+        } < <(ps c -p "$pid" -o ppid= -o command= | sed 's/^ *//')
+        # XXX This does not quite work yet with screen on OS x. Find out why.
+        # echo "PID: $pid // PPID: $ppid // CMD: $command" 1>&2;
+        # Stop when we have reached the first process, or an sshd/login process.
+        if [ -z "$ppid" ] || [ "$ppid" -eq 0 ] || [ "$ppid" -eq 1 ] || [ "$command" = 'login' ] || [ "$command" = 'sshd' ]
+        then
+            # Include screen/xterm as the "root" process.
+            if [ "$command" = 'screen' ] || [ "$command" = 'xterm' ]
+            then
+                commands=("$command" "${commands[@]}")
+            fi
+            break
+        fi
+        # Insert the command in the front of the process array.
+        commands=("$command" "${commands[@]}")
+        # Prepare for the next iteration.
+        pid="$ppid"
+        ppid=
+    done
+    # Hide the first bash process.
+    set -- "${commands[@]}"
+    if [ "$1" = '-bash' ] || [ "$1" = 'bash' ]
+    then
+        shift
+        commands=("$@")
+    fi
+    # Print the tree with the specified separator.
+    separator='→'
+    output="$(IFS="$separator"; echo "${commands[*]}")"
+    echo "${output//$separator/ $separator }"
 }
 
 # taken from https://github.com/janmoesen/tilde/blob/master/.bash/commands
 # Show the uptime (including load) and the top 10 processes by CPU usage.
 function top10 {
-	uptime;
-	if [[ "$OSTYPE" =~ ^darwin ]]; then
-		ps waux -r;
-	else
-		ps waux --sort='-%cpu';
-	fi | head -n 11 | cut -c "1-${COLUMNS:-80}";
+    uptime
+    if [[ "$OSTYPE" =~ ^darwin ]]
+    then
+        ps waux -r
+    else
+        ps waux --sort='-%cpu'
+    fi | head -n 11 | cut -c "1-${COLUMNS:-80}"
 }
 
 # Normalize `open` across Linux, macOS, and Windows.
-if [ ! $(uname -s) = 'Darwin' ]; then
-    if grep -q Microsoft /proc/version; then
+if [ ! "$(uname -s)" = 'Darwin' ]
+then
+    if grep -q Microsoft /proc/version
+    then
         # Ubuntu on Windows using the Linux subsystem
-        alias open='explorer.exe';
+        alias open='explorer.exe'
     else
-        alias open='xdg-open';
+        alias open='xdg-open'
     fi
 fi
 
 ##
 # Load any platform-specific resources
 ##
-[ -f $HOME/.bashd/extra_$arch.bashrc ] && . $HOME/.bashd/extra_$arch.bashrc
-[ -f $HOME/.bashd/extra_${arch}_${machinearch}.bashrc ] && . $HOME/.bashd/extra_${arch}_${machinearch}.bashrc
-[ -f $HOME/.bashd/extra_x11.bashrc -a is_within_x ] && . $HOME/.bashd/extra_x11.bashrc
+[ -f "$HOME/.bashd/extra_$arch.bashrc" ] && . "$HOME/.bashd/extra_$arch.bashrc"
+[ -f "$HOME/.bashd/extra_${arch}_${machinearch}.bashrc" ] && . "$HOME/.bashd/extra_${arch}_${machinearch}.bashrc"
+[ -f "$HOME/.bashd/extra_x11.bashrc" ] && [ is_within_x ] && . "$HOME/.bashd/extra_x11.bashrc"
 true
-
