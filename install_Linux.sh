@@ -65,7 +65,7 @@ function installDebianPackages() {
         "font-manager"
         "fonts-dancingscript"
         "fonts-ebgaramond"
-        "fonts-ebgaramond-exra"
+        "fonts-ebgaramond-extra"
         "fonts-essays1743"
         "fonts-fantasque-sans"
         "fonts-goudybookletter"
