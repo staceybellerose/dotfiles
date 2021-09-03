@@ -278,6 +278,12 @@ function cdlast {
     done
 }
 
+# make a dir and cd into it
+function mcd () {
+  mkdir -p "$1"
+  cd "$1"
+}
+
 # taken from https://github.com/janmoesen/tilde/blob/master/.bash/commands
 # Show a one-line process tree of the given process, defaulting to the current
 # shell. By specifying this as a function instead of a separate script, we
