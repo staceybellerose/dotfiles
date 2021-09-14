@@ -59,3 +59,7 @@ hideHiddenFiles() {
     killall Finder
 }
 
+getShell() {
+	dscl . -read ~/ UserShell | sed 's/UserShell: //'
+}
+

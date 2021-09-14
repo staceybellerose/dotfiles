@@ -283,6 +283,10 @@ function mcd () {
   mkdir -p "$1"
   cd "$1"
 }
+# gets the user's default shell
+function getShell {
+	awk -F: '$1==u{print $7}' u=$(id -un) /etc/passwd
+}
 
 # taken from https://github.com/janmoesen/tilde/blob/master/.bash/commands
 # Show a one-line process tree of the given process, defaulting to the current
