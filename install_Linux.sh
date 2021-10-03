@@ -69,7 +69,6 @@ function installDebianPackages() {
         "rake"
         "rails"
         "scite"
-        "ttf-anonymous-pro"
         "ttf-xfree86-nonfree"
         "zenity"
     )
