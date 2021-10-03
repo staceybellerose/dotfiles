@@ -8,11 +8,22 @@ machinearch=$(uname -m)
 # Set up environment variables
 ##
 
-export PATH="${HOME}/bin:${PATH}"
+if [ -d "$HOME/bin" ]
+then
+    PATH="$HOME/bin:$PATH"
+fi
+if [ -d "$HOME/.local/bin" ]
+then
+    PATH="$PATH:$HOME/.local/bin"
+fi
+export PATH
 export LESS="-aeiR"
 export MANPAGER="less -X"
 export EDITOR=vi
 export PAGER=less
+
+# append to the history file, don't overwrite it
+shopt -s histappend
 
 # Increase Bash history size. Allow 32³ entries; the default is 500.
 export HISTSIZE='32768'
@@ -164,30 +175,33 @@ function parse_git_branch() {
 
 function prompt_command {
     EXIT=$?
+    case "$TERM" in
+        xterm-color|*-256color) color_prompt=yes;;
+    esac
     local XTERM_TITLE=""
     if [[ $TERM == xterm* ]]
     then
-        XTERM_TITLE="\[\e]2;\u@\H:\w\a\]"
+        XTERM_TITLE="\[\e]0;\u@\H:\w\a\]"
     fi
 
-    local BGJOBS_COLOR="$C_DARKGRAY"
+    local BGJOBS_COLOR=${color_prompt:+$C_DARKGRAY}
     local BGJOBS=""
     if [ "$(jobs | head -c1)" ]
     then
         BGJOBS=" $BGJOBS_COLOR(bg:\j)"
     fi
 
-    local DOLLAR_COLOR="$C_GREEN"
+    local DOLLAR_COLOR=${color_prompt:+$C_GREEN}
     if [[ ${EUID} == 0 ]]
     then
-        DOLLAR_COLOR="$C_RED"
+        DOLLAR_COLOR=${color_prompt:+$C_RED}
     fi
     local DOLLAR="$DOLLAR_COLOR\\\$"
 
-    local USER_COLOR="$C_GREEN"
+    local USER_COLOR=${color_prompt:+$C_GREEN}
     if [[ ${EUID} == 0 ]]
     then
-        USER_COLOR="$C_BG_RED$C_BLACK"
+        USER_COLOR=${color_prompt:+$C_BG_RED$C_BLACK}
     fi
 
     local USER_STRING="\u@\h"
@@ -196,10 +210,10 @@ function prompt_command {
         USER_STRING="\u"
     fi
 
-    local ARROW_COLOR="$C_GREEN"
+    local ARROW_COLOR=${color_prompt:+$C_GREEN}
     if [[ $EXIT != 0 ]]
     then
-        ARROW_COLOR="$C_RED"
+        ARROW_COLOR=${color_prompt:+$C_RED}
     fi
     arrow_character=$'\xe2\x86\x92'
     local ARROW="$ARROW_COLOR$arrow_character "
