@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1091
 
+# Use this script for any Mac (OS X)-based specific installations
+
 source ./bin/utils.sh
 
 packages="$1"
@@ -259,6 +261,7 @@ then
         fi
     fi
 fi # if [[ $packages ]]
+
 if [[ $config -eq 1 ]]
 then
     # Configure Mac Appearance
@@ -314,6 +317,7 @@ EOF
     defaults write com.apple.Finder AppleShowAllFiles -bool true
     killall Finder
 fi # if [[ $config ]]
+
 if [[ $packages -eq 1 ]]
 then
     if [ -d "/Applications/iTerm.app" ]

@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC1091
 
+# Use this script for any Linux-based specific installations
+
 source ./bin/utils.sh
 
 packages="$1"
