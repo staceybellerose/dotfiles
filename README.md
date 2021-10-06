@@ -51,45 +51,15 @@ bin/coloredlogcat.py is released under the Apache License, Version 2.0. See LICE
 
 ### Fonts
 
-* [Cabin][cabin], [Cabin Sketch][cabinsketch], [Cascadia Mono][cascadia], [Dancing Script][dancing], [EB Garamond][eb], [Fantasque Sans Mono][fantasque], [FontAwesome][awesome], [Goudy Bookletter 1911][bookletter], [Humor Sans][xkcd], [Inconsolata][inconsolata], [Inter][inter], [Isabella][isabella], [Libre Baskerville][lbaskerville], [Libre Caslon Text][lcaslon], [Libre Franklin][lfranklin], [Lobster, Lobster Two][lobster], [Merriweather][merriweather], [Milonga][milonga], [Miltonian][miltonian], [Mononoki][mononoki], [Petit Formal Script][petit], [Source Code Pro][sourcecode], [Source Sans Pro][sourcesans], and [Source Serif Pro][sourceserif] are licensed under the SIL Open Font License, Version 1.1.
-* [Domitian][domitian] is licensed under your choice of the SIL Open Font License Version 1.1, the GNU Affero General Public License (AGPL) Version 3, LaTeX Project Public License, or any combination thereof.
-* [Essays 1743][essays] is licensed under the GNU Lesser General Public License (LGPL), Version 2.1.
-* [Meslo LG][meslo] is licensed under the Apache License, Version 2.0.
-* [Monoid][monoid] is dual licensed under the MIT and the SIF Open Font License, Version 1.1.
-* [Roboto, Roboto Condensed][roboto], [Roboto Mono][robotomono], and [Roboto Slab][robotoslab] are licensed under the Apache License, Version 2.0.
-* [Ubuntu][ubuntu] is licensed under the Ubuntu Font License, Version 1.0.
+Unless otherwise specified, the included fonts are licensed under the SIL Open Font License, Version 1.1.
+
+* Domitian is licensed under your choice of the SIL Open Font License Version 1.1, the GNU Affero General Public License (AGPL) Version 3, LaTeX Project Public License, or any combination thereof.
+* Essays 1743 is licensed under the GNU Lesser General Public License (LGPL), Version 2.1.
+* ET Book is licensed under the MIT License.
+* Gillius ADF is licensed under the GNU General Public License (GPL), Version 2 or later, with font exception.
+* Meslo LG is licensed under the Apache License, Version 2.0.
+* Monoid is dual licensed under the MIT and the SIF Open Font License, Version 1.1.
+* Roboto, Roboto Condensed, Roboto Mono, and Roboto Slab are licensed under the Apache License, Version 2.0.
+* Ubuntu is licensed under the Ubuntu Font License, Version 1.0.
 
 For more details on font licenses, see the individual LICENSE files in each font's folder.
-
-[awesome]: https://fontawesome.com/v4.7/
-[bookletter]: https://github.com/theleagueof/goudy-bookletter-1911
-[cabin]: https://github.com/impallari/Cabin
-[cabinsketch]: https://github.com/impallari/CabinSketch
-[cascadia]: https://github.com/microsoft/cascadia-code
-[dancing]: https://github.com/impallari/DancingScript
-[domitian]: https://github.com/dbenjaminmiller/domitian
-[eb]: https://github.com/octaviopardo/EBGaramond12
-[essays]: https://www.thibault.org/fonts/essays/
-[fantasque]: https://github.com/belluzj/fantasque-sans
-[inconsolata]: https://github.com/googlefonts/inconsolata
-[inter]: https://github.com/rsms/inter/
-[isabella]: https://www.thibault.org/fonts/isabella/
-[lbaskerville]: https://github.com/impallari/Libre-Baskerville
-[lcaslon]: https://github.com/impallari/Libre-Caslon-Text
-[lfranklin]: https://github.com/impallari/Libre-Franklin
-[lobster]: https://github.com/impallari/The-Lobster-Font
-[merriweather]: https://github.com/SorkinType/Merriweather
-[meslo]: https://github.com/andreberg/Meslo-Font
-[milonga]: https://fonts.google.com/specimen/Milonga
-[miltonian]: https://github.com/impallari/Miltonian
-[monoid]: https://github.com/larsenwork/monoid
-[mononoki]: https://github.com/madmalik/mononoki
-[petit]: https://fonts.google.com/specimen/Petit+Formal+Script
-[roboto]: https://github.com/googlefonts/roboto
-[robotomono]: https://github.com/googlefonts/RobotoMono
-[robotoslab]: https://github.com/googlefonts/robotoslab
-[sourcecode]: https://github.com/adobe-fonts/source-code-pro
-[sourcesans]: https://github.com/adobe-fonts/source-sans
-[sourceserif]: https://github.com/adobe-fonts/source-serif
-[ubuntu]: https://design.ubuntu.com/font/
-[xkcd]: http://xkcdsucks.blogspot.com/2009/03/xkcdsucks-is-proud-to-present-humor.html
