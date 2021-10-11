@@ -53,14 +53,16 @@ bin/coloredlogcat.py is released under the Apache License, Version 2.0. See LICE
 
 Unless otherwise specified, the included fonts are licensed under the SIL Open Font License, Version 1.1.
 
+* Charter is licensed under the Bitstream Charter permissive license.
 * Domitian is licensed under your choice of the SIL Open Font License Version 1.1, the GNU Affero General Public License (AGPL) Version 3, LaTeX Project Public License, or any combination thereof.
 * Essays 1743 is licensed under the GNU Lesser General Public License (LGPL), Version 2.1.
 * ET Book is licensed under the MIT License.
-* Gillius ADF is licensed under the GNU General Public License (GPL), Version 2 or later, with font exception.
+* Accanthis ADF, FPL Neu, Gillius ADF, and Ornements ADF are licensed under the GNU General Public License (GPL), Version 2 or later, with font exception.
 * Luxi fonts are licensed under the Luxi font license.
 * Meslo LG is licensed under the Apache License, Version 2.0.
-* Monoid is dual licensed under the MIT and the SIF Open Font License, Version 1.1.
+* Monoid is dual licensed under the MIT License and the SIF Open Font License, Version 1.1.
 * Roboto, Roboto Condensed, Roboto Mono, and Roboto Slab are licensed under the Apache License, Version 2.0.
+* Sorts Mill Kis is licensed under the MIT License.
 * TeX Gyre fonts are licensed under the GUST Font License.
 * Ubuntu is licensed under the Ubuntu Font License, Version 1.0.
 * URW fonts are licensed under the Aladdin Free Public License.
