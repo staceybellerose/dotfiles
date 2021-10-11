@@ -61,5 +61,6 @@ Unless otherwise specified, the included fonts are licensed under the SIL Open F
 * Monoid is dual licensed under the MIT and the SIF Open Font License, Version 1.1.
 * Roboto, Roboto Condensed, Roboto Mono, and Roboto Slab are licensed under the Apache License, Version 2.0.
 * Ubuntu is licensed under the Ubuntu Font License, Version 1.0.
+* URW fonts are licensed under the Aladdin Free Public License.
 
 For more details on font licenses, see the individual LICENSE files in each font's folder.
