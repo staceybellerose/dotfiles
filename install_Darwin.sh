@@ -99,7 +99,7 @@ function checkFile() {
 function installFonts() {
     e_bold "Installing Fonts"
     mkdir -p "${HOME}/Library/Fonts"
-    find ./fonts -iname "*.ttf" -exec bash -c '
+    find ./fonts -iname "*.ttf" -o -iname "*.otf" -exec bash -c '
         filename=$1
         source ./bin/utils.sh
         file=$(basename "$filename")

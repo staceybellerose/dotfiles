@@ -49,6 +49,14 @@ Open Source fonts that I use for various purposes.
 | [Source Sans Pro][sourcesans]     | sans-serif  | grotesque         |                 |
 | [Source Serif Pro][sourceserif]   | serif       | transitional slab |                 |
 | [Spartan][spartan]                | sans-serif  | geometric         | Futura          |
+| [TeX Gyre Adventor][tgadventor]   | sans-serif  | geometric         | Avant Garde     |
+| [TeX Gyre Bonum][tgbonum]         | serif       | transitional      | Bookman         |
+| [TeX Gyre Chorus][tgchorus]       | script      | formal            | Zapf Chancery   |
+| [TeX Gyre Cursor][tgcursor]       | monospaced  | slab serif        | Courier         |
+| [TeX Gyre Heros][tgheros]         | sans-serif  | neo-grotesque     | Helvetica       |
+| [TeX Gyre Pagella][tgpagella]     | sans-serif  | old-style         | Palatino        |
+| [TeX Gyre Schola][tgschola]       | serif       | transitional      | Century Schoolbook |
+| [TeX Gyre Termes][tgtermes]       | sans-serif  | transitional      | Times Roman     |
 | [Ubuntu][ubuntu]                  | sans-serif  | humanist          |                 |
 
 [anonymous]: https://www.marksimonson.com/fonts/view/anonymous-pro
@@ -93,5 +101,13 @@ Open Source fonts that I use for various purposes.
 [sourcesans]: https://github.com/adobe-fonts/source-sans
 [sourceserif]: https://github.com/adobe-fonts/source-serif
 [spartan]: https://github.com/bghryct/Spartan-MB
+[tgadventor]: http://www.gust.org.pl/projects/e-foundry/tex-gyre/adventor
+[tgbonum]: http://www.gust.org.pl/projects/e-foundry/tex-gyre/bonum
+[tgchorus]: http://www.gust.org.pl/projects/e-foundry/tex-gyre/chorus
+[tgcursor]: http://www.gust.org.pl/projects/e-foundry/tex-gyre/cursor
+[tgheros]: http://www.gust.org.pl/projects/e-foundry/tex-gyre/heros
+[tgpagella]: http://www.gust.org.pl/projects/e-foundry/tex-gyre/pagella
+[tgschola]: http://www.gust.org.pl/projects/e-foundry/tex-gyre/schola
+[tgtermes]: http://www.gust.org.pl/projects/e-foundry/tex-gyre/termes
 [ubuntu]: https://design.ubuntu.com/font/
 [xkcd]: http://xkcdsucks.blogspot.com/2009/03/xkcdsucks-is-proud-to-present-humor.html
