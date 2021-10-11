@@ -32,6 +32,9 @@ Open Source fonts that I use for various purposes.
 | [Libre Franklin][lfranklin]       | sans-serif  | grotesque         | Franklin Gothic |
 | [Lobster][lobster]                | script      | italic, swashed   |                 |
 | [Lobster Two][lobster]            | serif       | swashed           |                 |
+| Luxi Mono<sup id="a1">[Note 1](#f1)</sup> | monospaced | slab serif |                 |
+| Luxi Sans                         | sans-serif  | humanist          |                 |
+| Luxi Serif                        | serif       | didone            |                 |
 | [Merriweather][merriweather]      | serif       | slab              |                 |
 | [Meslo LG][meslo]                 | monospaced  | grotesque         |                 |
 | [Milonga][milonga]                | serif       | swashed           |                 |
@@ -64,6 +67,10 @@ Open Source fonts that I use for various purposes.
 | [URW Classico][ghostpdl]          | sans-serif  | humanist          | Optima          |
 | [URW D050000L][ghostpdl]          | dingbats    | —                 | Zapf Dingbats   |
 | [URW U001][ghostpdl]              | sans-serif  | neo-grotesque     | Univers         |
+
+--
+
+<b id="f1">Note 1</b> Luxi fonts are not Open Source, as they are not modifiable, but are freely distributable. See their license for further details. [↩](#a1 "Return to table")
 
 [anonymous]: https://www.marksimonson.com/fonts/view/anonymous-pro
 [awesome]: https://fontawesome.com/v4.7/
