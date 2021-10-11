@@ -58,10 +58,13 @@ Unless otherwise specified, the included fonts are licensed under the SIL Open F
 * Essays 1743 is licensed under the GNU Lesser General Public License (LGPL), Version 2.1.
 * ET Book is licensed under the MIT License.
 * Accanthis ADF, FPL Neu, Gillius ADF, and Ornements ADF are licensed under the GNU General Public License (GPL), Version 2 or later, with font exception.
+* Luxi fonts are licensed under the Luxi font license.
 * Meslo LG is licensed under the Apache License, Version 2.0.
 * Monoid is dual licensed under the MIT License and the SIF Open Font License, Version 1.1.
 * Roboto, Roboto Condensed, Roboto Mono, and Roboto Slab are licensed under the Apache License, Version 2.0.
 * Sorts Mill Kis is licensed under the MIT License.
+* TeX Gyre fonts are licensed under the GUST Font License.
 * Ubuntu is licensed under the Ubuntu Font License, Version 1.0.
+* URW fonts are licensed under the Aladdin Free Public License.
 
 For more details on font licenses, see the individual LICENSE files in each font's folder.
