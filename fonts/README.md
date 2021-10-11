@@ -58,6 +58,12 @@ Open Source fonts that I use for various purposes.
 | [TeX Gyre Schola][tgschola]       | serif       | transitional      | Century Schoolbook |
 | [TeX Gyre Termes][tgtermes]       | sans-serif  | transitional      | Times Roman     |
 | [Ubuntu][ubuntu]                  | sans-serif  | humanist          |                 |
+| [URW Algiers][ghostpdl]           | serif       | glyphic           | Albertus, A028  |
+| [URW Antique Olive][ghostpdl]     | sans-serif  | humanist          |                 |
+| [URW C093][ghostpdl]              | script      | formal            | Coronet         |
+| [URW Classico][ghostpdl]          | sans-serif  | humanist          | Optima          |
+| [URW D050000L][ghostpdl]          | dingbats    | —                 | Zapf Dingbats   |
+| [URW U001][ghostpdl]              | sans-serif  | neo-grotesque     | Univers         |
 
 [anonymous]: https://www.marksimonson.com/fonts/view/anonymous-pro
 [awesome]: https://fontawesome.com/v4.7/
@@ -75,6 +81,7 @@ Open Source fonts that I use for various purposes.
 [etbook]: https://github.com/edwardtufte/et-book
 [fantasque]: https://github.com/belluzj/fantasque-sans
 [gillius]: https://arkandis.tuxfamily.org/adffonts.html
+[ghostpdl]: http://git.ghostscript.com/?p=ghostpdl.git;a=tree;f=pcl/urwfonts;hb=HEAD
 [goudy]: https://github.com/theleagueof/goudy-bookletter-1911
 [inconsolata]: https://github.com/googlefonts/inconsolata
 [inter]: https://github.com/rsms/inter/
