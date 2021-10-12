@@ -94,7 +94,7 @@ Open Source fonts that I use for various purposes.
 
 --
 
-<b id="f1">Note 1</b> Luxi fonts are not Open Source, as they are not modifiable, but are freely distributable. See their license for further details. [↩](#a1 "Return to table")
+<b id="f1">Note 1:</b> Luxi fonts are not Open Source, as they are not modifiable, but are freely distributable. See their license for further details. [↩](#a1 "Return to table")
 
 [adffonts]: https://arkandis.tuxfamily.org/adffonts.html
 [anonymous]: https://www.marksimonson.com/fonts/view/anonymous-pro
