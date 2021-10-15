@@ -19,6 +19,11 @@ For partial installs, use the following command line options:
 |   -p   | Suppress package updates |
 |   -v   | Suppress VSCode extension installation |
 |   -x   | Suppress XCode initialization (OS X only) |
+|   -C   | Only run configuration changes |
+|   -F   | Only run font installation |
+|   -P   | Only run package updates |
+|   -V   | Only run VSCode extension installation |
+|   -X   | Only run XCode initialization  (OS X only) |
 
 ### Manual (Minimal) Installation
 
@@ -51,20 +56,20 @@ bin/coloredlogcat.py is released under the Apache License, Version 2.0. See LICE
 
 ### Fonts
 
-Unless otherwise specified, the included fonts are licensed under the SIL Open Font License, Version 1.1.
+Unless otherwise specified, the included fonts are licensed under the SIL Open Font License (OFL), Version 1.1.
+
+If a font is dual licensed under the SIL OFL and another license, I have elected to distribute it under the SIL OFL.
+
+#### Fonts not licensed under the SIL OFL
 
 * Charter is licensed under the Bitstream Charter permissive license.
-* Domitian is licensed under your choice of the SIL Open Font License Version 1.1, the GNU Affero General Public License (AGPL) Version 3, LaTeX Project Public License, or any combination thereof.
 * Essays 1743 is licensed under the GNU Lesser General Public License (LGPL), Version 2.1.
-* ET Book is licensed under the MIT License.
+* ET Book and Sorts Mill Kis are licensed under the MIT License.
 * Accanthis ADF, FPL Neu, Gillius ADF, and Ornements ADF are licensed under the GNU General Public License (GPL), Version 2 or later, with font exception.
 * Luxi fonts are licensed under the Luxi font license.
-* Meslo LG is licensed under the Apache License, Version 2.0.
-* Monoid is dual licensed under the MIT License and the SIF Open Font License, Version 1.1.
-* Roboto, Roboto Condensed, Roboto Mono, and Roboto Slab are licensed under the Apache License, Version 2.0.
-* Sorts Mill Kis is licensed under the MIT License.
+* Droid Sans, Droid Sans Mono, Droid Sans Mono Dotted, Droid Sans Mono Slashed, Droid Serif, Meslo LG, Roboto, Roboto Condensed, Roboto Mono, Roboto Slab, and Smokum are licensed under the Apache License, Version 2.0.
 * TeX Gyre fonts are licensed under the GUST Font License.
-* Ubuntu is licensed under the Ubuntu Font License, Version 1.0.
+* Ubuntu, Ubuntu Condensed, and Ubuntu Mono are licensed under the Ubuntu Font License, Version 1.0.
 * URW fonts are licensed under the Aladdin Free Public License.
 
 For more details on font licenses, see the individual LICENSE files in each font's folder.
