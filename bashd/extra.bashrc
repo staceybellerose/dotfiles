@@ -82,7 +82,7 @@ do
 done;
 
 # determine if we are within an X session
-function is_within_x {
+is_within_x () {
     if xhost >& /dev/null
         then true
         else false
@@ -117,7 +117,7 @@ C_BG_CYAN="\[\e[46m\]"
 C_BG_LIGHTGRAY="\[\e[47m\]"
 
 # get current branch in git repo
-function parse_git_branch() {
+parse_git_branch () {
     # Check if the current directory is in a Git repository.
     git rev-parse --is-inside-work-tree &>/dev/null || return;
     BRANCH=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
@@ -173,7 +173,7 @@ function parse_git_branch() {
     fi
 }
 
-function prompt_command {
+prompt_command () {
     EXIT=$?
     case "$TERM" in
         xterm-color|*-256color) color_prompt=yes;;
@@ -229,7 +229,7 @@ function prompt_command {
 export PROMPT_COMMAND=prompt_command
 
 # taken from http://www.cyberciti.biz/faq/linux-unix-colored-man-pages-with-less-command/
-man() {
+man () {
     env \
     LESS_TERMCAP_mb="$(printf "\e[1;31m")" \
     LESS_TERMCAP_md="$(printf "\e[1;31m")" \
@@ -264,23 +264,23 @@ whiteboard () {
 #   20111021-112729.sql
 #   20111021-113949.sql
 #   $ vilast *.sql # will edit 20111021-113949.sql
-function vilast {
+vilast () {
     (($#)) && ${EDITOR:-vim} "${!#}"
 }
 # A quick way to invoke a read-only Vim on the last file. See "vilast".
-function viewlast {
+viewlast () {
     (EDITOR=view vilast "$@")
 }
 # A quick way to show the last file in the Finder. See "vilast".
-function showlast {
+showlast () {
     (($#)) && show "${!#}"
 }
 # A quick way to "tail -f" the last file. See "vilast".
-function taillast {
+taillast () {
     (($#)) && tail -f "${!#}"
 }
 # A quick way to "cd" to the last directory. See "vilast".
-function cdlast {
+cdlast () {
     for ((i = $#; i > 0; i--))
     do
         if [ -d "${!i}" ]
@@ -293,20 +293,20 @@ function cdlast {
 }
 
 # make a dir and cd into it
-function mcd () {
-  mkdir -p "$1"
-  cd "$1"
+mcd () {
+    mkdir -p "$1"
+    cd "$1" || return
 }
 # gets the user's default shell
-function getShell {
-	awk -F: '$1==u{print $7}' u=$(id -un) /etc/passwd
+getShell () {
+    awk -F: '$1==u{print $7}' u="$(id -un)" /etc/passwd
 }
 
 # taken from https://github.com/janmoesen/tilde/blob/master/.bash/commands
 # Show a one-line process tree of the given process, defaulting to the current
 # shell. By specifying this as a function instead of a separate script, we
 # avoid the extra shell process.
-function process-tree {
+process-tree () {
     pid="${1:-$$}"
     orig_pid="$pid"
     local commands=()
@@ -350,7 +350,7 @@ function process-tree {
 
 # taken from https://github.com/janmoesen/tilde/blob/master/.bash/commands
 # Show the uptime (including load) and the top 10 processes by CPU usage.
-function top10 {
+top10 () {
     uptime
     if [[ "$OSTYPE" =~ ^darwin ]]
     then
@@ -377,5 +377,5 @@ fi
 ##
 [ -f "$HOME/.bashd/extra_$arch.bashrc" ] && . "$HOME/.bashd/extra_$arch.bashrc"
 [ -f "$HOME/.bashd/extra_${arch}_${machinearch}.bashrc" ] && . "$HOME/.bashd/extra_${arch}_${machinearch}.bashrc"
-[ -f "$HOME/.bashd/extra_x11.bashrc" ] && [ is_within_x ] && . "$HOME/.bashd/extra_x11.bashrc"
+[ -f "$HOME/.bashd/extra_x11.bashrc" ] && is_within_x && . "$HOME/.bashd/extra_x11.bashrc"
 true

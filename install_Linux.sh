@@ -10,57 +10,69 @@ fonts="$2"
 config="$3"
 # shellcheck disable=SC2034
 xcode="$4"
+gui="$5"
+yes="$6"
 
-function installFonts() {
-    e_bold "Installing Fonts"
+if [[ $gui -eq 0 ]]
+then
+    CPOPT=-av
+else
+    CPOPT=-a
+fi
+
+installFonts () {
+    g_bold "Installing Fonts"
     mkdir -p "${HOME}/.fonts"
     for dir in fonts/*
     do
-        fontname=$(basename "$dir")
-        if [ -d "${HOME}/.fonts/${fontname}" ]
+        if [ -d "$dir" ]
         then
-            e_arrow "${fontname} is already installed"
-        else
-            cp -av "$dir" "${HOME}/.fonts" && e_success "Installed font: ${fontname}" || e_error "Unable to install font: ${fontname}"
+            fontname=$(basename "$dir")
+            if [ -d "${HOME}/.fonts/${fontname}" ]
+            then
+                g_arrow "${fontname} is already installed"
+            else
+                cp $CPOPT "$dir" "${HOME}/.fonts" && g_success "Installed font: ${fontname}" || g_error "Unable to install font: ${fontname}"
+            fi
         fi
     done
 }
 
-function installConfig() {
-    e_bold "Installing Configuration Files"
+installConfig () {
+    g_bold "Installing Configuration Files"
     mkdir -p "${HOME}/.config"
-    cp -av config/* "${HOME}/.config" && e_success "Installed config files" || e_error "Unable to install config files"
+    cp $CPOPT config/* "${HOME}/.config" && g_success "Installed config files" || g_error "Unable to install config files"
     mkdir -p "${HOME}/.local"
-    cp -av local/* "${HOME}/.local" && e_success "Installed share files" || e_error "Unable to install share files"
+    cp $CPOPT local/* "${HOME}/.local" && g_success "Installed share files" || g_error "Unable to install share files"
     # fix the absolute path in qt5ct.conf
-    sed -i -- "s:color_scheme_path=.*:color_scheme_path=${HOME}/.config/qt5ct/colors/one dark.conf:g" "${HOME}/.config/qt5ct/qt5ct.conf" && e_success "Updated QT5 config file" || e_error "Unable to update QT5 config file"
+    sed -i -- "s:color_scheme_path=.*:color_scheme_path=${HOME}/.config/qt5ct/colors/one dark.conf:g" "${HOME}/.config/qt5ct/qt5ct.conf" && g_success "Updated QT5 config file" || g_error "Unable to update QT5 config file"
 }
 
-function isDebianDerivative() {
+isDebianDerivative () {
     which dpkg &> /dev/null
     return $?
 }
 
-function hasDebianPackage() {
+hasDebianPackage () {
     dpkg -s "$1" &> /dev/null
     return $?
 }
 
-function installDebianPackage() {
+installDebianPackage () {
     isDebianDerivative || return
     if hasDebianPackage "$1"
     then
-        e_success "$1 is already installed"
+        g_arrow "$1 is already installed"
     else
-        e_warning "Installing package $1"
+        g_info "Installing package $1"
         sudo apt-get install "$1"
         hasDebianPackage "$1" && e_success "$1 successfully installed" || e_error "$1 not installed"
     fi
 }
 
-function installDebianPackages() {
+installDebianPackages () {
     isDebianDerivative || return
-    e_bold "Installing Debian Packages"
+    g_bold "Installing Debian Packages"
     declare -a pkgs=(
         "arc-theme"
         "tango-icon-theme"
@@ -72,24 +84,47 @@ function installDebianPackages() {
         "ttf-xfree86-nonfree"
         "zenity"
     )
+    toInstall=()
     for pkg in "${pkgs[@]}"
+    do
+        if hasDebianPackage "$pkg"
+        then
+            install=n
+        elif [[ $yes -eq 1 ]]
+        then
+            install=y
+        else
+            if [[ $gui -eq 0 ]]
+            then
+                read -rp "Do you want to install ${C_FORE_BLUE}$pkg${C_RESET}? [y/${C_BOLD}n${C_RESET}]: " install
+            else
+                zenity --question --text="Do you want to install ${pkg}?" \
+                    --window-icon=./installer.svg --width=300 --height=100 && install=y
+            fi
+        fi
+        if [[ $install == "y" ]]
+        then
+            toInstall+=( "$pkg" )
+        fi
+    done
+    for pkg in "${toInstall[@]}"
     do
         installDebianPackage "$pkg"
     done
 }
 
-function isRedHatDerivative() {
+isRedHatDerivative () {
     which rpm &> /dev/null
     return $?
 }
 
-function installRedHatPackages() {
+installRedHatPackages () {
     isRedHatDerivative || return
-    e_bold "Installing Red Hat Packages"
+    g_bold "Installing Red Hat Packages"
     ## TODO add packages here as needed
 }
 
-e_header "Linux Installer"
+g_header "Linux Installer"
 
 if [[ $config -eq 1 ]]
 then

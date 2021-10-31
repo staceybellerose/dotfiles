@@ -3,11 +3,14 @@
 
 source ./bin/utils.sh
 
+# shellcheck disable=SC2034
+gui="$1"
+
 TMPDIR=${TMPDIR:-/tmp}
 
 (( installed=0 ))
 
-function detectVSCode() {
+detectVSCode () {
     if [ -d "/Applications/Visual Studio Code.app" ]
     then
         code="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
@@ -18,7 +21,7 @@ function detectVSCode() {
     then
         code="$(command -v codium)"
     else
-        e_error "Unable to detect VS Code"
+        g_error "Unable to detect VS Code"
         return 1
     fi
     tmpfile=$$-vscode-extensions.log
@@ -26,23 +29,23 @@ function detectVSCode() {
     return 0
 }
 
-function installVSCodeExtension() {
+installVSCodeExtension () {
     ext=$1
     grep -q "$ext" "${TMPDIR}/${tmpfile}" &>/dev/null || {
-        e_arrow "Installing $ext"
+        g_arrow "Installing $ext"
         "$code" --install-extension "$ext" > /dev/null
         (( installed++ ))
     }
 }
 
-function installVSCodeCleanup() {
+installVSCodeCleanup () {
     rm "${TMPDIR}/${tmpfile}"
 }
 
-function installAllVSCodeExtensions() {
+installAllVSCodeExtensions () {
     # Install Visual Studio Code/codium extensions
     detectVSCode && {
-        e_bold "Installing ${C_FORE_BLUE}VS Code/codium Extensions"
+        g_bold "Installing ${C_FORE_BLUE}VS Code/codium Extensions"
         # General Extensions
         installVSCodeExtension ms-vsliveshare.vsliveshare # Live Share
         installVSCodeExtension CoenraadS.bracket-pair-colorizer-2 # Bracket Pair Colorizer 2
@@ -58,6 +61,7 @@ function installAllVSCodeExtensions() {
         installVSCodeExtension Tyriar.sort-lines # Sort Lines
         installVSCodeExtension dakara.transformer # Text Transformer
         installVSCodeExtension fnando.linter # Linter
+        installVSCodeExtension jerrygoyal.shortcut-menu-bar # Shortcut Menu Bar
 
         # Ruby / Rails extensions
         installVSCodeExtension rebornix.ruby # Ruby
@@ -97,7 +101,7 @@ function installAllVSCodeExtensions() {
         installVSCodeExtension mathiasfrohlich.Kotlin # Kotlin Extension
         installVSCodeExtension fwcd.kotlin # Kotlin IDE
         installVSCodeExtension formulahendry.code-runner # Code Runner
-        installVSCodeExtension richardwillis.vscode-gradle # Gradle Tasks
+        installVSCodeExtension vscjava.vscode-gradle # Gradle Tasks
         installVSCodeExtension naco-siren.gradle-language # Gradle Language Support
         installVSCodeExtension esafirm.kotlin-formatter # Kotlin Formatter using ktlint
 
@@ -126,12 +130,12 @@ function installAllVSCodeExtensions() {
         # Clean up temp file
         installVSCodeCleanup
         if ((installed > 0)); then
-            e_success "$installed extensions installed"
+            g_success "$installed extensions installed"
         else
-            e_arrow "No extensions to install"
+            g_info "No extensions to install"
         fi
     }
 }
 
-e_header "VSCode Extension Installer"
+g_header "VSCode Extension Installer"
 installAllVSCodeExtensions

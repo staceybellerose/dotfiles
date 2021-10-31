@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC1091
+# shellcheck disable=SC1091,SC2181
 
 # Use this script for any Mac (OS X)-based specific installations
 
@@ -9,14 +9,23 @@ packages="$1"
 fonts="$2"
 config="$3"
 xcode="$4"
+gui="$5"
+yes="$6"
+
+if [[ $gui -eq 0 ]]
+then
+    CPOPT=-av
+else
+    CPOPT=-a
+fi
 
 toInstall=()
 toInstallCask=()
 
-function initXCode() {
+initXCode () {
     if [[ -d "$('xcode-select' -print-path 2>/dev/null)" ]]
     then
-        e_bold "Initializing XCode Command Line Tools"
+        g_bold "Initializing XCode Command Line Tools"
         xcode-select --install 2>/dev/null
         # wait until XCode Command Line Tools are installed
         until xcode-select --print-path &> /dev/null
@@ -26,17 +35,36 @@ function initXCode() {
     fi
 }
 
-function promptToInstall() {
+promptToInstall () {
     test_result=$?
     name=$1; url=$2; useCask=$3
     shift 3
     app=("$@")
-    [[ $test_result -eq 0 ]] && e_success "$name is already installed" || {
-        e_warning "$name is not installed"
+    [[ $test_result -eq 0 ]] && g_success "$name is already installed" || {
+        g_info "$name is not installed"
         install="h"
         while [ "$install" == "h" ]
         do
-            read -rp "Do you want to install ${C_FORE_BLUE}$name${C_RESET}? [y/${C_BOLD}n${C_RESET}/h]: " install
+            if [[ $yes -eq 1 ]]
+            then
+                install=y
+            else
+                if [[ $gui -eq 0 ]]
+                then
+                    read -rp "Do you want to install ${C_FORE_BLUE}$name${C_RESET}? [y/${C_BOLD}n${C_RESET}/h]: " install
+                else
+                    result=$(zenity --question --text="Do you want to install ${name}?" \
+                        --extra-button="Help" --window-icon=./installer.svg --width=300 --height=100)
+                    rc=$?
+                    if [[ $result == "Help" ]]
+                    then
+                        install=h
+                    elif [[ $rc -eq 0 ]]
+                    then
+                        install=y
+                    fi
+                fi
+            fi
             if [ "$install" == "y" ]
             then
                 if [ "$useCask" == "1" ]
@@ -53,62 +81,62 @@ function promptToInstall() {
     }
 }
 
-function checkInstall() {
+checkInstall () {
     cmd=$1; name=$2; url=$3
     type -P "$cmd" &> /dev/null
     promptToInstall "$name" "$url" "0" "$cmd"
 }
 
-function checkSubCommand() {
+checkSubCommand () {
     cmd=$1; subcommand=$2; name=$3; url=$4
     command -v "$subcommand" &> /dev/null
     promptToInstall "$name" "$url" "0" "$cmd"
 }
 
-function checkCask() {
+checkCask () {
     cask=$1; name=$2; cmd=$3; url=$4
     test -d "/Applications/$cmd"
     promptToInstall "$name" "$url" "1" "$cask"
 }
 
-function checkLibraryCask() {
+checkLibraryCask () {
     cask=$1; name=$2; cmd=$3; url=$4
     test -d "${HOME}/Library/$cmd"
     promptToInstall "$name" "$url" "1" "$cask"
 }
 
-function checkJava() {
+checkJava () {
     name=$1; version=$2; url=$3
     cask=("oracle-jdk" "oracle-jdk-javadoc")
     /usr/libexec/java_home -v "$version" &> /dev/null
     promptToInstall "$name" "$url" "1" "${cask[@]}"
 }
 
-function checkNvm() {
+checkNvm () {
     cmd=$1; name=$2; url=$3
     test -d "$HOME/.nvm"
     promptToInstall "$name" "$url" "0" "$cmd"
 }
 
-function checkFile() {
+checkFile () {
     cmd=$1; file=$2; name=$3; url=$4
     test -f "$file"
     promptToInstall "$name" "$url" "0" "$cmd"
 }
 
-function installFonts() {
+installFonts () {
     e_bold "Installing Fonts"
     mkdir -p "${HOME}/Library/Fonts"
-    find ./fonts -iname "*.ttf" -o -iname "*.otf" -exec bash -c '
-        filename=$1
-        source ./bin/utils.sh
+    find ./fonts \( -iname "*.ttf" -o -iname "*.otf" \) -print0 | while IFS= read -r -d '' filename
+    do
         file=$(basename "$filename")
-        test -f ${HOME}/Library/Fonts/$file || {
-            cp -av "$filename" ${HOME}/Library/Fonts && e_success "Installed $file" || e_error "Unable to install $file"
-        }' shell {} \;
+        test -f "${HOME}/Library/Fonts/$file" || {
+            cp $CPOPT "$filename" "${HOME}/Library/Fonts" && g_success "Installed $file" || g_error "Unable to install $file"
+        }
+    done
 }
 
-e_header "Mac Application Installer"
+g_header "Mac Application Installer"
 
 if [[ $xcode -eq 1 ]]
 then
@@ -120,7 +148,7 @@ then
 fi
 if [[ $packages -eq 1 ]]
 then
-    e_bold "Installing Programs"
+    g_bold "Installing Programs"
 
     # Command Line Tools
     checkInstall brew "Homebrew" "https://brew.sh/"
@@ -150,6 +178,7 @@ then
     checkInstall kotlin "kotlin" "https://kotlinlang.org/"
     checkInstall python3 "python3" "https://www.python.org/"
     checkInstall jupyter "jupyter" "https://jupyter.org/"
+    checkInstall zenity "zenity" "https://wiki.gnome.org/Projects/Zenity"
     checkFile bash-completion "/usr/local/etc/profile.d/bash_completion.sh" "Bash Completion" "https://salsa.debian.org/debian/bash-completion"
 
     # Homebrew Casks
@@ -192,18 +221,10 @@ then
 
     checkJava "Oracle JDK" "1.8" "https://www.oracle.com/technetwork/java/javase/overview/index.html"
 
-    echo "Those software will be installed:" "${toInstall[@]}" "${toInstallCask[@]}"
-    read -rp "Let's do it now? [y/${C_BOLD}n${C_RESET}]: " install
-    if [ "$install" != "y" ]
-    then
-        e_bold "Install cancelled."
-        exit 1
-    fi
-
     # Install the Command Line Tools and the Homebrew Bottles
     for i in "${toInstall[@]}"
     do
-        e_bold "Installing ${C_FORE_BLUE}$i"
+        g_info "Installing $i"
         if [ "$i" == "brew" ]
         then
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
@@ -226,7 +247,7 @@ then
     # Install the Homebrew Casks
     for i in "${toInstallCask[@]}"
     do
-        e_bold "Installing ${C_FORE_BLUE}$i"
+        g_info "Installing $i"
         brew cask install "$i"
     done
 
@@ -237,7 +258,7 @@ then
     # Configure OpenInTerminal and OpenInEditor
     if [ -d "/Applications/OpenInEditor-Lite.app" ]
     then
-        e_bold "Configuring ${C_FORE_BLUE}OpenInEditor Lite"
+        g_info "Configuring OpenInEditor Lite"
         if [ -d "/Applications/MacVim.app" ]
         then
             defaults write wang.jianing.app.OpenInEditor-Lite OIT_EditorBundleIdentifier MacVim
@@ -251,7 +272,7 @@ then
     fi
     if [ -d "/Applications/OpenInTerminal-Lite.app" ]
     then
-        e_bold "Configuring ${C_FORE_BLUE}OpenInTerminal Lite"
+        g_info "Configuring OpenInTerminal Lite"
         if [ -d "/Applications/iTerm.app" ]
         then
             defaults write wang.jianing.app.OpenInTerminal-Lite OIT_TerminalBundleIdentifier iTerm
@@ -265,7 +286,7 @@ fi # if [[ $packages ]]
 if [[ $config -eq 1 ]]
 then
     # Configure Mac Appearance
-    e_bold "Configuring ${C_FORE_BLUE}Mac Appearance"
+    g_info "Configuring Mac Appearance"
     osascript -e 'tell application "System Preferences" to quit'
     osascript << EOF
     tell application "System Preferences"
@@ -322,7 +343,7 @@ if [[ $packages -eq 1 ]]
 then
     if [ -d "/Applications/iTerm.app" ]
     then
-        e_bold "Configuring ${C_FORE_BLUE}iTerm2"
+        g_info "Configuring iTerm2"
         /bin/bash -c "$(curl -fsSL https://iterm2.com/shell_integration/install_shell_integration.sh)"
         open one-dark.itermcolors
     fi
