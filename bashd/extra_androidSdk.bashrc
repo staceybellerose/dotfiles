@@ -23,8 +23,9 @@ done
 if [ -d "${ANDROID_HOME}" ]
 then
     PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
-    BUILD_TOOLS_VERSION=$(ls -1 ${ANDROID_HOME}/build-tools/ | sort | tail -n 1 | tr -d '\r\n')
-    PATH=${PATH}:${ANDROID_HOME}/build-tools/${BUILD_TOOLS_VERSION}
+    # shellcheck disable=SC2012
+    BUILD_TOOLS_VERSION=$(ls -1 "${ANDROID_HOME}/build-tools/" | sort | tail -n 1 | tr -d '\r\n')
+    PATH=${PATH}:${ANDROID_HOME}/build-tools/${BUILD_TOOLS_VERSION}:${ANDROID_HOME}/cmdline-tools/latest
     export PATH
 fi
 
@@ -35,7 +36,7 @@ adbd () {
     adb -s "$(get_device)" "$@"
 }
 
-function get_device() {
+get_device () {
     local -r devices=$(adb devices | grep device$)
     if [ "$(wc -l <<< "$devices")" -eq 1 ]
     then
@@ -56,7 +57,7 @@ function get_device() {
     fi
 }
 
-function logcat() {
+logcat () {
     local device
     device=$(get_device)
     if [ -z "$1" ]
