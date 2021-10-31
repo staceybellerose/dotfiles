@@ -299,7 +299,7 @@ mcd () {
 }
 # gets the user's default shell
 getShell () {
-	awk -F: '$1==u{print $7}' u="$(id -un)" /etc/passwd
+    awk -F: '$1==u{print $7}' u="$(id -un)" /etc/passwd
 }
 
 # taken from https://github.com/janmoesen/tilde/blob/master/.bash/commands

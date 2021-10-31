@@ -60,6 +60,6 @@ hideHiddenFiles () {
 }
 
 getShell () {
-	dscl . -read ~/ UserShell | sed 's/UserShell: //'
+    dscl . -read ~/ UserShell | sed 's/UserShell: //'
 }
 
