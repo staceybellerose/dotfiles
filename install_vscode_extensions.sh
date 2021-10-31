@@ -10,7 +10,7 @@ TMPDIR=${TMPDIR:-/tmp}
 
 (( installed=0 ))
 
-function detectVSCode() {
+detectVSCode () {
     if [ -d "/Applications/Visual Studio Code.app" ]
     then
         code="/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code"
@@ -29,7 +29,7 @@ function detectVSCode() {
     return 0
 }
 
-function installVSCodeExtension() {
+installVSCodeExtension () {
     ext=$1
     grep -q "$ext" "${TMPDIR}/${tmpfile}" &>/dev/null || {
         g_arrow "Installing $ext"
@@ -38,11 +38,11 @@ function installVSCodeExtension() {
     }
 }
 
-function installVSCodeCleanup() {
+installVSCodeCleanup () {
     rm "${TMPDIR}/${tmpfile}"
 }
 
-function installAllVSCodeExtensions() {
+installAllVSCodeExtensions () {
     # Install Visual Studio Code/codium extensions
     detectVSCode && {
         g_bold "Installing ${C_FORE_BLUE}VS Code/codium Extensions"

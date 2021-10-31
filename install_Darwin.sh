@@ -22,7 +22,7 @@ fi
 toInstall=()
 toInstallCask=()
 
-function initXCode() {
+initXCode () {
     if [[ -d "$('xcode-select' -print-path 2>/dev/null)" ]]
     then
         g_bold "Initializing XCode Command Line Tools"
@@ -35,7 +35,7 @@ function initXCode() {
     fi
 }
 
-function promptToInstall() {
+promptToInstall () {
     test_result=$?
     name=$1; url=$2; useCask=$3
     shift 3
@@ -81,50 +81,50 @@ function promptToInstall() {
     }
 }
 
-function checkInstall() {
+checkInstall () {
     cmd=$1; name=$2; url=$3
     type -P "$cmd" &> /dev/null
     promptToInstall "$name" "$url" "0" "$cmd"
 }
 
-function checkSubCommand() {
+checkSubCommand () {
     cmd=$1; subcommand=$2; name=$3; url=$4
     command -v "$subcommand" &> /dev/null
     promptToInstall "$name" "$url" "0" "$cmd"
 }
 
-function checkCask() {
+checkCask () {
     cask=$1; name=$2; cmd=$3; url=$4
     test -d "/Applications/$cmd"
     promptToInstall "$name" "$url" "1" "$cask"
 }
 
-function checkLibraryCask() {
+checkLibraryCask () {
     cask=$1; name=$2; cmd=$3; url=$4
     test -d "${HOME}/Library/$cmd"
     promptToInstall "$name" "$url" "1" "$cask"
 }
 
-function checkJava() {
+checkJava () {
     name=$1; version=$2; url=$3
     cask=("oracle-jdk" "oracle-jdk-javadoc")
     /usr/libexec/java_home -v "$version" &> /dev/null
     promptToInstall "$name" "$url" "1" "${cask[@]}"
 }
 
-function checkNvm() {
+checkNvm () {
     cmd=$1; name=$2; url=$3
     test -d "$HOME/.nvm"
     promptToInstall "$name" "$url" "0" "$cmd"
 }
 
-function checkFile() {
+checkFile () {
     cmd=$1; file=$2; name=$3; url=$4
     test -f "$file"
     promptToInstall "$name" "$url" "0" "$cmd"
 }
 
-function installFonts() {
+installFonts () {
     e_bold "Installing Fonts"
     mkdir -p "${HOME}/Library/Fonts"
     find ./fonts \( -iname "*.ttf" -o -iname "*.otf" \) -print0 | while IFS= read -r -d '' filename

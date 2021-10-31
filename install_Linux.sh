@@ -20,7 +20,7 @@ else
     CPOPT=-a
 fi
 
-function installFonts() {
+installFonts () {
     g_bold "Installing Fonts"
     mkdir -p "${HOME}/.fonts"
     for dir in fonts/*
@@ -38,7 +38,7 @@ function installFonts() {
     done
 }
 
-function installConfig() {
+installConfig () {
     g_bold "Installing Configuration Files"
     mkdir -p "${HOME}/.config"
     cp $CPOPT config/* "${HOME}/.config" && g_success "Installed config files" || g_error "Unable to install config files"
@@ -48,17 +48,17 @@ function installConfig() {
     sed -i -- "s:color_scheme_path=.*:color_scheme_path=${HOME}/.config/qt5ct/colors/one dark.conf:g" "${HOME}/.config/qt5ct/qt5ct.conf" && g_success "Updated QT5 config file" || g_error "Unable to update QT5 config file"
 }
 
-function isDebianDerivative() {
+isDebianDerivative () {
     which dpkg &> /dev/null
     return $?
 }
 
-function hasDebianPackage() {
+hasDebianPackage () {
     dpkg -s "$1" &> /dev/null
     return $?
 }
 
-function installDebianPackage() {
+installDebianPackage () {
     isDebianDerivative || return
     if hasDebianPackage "$1"
     then
@@ -70,7 +70,7 @@ function installDebianPackage() {
     fi
 }
 
-function installDebianPackages() {
+installDebianPackages () {
     isDebianDerivative || return
     g_bold "Installing Debian Packages"
     declare -a pkgs=(
@@ -113,12 +113,12 @@ function installDebianPackages() {
     done
 }
 
-function isRedHatDerivative() {
+isRedHatDerivative () {
     which rpm &> /dev/null
     return $?
 }
 
-function installRedHatPackages() {
+installRedHatPackages () {
     isRedHatDerivative || return
     g_bold "Installing Red Hat Packages"
     ## TODO add packages here as needed

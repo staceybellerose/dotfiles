@@ -7,7 +7,7 @@ arch=$(uname -s)
 machinearch=$(uname -m)
 TMPDIR=${TMPDIR:-/tmp}
 
-function setXcode() {
+setXcode () {
     # Don't run the xcode options unless on a Mac
     if [[ "${arch}" == "Darwin" ]]
     then
@@ -30,7 +30,7 @@ setXcode
 
 CPOPT=-av
 
-function help() {
+help () {
     cat <<EOF
 dotfiles installer - Stacey Adams - https://staceyadams.me/
 
@@ -58,7 +58,7 @@ line will take effect. The other capital letter options are ignored.
 EOF
 }
 
-function installBashd() {
+installBashd () {
     g_bold "Installing bashd files"
     mkdir -p "${HOME}/.bashd"
     grep -q "extra.bashrc" "${HOME}/.bash_profile" &> /dev/null && g_arrow "bash profile already configured" || {
@@ -80,19 +80,19 @@ function installBashd() {
     cp $CPOPT bashd/* "${HOME}/.bashd" && g_success "Installed bashd files" || g_error "Unable to install bashd files"
 }
 
-function installVim() {
+installVim () {
     g_bold "Installing vim files"
     mkdir -p "${HOME}/.vim"
     cp $CPOPT vim/* "${HOME}/.vim" && g_success "Installed vim files" || g_error "Unable to install vim files"
 }
 
-function installBin() {
+installBin () {
     g_bold "Installing bin files"
     mkdir -p "${HOME}/bin"
     cp $CPOPT bin/* "${HOME}/bin" && g_success "Installed bin files" || g_error "Unable to install bin files"
 }
 
-function installOSBin() {
+installOSBin () {
     [ -d "./bin_${arch}" ] && {
         g_bold "Installing OS-specific bin files"
         cp $CPOPT "./bin_${arch}/*" "${HOME}/bin" && g_success "Installed OS-specific bin files" || g_error "Unable to install OS-specific bin files"
@@ -100,7 +100,7 @@ function installOSBin() {
     } || g_info "No OS-specific bin files to install"
 }
 
-function installConfig() {
+installConfig () {
     g_bold "Installing configuration files"
     cp $CPOPT editorconfig "${HOME}" && g_success "Installed editorconfig file" || g_error "Unable to install editorconfig file"
     cp $CPOPT dircolors "${HOME}/.dircolors" && g_success "Installed dircolors file" || g_error "Unable to install dircolors file"
