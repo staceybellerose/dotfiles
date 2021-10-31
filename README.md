@@ -14,6 +14,9 @@ For partial installs, use the following command line options:
 | Option | Function |
 |:------:|:---------|
 |   -h   | Print the help text |
+|   -g   | Run in GUI mode (requires zenity in $PATH) |
+|   -y   | Answer Yes to all prompts |
+|   -a   | Enable Android Studio configuration changes |
 |   -c   | Suppress configuration changes |
 |   -f   | Suppress font installation |
 |   -p   | Suppress package updates |
