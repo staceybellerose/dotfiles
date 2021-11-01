@@ -65,6 +65,8 @@ If a font is dual licensed under the SIL OFL and another license, I have elected
 
 #### Fonts not licensed under the SIL OFL
 
+* Abelard, AuntJudy, Barbara Plump, Barbara Svelte, Carolingia, Cry Uncial, and Laramie are freely distributable Freeware.
+* Black Chancery is released into the public domain.
 * Charter is licensed under the Bitstream Charter permissive license.
 * Essays 1743 is licensed under the GNU Lesser General Public License (LGPL), Version 2.1.
 * ET Book and Sorts Mill Kis are licensed under the MIT License.

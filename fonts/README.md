@@ -4,6 +4,7 @@ Open Source fonts that I use for various purposes.
 
 | Font                              | Category    | Classification    | Equivalent To    | Google Fonts? |
 |:----------------------------------|:------------|:------------------|:-----------------|:-:|
+| Abelard<sup id="a1">[1](#f1)</sup>| script      | medieval          |                  | — |
 | [Accanthis ADF][adffonts]         | serif       | old-style         |Cloister Old Style| — |
 | [Alegreya][alegreya]              | serif       | old-style         |                  | Y |
 | [Alegreya SC][alegreya]           | serif       | old-style         |                  | Y |
@@ -11,13 +12,18 @@ Open Source fonts that I use for various purposes.
 | [Alegreya Sans SC][alegreyasans]  | sans-serif  | humanist          |                  | Y |
 | [Anonymous Pro][anonymous]        | monospaced  | grotesque (sans)  |                  | Y |
 | [Atomic Age][atomicage]           | serif       | glyphic, swashed  |                  | Y |
+| AuntJudy<sup>[1](#f1)</sup>       | historic    | uncial            |                  | — |
+| Barbara Plump<sup>[1](#f1)</sup>  | historic    | lombardic, uncial |                  | — |
+| Barbara Svelte<sup>[1](#f1)</sup> | historic    | lombardic, uncial |                  | — |
 | [Besley*][besley]                 | serif       | slab              | Clarendon        | Y |
 | [Besley Small Caps][besleysc]     | serif       | slab              | Clarendon        | — |
+| Black Chancery<sup id="a4">[4](#f4)</sup>|script| calligraphic      |                  | — |
 | [Bodoni*][bodoni]                 | serif       | didone            | Bodoni           | Y |
 | [Cabin][cabin]                    | sans-serif  | grotesque         |                  | Y |
 | [Cabin Sketch][cabinsketch]       | sans-serif  | grotesque         |                  | Y |
 | [Cantarell][cantarell]            | sans-serif  | humanist          |                  | Y |
 | [Cardo][cardo]                    | serif       | old-style         | Bembo            | Y |
+| Carolingia<sup id="a2">[2](#f2)</sup>| historic | carolingian       |                  | — |
 | [Cascadia Mono][cascadia]         | monospaced  | grotesque (sans)  |                  | — |
 | [Charter][charter]                | serif       | transitional      |                  | — |
 | [Chomsky][chomsky]                | blackletter | textualis         |                  | — |
@@ -27,6 +33,7 @@ Open Source fonts that I use for various purposes.
 | [Copse][copse]                    | serif       | slab              |                  | Y |
 | [Cormorant][cormorant]            | serif       | old-style         | Garamond         | Y |
 | [Crimson Pro][crimsonpro]         | serif       | old-style         |                  | Y |
+| [Cry Uncial][cryuncial]           | script      | historic, uncial  |                  | — |
 | [Dancing Script][dancing]         | script      | casual            |                  | Y |
 | [Domitian][domitian]              | serif       | old-style         | Palatino         | — |
 | [Droid Sans][droid]               | sans-serif  | humanist          |                  | — |
@@ -59,6 +66,7 @@ Open Source fonts that I use for various purposes.
 | [Junction][junction]              | sans-serif  | humanist          |                  | — |
 | [Justus][justus]                  | serif       | didone            | Walbaum          | — |
 | [KJV1611][kjv1611]                | blackletter | textualis         |                  | — |
+| Laramie<sup>[2](#f2)</sup>        | serif       | slab, western     |                  | — |
 | [Lato][lato]                      | sans-serif  | humanist          | Avenir           | Y |
 | [Libre Baskerville][lbaskerville] | serif       | transitional      | Baskerville      | Y |
 | [Libre Bodoni][lbodoni]           | serif       | didone            | Bodoni           | — |
@@ -68,9 +76,9 @@ Open Source fonts that I use for various purposes.
 | [Linden Hill][lindenhill]         | serif       | old-style         | Deepdene         | Y |
 | [Lobster][lobster]                | script      | italic, swashed   |                  | Y |
 | [Lobster Two][lobster]            | serif       | glyphic, swashed  |                  | Y |
-| Luxi Mono<sup id="a1">[Note 1](#f1)</sup> | monospaced |slab (serif)|                  | — |
-| Luxi Sans                         | sans-serif  | humanist          |                  | — |
-| Luxi Serif                        | serif       | didone            |                  | — |
+| Luxi Mono<sup id="a3">[3](#f3)</sup>| monospaced| slab (serif)      |                  | — |
+| Luxi Sans<sup>[3](#f3)</sup>      | sans-serif  | humanist          |                  | — |
+| Luxi Serif<sup>[3](#f3)</sup>     | serif       | didone            |                  | — |
 | [Merriweather][merriweather]      | serif       | slab              |                  | Y |
 | [Merriweather Sans][merrisans]    | sans-serif  | humanist          |                  | Y |
 | [Meslo LG][meslo]                 | monospaced  | grotesque (sans)  |                  | — |
@@ -97,7 +105,7 @@ Open Source fonts that I use for various purposes.
 | [Roboto Slab][robotoslab]         | serif       | slab              |                  | Y |
 | [Rokkitt][rokkitt]                | serif       | slab              | Rockwell         | Y |
 | [Sancreek][sancreek]              | serif       | western           |                  | Y |
-| [Smokum][smokum]                  | serif       | slab              | French Clarendon | Y |
+| [Smokum][smokum]                  | serif       | slab, western     | French Clarendon | Y |
 | [Sorts Mill Goudy][sortsgoudy]    | serif       | old-style         | Goudy Old Style  | Y |
 | [Sorts Mill Kis][sortskis]        | serif       | old-style         | Janson, Kis      | — |
 | [Source Code Pro][sourcecode]     | monospaced  | grotesque (sans)  |                  | Y |
@@ -116,6 +124,7 @@ Open Source fonts that I use for various purposes.
 | [Ubuntu][ubuntu]                  | sans-serif  | humanist          |                  | Y |
 | [Ubuntu Condensed][ubuntu]        | sans-serif  | humanist          |                  | Y |
 | [Ubuntu Mono][ubuntu]             | monospaced  | humanist (sans)   |                  | Y |
+| [Uncial Antiqua][uncialantiqua]   | script      | uncial modern     |                  | Y |
 | [URW Algiers][ghostpdl]           | serif       | glyphic           | Albertus, A028   | — |
 | [URW Antique Olive][ghostpdl]     | sans-serif  | humanist          |                  | — |
 | [URW C093][ghostpdl]              | script      | formal            | Coronet          | — |
@@ -124,9 +133,15 @@ Open Source fonts that I use for various purposes.
 | [URW U001][ghostpdl]              | sans-serif  | neo-grotesque     | Univers          | — |
 | [Zilla Slab][zilla]               | serif       | slab              | Museo Slab       | Y |
 
---
+### Notes
 
-<b id="f1">Note 1:</b> Luxi fonts are not Open Source, as they are not modifiable, but are freely distributable. See their license for further details. [↩](#a1 "Return to table")
+<b id="f1">1:</b> Judith Sutcliffe fonts (Abelard, AuntJudy, Barbara Plump, and Barbara Svelte) were released as freely distributable Freeware, and have no available source code. [↩](#a1 "Return to table")
+
+<b id="f2">2:</b> William Boyd fonts (Carolingia and Laramie) were released as freely distributable Freeware, and have no available source code. [↩](#a2 "Return to table")
+
+<b id="f3">3:</b> Luxi fonts are not Open Source, as they are not modifiable, but are freely distributable. See their license for further details. [↩](#a3 "Return to table")
+
+<b id="f4">4:</b> Black Chancery is Public Domain, and has no available source code. [↩](#a4 "Return to table")
 
 [adffonts]: https://arkandis.tuxfamily.org/adffonts.html
 [alegreya]: https://www.huertatipografica.com/en/fonts/alegreya-ht-pro
@@ -150,6 +165,7 @@ Open Source fonts that I use for various purposes.
 [copse]: https://fonts.google.com/specimen/Copse
 [cormorant]: https://github.com/CatharsisFonts/Cormorant
 [crimsonpro]: https://github.com/Fonthausen/CrimsonPro
+[cryuncial]: https://www.iconian.com/c.html
 [dancing]: https://github.com/impallari/DancingScript
 [domitian]: https://github.com/dbenjaminmiller/domitian
 [droid]: https://github.com/RPi-Distro/fonts-android
@@ -225,5 +241,6 @@ Open Source fonts that I use for various purposes.
 [tgtermes]: http://www.gust.org.pl/projects/e-foundry/tex-gyre/termes
 [trocchi]: https://github.com/vernnobile/TrocchiFont
 [ubuntu]: https://design.ubuntu.com/font/
+[uncialantiqua]: https://github.com/librefonts/uncialantiqua
 [xkcd]: http://xkcdsucks.blogspot.com/2009/03/xkcdsucks-is-proud-to-present-humor.html
 [zilla]: https://github.com/mozilla/zilla-slab
