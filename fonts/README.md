@@ -10,7 +10,7 @@ Open Source fonts that I use for various purposes.
 | [Alegreya SC][alegreya]           | serif       | old-style         |                  | Y |
 | [Alegreya Sans][alegreyasans]     | sans-serif  | humanist          |                  | Y |
 | [Alegreya Sans SC][alegreyasans]  | sans-serif  | humanist          |                  | Y |
-| [Anonymous Pro][anonymous]        | monospaced  | grotesque (sans)  |                  | Y |
+| [Anonymous Pro][anonymous]        | monospaced  | grotesk (sans)    |                  | Y |
 | [Atomic Age][atomicage]           | serif       | glyphic, swashed  |                  | Y |
 | AuntJudy<sup>[1](#f1)</sup>       | historic    | uncial            |                  | — |
 | Barbara Plump<sup>[1](#f1)</sup>  | historic    | lombardic, uncial |                  | — |
@@ -19,14 +19,15 @@ Open Source fonts that I use for various purposes.
 | [Besley Small Caps][besleysc]     | serif       | slab              | Clarendon        | — |
 | Black Chancery<sup id="a4">[4](#f4)</sup>|script| calligraphic      |                  | — |
 | [Bodoni*][bodoni]                 | serif       | didone            | Bodoni           | Y |
-| [Cabin][cabin]                    | sans-serif  | grotesque         |                  | Y |
-| [Cabin Sketch][cabinsketch]       | sans-serif  | grotesque         |                  | Y |
+| [Cabin][cabin]                    | sans-serif  | grotesk           |                  | Y |
+| [Cabin Sketch][cabinsketch]       | sans-serif  | grotesk           |                  | Y |
 | [Cantarell][cantarell]            | sans-serif  | humanist          |                  | Y |
 | [Cardo][cardo]                    | serif       | old-style         | Bembo            | Y |
 | Carolingia<sup id="a2">[2](#f2)</sup>| historic | carolingian       |                  | — |
-| [Cascadia Mono][cascadia]         | monospaced  | grotesque (sans)  |                  | — |
+| [Cascadia Mono][cascadia]         | monospaced  | grotesk (sans)    |                  | — |
 | [Charter][charter]                | serif       | transitional      |                  | — |
 | [Chomsky][chomsky]                | blackletter | textualis         |                  | — |
+| [Cinzel][cinzel]                  | serif       | incised           | Trajan Pro       | Y |
 | [Coelacanth][coelacanth]          | serif       | old-style         | Centaur          | — |
 | [Cookie][cookie]                  | script      | informal          |                  | Y |
 | [Copperplate CC][copperplate]     | serif       | wedge             | Copperplate      | — |
@@ -43,9 +44,10 @@ Open Source fonts that I use for various purposes.
 | [Droid Serif][droid]              | serif       | slab              |                  | — |
 | [EB Garamond][eb]                 | serif       | old-style         | Garamond         | Y |
 | [Elusive Icons][elusive]          | dingbats    | —                 |                  | — |
+| [Enriqueta][enriqueta]            | serif       | slab              | Rockwell         | Y |
 | [Essays 1743][essays]             | serif       | old-style         |                  | — |
 | [ET Book][etbook]                 | serif       | old-style         | Bembo            | — |
-| [Fantasque Sans Mono][fantasque]  | monospaced  | grotesque (sans)  |                  | — |
+| [Fantasque Sans Mono][fantasque]  | monospaced  | grotesk (sans)    |                  | — |
 | [Fanwood][fanwood]                | serif       | old-style         | Fairfield        | Y |
 | [Fira Mono][fira]                 | monospaced  | humanist (sans)   |                  | Y |
 | [Fira Sans][fira]                 | sans-serif  | humanist          |                  | Y |
@@ -58,7 +60,7 @@ Open Source fonts that I use for various purposes.
 | [Hack][hack]                      | monospaced  | humanist (sans)   |                  | — |
 | [Humor Sans][xkcd]                | script      | informal          |                  | — |
 | [Inconsolata][inconsolata]        | monospaced  | humanist (sans)   |                  | Y |
-| [Inter][inter]                    | monospaced  |neo-grotesque (sans)|                 | Y |
+| [Inter][inter]                    | monospaced  | neo-grotesk (sans)|                  | Y |
 | [Isabella][isabella]              | blackletter | textualis         |                  | — |
 | [Josefin Sans][josefinsans]       | sans-serif  | geometric         |                  | Y |
 | [Josefin Slab][josefinslab]       | serif       | slab              |                  | Y |
@@ -71,7 +73,7 @@ Open Source fonts that I use for various purposes.
 | [Libre Baskerville][lbaskerville] | serif       | transitional      | Baskerville      | Y |
 | [Libre Bodoni][lbodoni]           | serif       | didone            | Bodoni           | — |
 | [Libre Caslon][lcaslon]           | serif       | old-style         | Caslon           | Y |
-| [Libre Franklin][lfranklin]       | sans-serif  | grotesque         | Franklin Gothic  | Y |
+| [Libre Franklin][lfranklin]       | sans-serif  | grotesk           | Franklin Gothic  | Y |
 | [Limelight][limelight]            | sans-serif  | geometric         | Broadway         | Y |
 | [Linden Hill][lindenhill]         | serif       | old-style         | Deepdene         | Y |
 | [Lobster][lobster]                | script      | italic, swashed   |                  | Y |
@@ -81,13 +83,14 @@ Open Source fonts that I use for various purposes.
 | Luxi Serif<sup>[3](#f3)</sup>     | serif       | didone            |                  | — |
 | [Merriweather][merriweather]      | serif       | slab              |                  | Y |
 | [Merriweather Sans][merrisans]    | sans-serif  | humanist          |                  | Y |
-| [Meslo LG][meslo]                 | monospaced  | grotesque (sans)  |                  | — |
+| [Meslo LG][meslo]                 | monospaced  | grotesk (sans)    |                  | — |
 | [Michroma][michroma]              | sans-serif  | geometric         | Eurostile        | Y |
 | [Milonga][milonga]                | serif       | swashed           |                  | Y |
 | [Miltonian][miltonian]            | serif       | swashed           |                  | Y |
-| [Monoid][monoid]                  | monospaced  | grotesque (sans)  |                  | — |
-| [Mononoki][mononoki]              | monospaced  | grotesque (sans)  |                  | — |
+| [Monoid][monoid]                  | monospaced  | grotesk (sans)    |                  | — |
+| [Mononoki][mononoki]              | monospaced  | grotesk (sans)    |                  | — |
 | [Montserrat][montserrat]          | sans-serif  | geometric         | Gotham           | Y |
+| [Nunito][nunito]                  | sans-serif  | humanist    | Avenir, Gotham Rounded | Y |
 | [Open Baskerville][obaskerville]  | serif       | transitional      | Baskerville      | — |
 | [Orbitron][orbitron]              | sans-serif  | geometric         | Bank Gothic      | Y |
 | [Ornements ADF][adffonts]         | dingbats    | —                 |                  | — |
@@ -97,26 +100,26 @@ Open Source fonts that I use for various purposes.
 | [Quaerite Regnum Dei][quaerite]   | blackletter | rotunda           |                  | — |
 | [Quicksand][quicksand]            | sans-serif  | geometric         |                  | Y |
 | [Radley][radley]                  | serif       | old-style         |                  | Y |
-| [Raleway][raleway]                | sans-serif  | neo-grotesque     |                  | Y |
+| [Raleway][raleway]                | sans-serif  | neo-grotesk       |                  | Y |
 | [Redacted][redacted]              | nonsense    | —                 |                  | — |
-| [Roboto][roboto]                  | sans-serif  | neo-grotesque     | Helvetica Neue   | Y |
-| [Roboto Condensed][roboto]        | sans-serif  | neo-grotesque     | Helvetica Neue   | Y |
-| [Roboto Mono][robotomono]         | monospaced  |neo-grotesque (sans)|                 | Y |
+| [Roboto][roboto]                  | sans-serif  | neo-grotesk       | Helvetica Neue   | Y |
+| [Roboto Condensed][roboto]        | sans-serif  | neo-grotesk       | Helvetica Neue   | Y |
+| [Roboto Mono][robotomono]         | monospaced  | neo-grotesk (sans)|                  | Y |
 | [Roboto Slab][robotoslab]         | serif       | slab              |                  | Y |
 | [Rokkitt][rokkitt]                | serif       | slab              | Rockwell         | Y |
 | [Sancreek][sancreek]              | serif       | western           |                  | Y |
 | [Smokum][smokum]                  | serif       | slab, western     | French Clarendon | Y |
 | [Sorts Mill Goudy][sortsgoudy]    | serif       | old-style         | Goudy Old Style  | Y |
 | [Sorts Mill Kis][sortskis]        | serif       | old-style         | Janson, Kis      | — |
-| [Source Code Pro][sourcecode]     | monospaced  | grotesque (sans)  |                  | Y |
-| [Source Sans Pro][sourcesans]     | sans-serif  | grotesque         |                  | Y |
+| [Source Code Pro][sourcecode]     | monospaced  | grotesk (sans)    |                  | Y |
+| [Source Sans Pro][sourcesans]     | sans-serif  | grotesk           |                  | Y |
 | [Source Serif Pro][sourceserif]   | serif       | transitional slab | Charter          | Y |
 | [Spartan][spartan]                | sans-serif  | geometric         | Futura           | Y |
 | [TeX Gyre Adventor][tgadventor]   | sans-serif  | geometric         | Avant Garde      | — |
 | [TeX Gyre Bonum][tgbonum]         | serif       | transitional      | Bookman          | — |
 | [TeX Gyre Chorus][tgchorus]       | script      | formal            | Zapf Chancery    | — |
 | [TeX Gyre Cursor][tgcursor]       | monospaced  | slab (serif)      | Courier          | — |
-| [TeX Gyre Heros][tgheros]         | sans-serif  | neo-grotesque     | Helvetica        | — |
+| [TeX Gyre Heros][tgheros]         | sans-serif  | neo-grotesk       | Helvetica Neue   | — |
 | [TeX Gyre Pagella][tgpagella]     | sans-serif  | old-style         | Palatino         | — |
 | [TeX Gyre Schola][tgschola]       | serif       | transitional      |Century Schoolbook| — |
 | [TeX Gyre Termes][tgtermes]       | sans-serif  | transitional      | Times Roman      | — |
@@ -130,7 +133,7 @@ Open Source fonts that I use for various purposes.
 | [URW C093][ghostpdl]              | script      | formal            | Coronet          | — |
 | [URW Classico][ghostpdl]          | sans-serif  | humanist          | Optima           | — |
 | [URW D050000L][ghostpdl]          | dingbats    | —                 | Zapf Dingbats    | — |
-| [URW U001][ghostpdl]              | sans-serif  | neo-grotesque     | Univers          | — |
+| [URW U001][ghostpdl]              | sans-serif  | neo-grotesk       | Univers          | — |
 | [Zilla Slab][zilla]               | serif       | slab              | Museo Slab       | Y |
 
 ### Notes
@@ -159,6 +162,7 @@ Open Source fonts that I use for various purposes.
 [cascadia]: https://github.com/microsoft/cascadia-code
 [charter]: https://practicaltypography.com/charter.html
 [chomsky]: https://github.com/ctrlcctrlv/chomsky
+[cinzel]: https://github.com/NDISCOVER/Cinzel
 [coelacanth]: https://github.com/Fuzzypeg/Coelacanth
 [cookie]: https://fonts.google.com/specimen/Cookie
 [copperplate]: https://github.com/CowboyCollective/CopperplateCC
@@ -172,6 +176,7 @@ Open Source fonts that I use for various purposes.
 [droiddot]: https://github.com/AlbertoDorado/droid-sans-mono-zeromod
 [eb]: https://github.com/octaviopardo/EBGaramond12
 [elusive]: https://github.com/dovy/elusive-icons
+[enriqueta]: https://github.com/vv-monsalve/Enriqueta_2019
 [essays]: https://www.thibault.org/fonts/essays/
 [etbook]: https://github.com/edwardtufte/et-book
 [fantasque]: https://github.com/belluzj/fantasque-sans
@@ -209,6 +214,7 @@ Open Source fonts that I use for various purposes.
 [monoid]: https://github.com/larsenwork/monoid
 [mononoki]: https://github.com/madmalik/mononoki
 [montserrat]: https://github.com/JulietaUla/Montserrat
+[nunito]: https://github.com/googlefonts/nunito
 [obaskerville]: https://github.com/klepas/open-baskerville
 [orbitron]: https://github.com/theleagueof/orbitron
 [petit]: https://fonts.google.com/specimen/Petit+Formal+Script
