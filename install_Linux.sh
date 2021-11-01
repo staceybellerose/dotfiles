@@ -36,6 +36,7 @@ installFonts () {
             fi
         fi
     done
+    fc-cache
 }
 
 installConfig () {

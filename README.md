@@ -72,7 +72,7 @@ If a font is dual licensed under the SIL OFL and another license, I have elected
 * ET Book and Sorts Mill Kis are licensed under the MIT License.
 * Accanthis ADF, FPL Neu, Gillius ADF, and Ornements ADF are licensed under the GNU General Public License (GPL), Version 2 or later, with font exception.
 * Luxi fonts are licensed under the Luxi font license.
-* Droid Sans, Droid Sans Mono, Droid Sans Mono Dotted, Droid Sans Mono Slashed, Droid Serif, Meslo LG, Roboto, Roboto Condensed, Roboto Mono, Roboto Slab, and Smokum are licensed under the Apache License, Version 2.0.
+* Caladea, Droid Sans, Droid Sans Mono, Droid Sans Mono Dotted, Droid Sans Mono Slashed, Droid Serif, Meslo LG, Roboto, Roboto Condensed, Roboto Mono, Roboto Slab, and Smokum are licensed under the Apache License, Version 2.0.
 * TeX Gyre fonts are licensed under the GUST Font License.
 * Ubuntu, Ubuntu Condensed, and Ubuntu Mono are licensed under the Ubuntu Font License, Version 1.0.
 * URW fonts are licensed under the Aladdin Free Public License.
