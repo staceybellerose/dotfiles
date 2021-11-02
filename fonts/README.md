@@ -11,6 +11,7 @@ Open Source fonts that I use for various purposes.
 | [Alegreya Sans][alegreyasans]     | sans-serif  | humanist          |                  | [link][g03] |
 | [Alegreya Sans SC][alegreyasans]  | sans-serif  | humanist          |                  | [link][g04] |
 | [Anonymous Pro][anonymous]        | monospaced  | grotesk (sans)    |                  | [link][g05] |
+| [Arimo][noto]                     | sans-serif  | neo-grotesk       | Arial            | [link][g74] |
 | [Atomic Age][atomicage]           | serif       | glyphic, swashed  |                  | [link][g06] |
 | AuntJudy<sup>[1](#f1)</sup>       | historic    | uncial            |                  | — |
 | Barbara Plump<sup>[1](#f1)</sup>  | historic    | lombardic, uncial |                  | — |
@@ -35,6 +36,7 @@ Open Source fonts that I use for various purposes.
 | [Copperplate CC][copperplate]     | serif       | wedge             | Copperplate      | — |
 | [Copse][copse]                    | serif       | slab              |                  | [link][g15] |
 | [Cormorant][cormorant]            | serif       | old-style         | Garamond         | [link][g16] |
+| [Cousine][noto]                   | monospaced  | neo-grotesk (sans)| Courier New      | [link][g75] |
 | [Crimson Pro][crimsonpro]         | serif       | old-style         |                  | [link][g17] |
 | [Cry Uncial][cryuncial]           | script      | historic, uncial  |                  | — |
 | [Dancing Script][dancing]         | script      | casual            |                  | [link][g18] |
@@ -128,6 +130,7 @@ Open Source fonts that I use for various purposes.
 | [TeX Gyre Pagella][tgpagella]     | sans-serif  | old-style         |Palatino, Palladio| — |
 | [TeX Gyre Schola][tgschola]       | serif       | transitional      |Century Schoolbook| — |
 | [TeX Gyre Termes][tgtermes]       | sans-serif  | transitional      |Times Roman, Nimbus Roman No9| — |
+| [Tinos][noto]                     | serif       | transitional      | Times New Roman  | [link][g76] |
 | [Trocchi][trocchi]                | serif       | slab              |                  | [link][g67] |
 | [Ubuntu][ubuntu]                  | sans-serif  | humanist          |                  | [link][g68] |
 | [Ubuntu Condensed][ubuntu]        | sans-serif  | humanist          |                  | [link][g69] |
@@ -221,6 +224,7 @@ Open Source fonts that I use for various purposes.
 [monoid]: https://github.com/larsenwork/monoid
 [mononoki]: https://github.com/madmalik/mononoki
 [montserrat]: https://github.com/JulietaUla/Montserrat
+[noto]: https://github.com/googlefonts/noto-fonts
 [nunito]: https://github.com/googlefonts/nunito
 [obaskerville]: https://github.com/klepas/open-baskerville
 [orbitron]: https://github.com/theleagueof/orbitron
@@ -330,3 +334,6 @@ Open Source fonts that I use for various purposes.
 [g71]: https://fonts.google.com/specimen/Uncial+Antiqua
 [g72]: https://fonts.google.com/specimen/Zilla+Slab
 [g73]: https://fonts.google.com/specimen/Playfair+Display+SC
+[g74]: https://fonts.google.com/specimen/Arimo
+[g75]: https://fonts.google.com/specimen/Cousine
+[g76]: https://fonts.google.com/specimen/Tinos
