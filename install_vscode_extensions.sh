@@ -45,7 +45,7 @@ installVSCodeCleanup () {
 installAllVSCodeExtensions () {
     # Install Visual Studio Code/codium extensions
     detectVSCode && {
-        g_bold "Installing ${C_FORE_BLUE}VS Code/codium Extensions"
+        g_bold "Installing VS Code/codium Extensions"
         # General Extensions
         installVSCodeExtension ms-vsliveshare.vsliveshare # Live Share
         installVSCodeExtension CoenraadS.bracket-pair-colorizer-2 # Bracket Pair Colorizer 2

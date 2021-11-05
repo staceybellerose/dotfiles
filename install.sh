@@ -307,14 +307,15 @@ if [[ $vscode -eq 1 ]]
 then
     . ./install_vscode_extensions.sh $gui
 fi
-if [[ $packages -eq 1 ]]
-then
-    . ./install_Python3.sh $gui $yes
-fi
 
 # Process OS-specific files
 [ -f "./install_${arch}.sh" ] && . "./install_${arch}.sh" $packages $fonts $config $xcode $gui $yes
 [ -f "./install_${arch}_${machinearch}.sh" ] && . "./install_${arch}_${machinearch}.sh" $packages $fonts $config $xcode $gui $yes
+
+if [[ $packages -eq 1 ]]
+then
+    . ./install_Python3.sh $gui $yes
+fi
 
 g_success "Done!"
 if [[ $gui -eq 1 ]]
