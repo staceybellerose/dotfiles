@@ -109,6 +109,12 @@ installAllVSCodeExtensions () {
         installVSCodeExtension ms-python.python # Python Extension
         installVSCodeExtension ms-python.vscode-pylance # Pylance Extension
 
+        # Database Extensions
+        installVSCodeExtension alexcvzz.vscode-sqlite # SQLite Databases
+        installVSCodeExtension adpyke.vscode-sql-formatter # SQL Formatter
+        installVSCodeExtension bajdzis.vscode-database # mysql, postgres database support
+        installVSCodeExtension mtxr.sqltools # Database management tools
+
         # Misc Extensions
         installVSCodeExtension rafaelmaiolla.diff # diff syntax highlighting
         installVSCodeExtension fabiospampinato.vscode-diff # diff file comparator
@@ -116,11 +122,13 @@ installAllVSCodeExtensions () {
         installVSCodeExtension yzhang.markdown-all-in-one # Markdown All in One
         installVSCodeExtension DavidAnson.vscode-markdownlint # Markdown Lint
         installVSCodeExtension dunstontc.viml # vim syntax highlighting
-        installVSCodeExtension alexcvzz.vscode-sqlite # SQLite Databases
         installVSCodeExtension ionutvmi.path-autocomplete # Path Autocomplete
-        installVSCodeExtension adpyke.vscode-sql-formatter # SQL Formatter
         installVSCodeExtension mikestead.dotenv # DotENV
         installVSCodeExtension ms-toolsai.jupyter # Jupyter Notebook support
+        installVSCodeExtension wayou.vscode-todo-highlight # TO DO highlight
+        installVSCodeExtension Gruntfuggly.todo-tree # TO DO tree in explorer pane
+        installVSCodeExtension ExodiusStudios.comment-anchors # Comment anchors
+        installVSCodeExtension jerrygoyal.shortcut-menu-bar # Add buttons to editor menu bar (since no toolbar)
 
         # Themes
         installVSCodeExtension zhuangtongfa.material-theme # One Dark Pro

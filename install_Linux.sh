@@ -61,13 +61,11 @@ hasDebianPackage () {
 
 installDebianPackage () {
     isDebianDerivative || return
-    if hasDebianPackage "$1"
+    if ! hasDebianPackage "$1"
     then
-        g_arrow "$1 is already installed"
-    else
         g_info "Installing package $1"
         sudo apt-get install "$1"
-        hasDebianPackage "$1" && e_success "$1 successfully installed" || e_error "$1 not installed"
+        hasDebianPackage "$1" && g_success "$1 successfully installed" || g_error "$1 not installed"
     fi
 }
 
@@ -90,6 +88,7 @@ installDebianPackages () {
     do
         if hasDebianPackage "$pkg"
         then
+            g_success "$pkg is already installed"
             install=n
         elif [[ $yes -eq 1 ]]
         then

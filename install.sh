@@ -200,11 +200,13 @@ then
     if [[ $fonts -eq 1 ]] ; then boolfonts=TRUE ; else boolfonts=FALSE ; fi
     if [[ $packages -eq 1 ]] ; then boolpackages=TRUE ; else boolpackages=FALSE ; fi
     if [[ $vscode -eq 1 ]] ; then boolvscode=TRUE ; else boolvscode=FALSE ; fi
-    if [[ $xcode -eq 1 ]] ; then boolxcode=TRUE ; else boolxcode=FALSE ; fi
+    if [ "$arch" = "Darwin" ] ; then
+        if [[ $xcode -eq 1 ]] ; then boolxcode=TRUE ; else boolxcode=FALSE ; fi
+    fi
     if [[ $android -eq 1 ]] ; then boolAndroid=TRUE ; else boolAndroid=FALSE ; fi
     if [[ $only -eq 1 ]] ; then boolOnly=TRUE ; else boolOnly=FALSE ; fi
     # shellcheck disable=SC2046
-    options=$(zenity --list --checklist --multiple --width=400 --height=250 \
+    options=$(zenity --list --checklist --multiple --width=400 --height=300 \
         --title="$header" --window-icon=./installer.svg \
         --text="Select the options to install" \
         --column="Install" --column="Option" \
@@ -212,8 +214,7 @@ then
         "$boolfonts" "Fonts" \
         "$boolpackages" "Package Updates" \
         "$boolvscode" "VS Code Extensions" \
-        $(test "${arch}" == "Darwin" && echo "$boolxcode") \
-        $(test "${arch}" == "Darwin" && echo \"XCode Initialization\") \
+        ${boolxcode:+ $boolxcode "XCode Initialization"} \
         "$boolAndroid" "Enable Android Studio Configuration Changes" \
         "$boolOnly" "Only install selected")
     result=$?
@@ -305,6 +306,10 @@ fi
 if [[ $vscode -eq 1 ]]
 then
     . ./install_vscode_extensions.sh $gui
+fi
+if [[ $packages -eq 1 ]]
+then
+    . ./install_Python3.sh $gui $yes
 fi
 
 # Process OS-specific files

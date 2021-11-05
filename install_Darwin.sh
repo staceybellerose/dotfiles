@@ -35,6 +35,10 @@ initXCode () {
     fi
 }
 
+getShell () {
+    dscl . -read ~/ UserShell | sed 's/UserShell: //'
+}
+
 promptToInstall () {
     test_result=$?
     name=$1; url=$2; useCask=$3
@@ -62,6 +66,8 @@ promptToInstall () {
                     elif [[ $rc -eq 0 ]]
                     then
                         install=y
+                    else
+                        install=n
                     fi
                 fi
             fi
@@ -124,6 +130,16 @@ checkFile () {
     promptToInstall "$name" "$url" "0" "$cmd"
 }
 
+checkBash () {
+    # If default shell is /bin/bash:
+    #   it was provided by Apple and is an old version
+    #   install the latest version from Homebrew
+    cmd="bash"; name="bash"; url="https://www.gnu.org/software/bash/"
+    shell=$(getShell)
+    [ "$shell" != "/bin/bash" ]
+    promptToInstall "$name" "$url" "0" "$cmd"
+}
+
 installFonts () {
     e_bold "Installing Fonts"
     mkdir -p "${HOME}/Library/Fonts"
@@ -153,6 +169,7 @@ then
     # Command Line Tools
     checkInstall brew "Homebrew" "https://brew.sh/"
     checkInstall rvm "Ruby Version Manager (rvm)" "https://rvm.io/"
+    checkBash
 
     # Homebrew Bottles
     checkSubCommand coreutils gecho "Core Utilities" "https://www.gnu.org/software/coreutils"
@@ -179,9 +196,15 @@ then
     checkInstall python3 "python3" "https://www.python.org/"
     checkInstall jupyter "jupyter" "https://jupyter.org/"
     checkInstall zenity "zenity" "https://wiki.gnome.org/Projects/Zenity"
+    checkInstall htop "htop" "https://htop.dev/"
+    checkInstall archey "archey4" "https://github.com/HorlogeSkynet/archey4"
+    checkInstall speedtest-cli "speedtest-cli" "https://github.com/sivel/speedtest-cli"
+    checkInstall tree "tree" "http://mama.indstate.edu/users/ice/tree/"
+    checkInstall dockutil "dockutil" "https://github.com/kcrawford/dockutil"
     checkFile bash-completion "/usr/local/etc/profile.d/bash_completion.sh" "Bash Completion" "https://salsa.debian.org/debian/bash-completion"
 
     # Homebrew Casks
+    checkCask android-file-transfer "Android File Transfer" "Android File Transfer.app" "https://www.android.com/filetransfer/"
     checkCask android-studio "Android Studio" "Android Studio.app" "https://developer.android.com/studio"
     checkCask atom "Atom" "Atom.app" "https://atom.io/"
     checkCask balenaetcher "balena Etcher" "balenaEtcher.app" "https://www.balena.io/etcher/"
@@ -197,20 +220,25 @@ then
     checkCask fork "Git-Fork" "Fork.app" "https://git-fork.com/"
     checkCask inkscape "Inkscape" "Inkscape.app" "https://inkscape.org/"
     checkCask iterm2 "iTerm2" "iTerm.app" "https://www.iterm2.com/"
+    checkCask libreoffice "LibreOffice" "LibreOffice.app" "https://www.libreoffice.org/"
     checkCask macdown "MacDown" "MacDown.app" "https://macdown.uranusjr.com/"
     checkCask macvim "MacVim" "MacVim.app" "https://github.com/macvim-dev/macvim"
+    checkCask mysqlworkbench "MySQL Workbench" "MySQLWorkbench.app" "https://www.mysql.com/products/workbench/"
+    checkCask onedrive "OneDrive" "OneDrive.app" "https://onedrive.live.com/"
     checkCask openinterminal-lite "OpenInTerminal Lite" "OpenInTerminal-Lite.app" "https://github.com/Ji4n1ng/OpenInTerminal"
     checkCask openineditor-lite "OpenInEditor Lite" "OpenInEditor-Lite.app" "https://github.com/Ji4n1ng/OpenInTerminal"
+    checkCask pencil "Pencil" "Pencil.app" "https://pencil.evolus.vn/"
     checkCask postman "Postman" "Postman.app" "https://www.postman.com/"
     checkCask powershell "PowerShell Core" "PowerShell.app" "https://microsoft.com/PowerShell"
     checkCask projectlibre "Project Libre" "ProjectLibre.app" "https://www.projectlibre.com/"
     checkCask pycharm-ce "PyCharm Community Edition" "PyCharm CE.app" "https://www.jetbrains.com/pycharm/"
     checkCask scribus "Scribus" "Scribus.app" "https://www.scribus.net/"
+    checkCask spotify "Spotify" "Spotify.app" "https://www.spotify.com/"
     checkCask the-unarchiver "The Unarchiver" "The Unarchiver.app" "https://theunarchiver.com/"
     checkCask thunderbird "Mozilla Thunderbird" "Thunderbird.app" "https://www.thunderbird.net/en-US/"
     checkCask visual-studio-code "Visual Studio Code" "Visual Studio Code.app" "https://code.visualstudio.com/"
     checkCask vlc "VLC Media Player" "VLC.app" "https://www.videolan.org/vlc/"
-    checkCask zoomus "Zoom.us" "zoom.us.app" "https://www.zoom.us/"
+    checkCask zoom "Zoom" "zoom.us.app" "https://www.zoom.us/"
     checkLibraryCask qlcolorcode "QuickLook CodeFormatter plugin" "QuickLook/QLColorCode.qlgenerator" "https://github.com/anthonygelibert/QLColorCode"
     checkLibraryCask qlmarkdown "QuickLook Markdown plugin" "QuickLook/QLMarkdown.qlgenerator" "https://github.com/toland/qlmarkdown"
     checkLibraryCask qlprettypatch "QuickLook PrettyPatch plugin" "QuickLook/QLPrettyPatch.qlgenerator" "https://github.com/anthonygelibert/QLColorCode"
@@ -221,16 +249,25 @@ then
 
     checkJava "Oracle JDK" "1.8" "https://www.oracle.com/technetwork/java/javase/overview/index.html"
 
+    # if we aren't installing brew, make sure we update it
+    if [[ ! " ${toInstall[*]} " =~ " brew " ]]
+    then
+        g_info "Updating Homebrew"
+        brew update -q
+        brew upgrade -q
+        brew cleanup -q
+    fi
+
     # Install the Command Line Tools and the Homebrew Bottles
     for i in "${toInstall[@]}"
     do
         g_info "Installing $i"
         if [ "$i" == "brew" ]
         then
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-            brew doctor
-            brew update
-            brew upgrade
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+            brew doctor -q
+            brew update -q
+            brew upgrade -q
         elif [ "$i" == "rvm" ]
         then
             curl -sSL https://get.rvm.io | bash -s stable --ruby --rails
@@ -240,7 +277,7 @@ then
         then
             /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh)"
         else
-            brew install "$i"
+            brew install -q "$i"
         fi
     done
 
@@ -248,7 +285,24 @@ then
     for i in "${toInstallCask[@]}"
     do
         g_info "Installing $i"
-        brew cask install "$i"
+        brew cask install -q "$i"
+    done
+
+    # Add items to dock if not already present
+    declare -a dockItems=(
+        "Google Chrome"
+        "Visual Studio Code"
+        "Android Studio"
+        "CotEditor"
+        "MacDown"
+        "Fork"
+        "Postman"
+        "Spotify"
+        "iTerm"
+    )
+    for item in "${dockItems[@]}"
+    do
+        (dockutil --find "$item" "$HOME" || dockutil --add "/Applications/$item.app") &> /dev/null
     done
 
     # Add NPM Packages

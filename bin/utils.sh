@@ -83,7 +83,7 @@ g_arrow() {
 g_success() {
     if [[ $gui -eq 1 ]]
     then
-        echo "#" ✔ "$@" >&${COPROC[1]}
+        echo "#" ✓ "$@" >&${COPROC[1]}
     fi
     # always send the message to STDERR
     >&2 e_success "$@"
@@ -91,7 +91,7 @@ g_success() {
 g_error() {
     if [[ $gui -eq 1 ]]
     then
-        echo "#" ✖ "$@" >&${COPROC[1]}
+        echo "#" ✗ "$@" >&${COPROC[1]}
     fi
     # always send the error to STDERR
     >&2 e_error "$@"
@@ -99,7 +99,7 @@ g_error() {
 g_warning() {
     if [[ $gui -eq 1 ]]
     then
-        echo "# !" "$@" >&${COPROC[1]}
+        echo "#" ! "$@" >&${COPROC[1]}
     fi
     # always send the warning to STDERR
     e_warning "$@"
