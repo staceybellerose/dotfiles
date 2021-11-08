@@ -54,7 +54,7 @@ installAllVSCodeExtensions () {
         installVSCodeExtension eriklynd.json-tools # JSON Tools
         installVSCodeExtension DotJoshJohnson.xml # XML Tools
         installVSCodeExtension redhat.vscode-yaml # YAML
-        installVSCodeExtension eamodio.gitlens # Git Lens
+        # installVSCodeExtension eamodio.gitlens # Git Lens
         installVSCodeExtension ms-azuretools.vscode-docker # Docker
         installVSCodeExtension aaron-bond.better-comments # Better Comments
         installVSCodeExtension wmaurer.change-case # Change Case

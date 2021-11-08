@@ -50,7 +50,7 @@ installConfig () {
 }
 
 isDebianDerivative () {
-    which dpkg &> /dev/null
+    type -P dpkg &> /dev/null
     return $?
 }
 
@@ -219,7 +219,7 @@ installDebianPackages () {
 }
 
 isRedHatDerivative () {
-    which rpm &> /dev/null
+    type -P rpm &> /dev/null
     return $?
 }
 

@@ -206,7 +206,7 @@ then
     if [[ $android -eq 1 ]] ; then boolAndroid=TRUE ; else boolAndroid=FALSE ; fi
     if [[ $only -eq 1 ]] ; then boolOnly=TRUE ; else boolOnly=FALSE ; fi
     # shellcheck disable=SC2046
-    options=$(zenity --list --checklist --multiple --width=400 --height=300 \
+    options=$(zenity --list --checklist --multiple --width=450 --height=300 \
         --title="$header" --window-icon=./installer.svg \
         --text="Select the options to install" \
         --column="Install" --column="Option" \
