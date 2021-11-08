@@ -22,13 +22,6 @@ export MANPAGER="less -X"
 export EDITOR=vi
 export PAGER=less
 
-# append to the history file, don't overwrite it
-shopt -s histappend
-
-# Increase Bash history size. Allow 32³ entries; the default is 500.
-export HISTSIZE='32768'
-export HISTFILESIZE="${HISTSIZE}"
-
 # Load platform-specific paths
 
 [ -f "$HOME/.bashd/path_$arch.bashrc" ] && . "$HOME/.bashd/path_$arch.bashrc"
@@ -62,13 +55,17 @@ alias du='du -h'
 alias df='df -h'
 
 # Case-insensitive globbing (used in pathname expansion)
-shopt -s nocaseglob;
+shopt -s nocaseglob
 
 # Append to the Bash history file, rather than overwriting it
-shopt -s histappend;
+shopt -s histappend
+
+# Increase Bash history size. Allow 32³ entries; the default is 500.
+export HISTSIZE='32768'
+export HISTFILESIZE="${HISTSIZE}"
 
 # Autocorrect typos in path names when using `cd`
-shopt -s cdspell;
+shopt -s cdspell
 
 # Check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
 shopt -s checkwinsize

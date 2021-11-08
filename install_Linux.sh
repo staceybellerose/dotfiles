@@ -109,11 +109,11 @@ installDebianPackages () {
         "featherpad"
         "filezilla"
         "firefox-esr"
+        "flameshot"
         "font-manager"
         "fontforge-doc"
         "fontforge-extras"
         "fontforge"
-        "fonts-droid-fallback"
         "fortunes"
         "freecad-python3"
         "fritzing"
@@ -149,7 +149,6 @@ installDebianPackages () {
         "libreoffice"
         "logrotate"
         "lyx"
-        "man-db"
         "manpages-dev"
         "manpages"
         "meld"
@@ -162,6 +161,8 @@ installDebianPackages () {
         "python3"
         "rails"
         "rake"
+        "rclone"
+        "rclone-browser"
         "ristretto"
         "rstudio"
         "rsync"
@@ -172,12 +173,14 @@ installDebianPackages () {
         "scribus-template"
         "scribus"
         "sigil"
+        "snapd"
         "solaar"
         "speedtest-cli"
         "sqlite-doc"
         "sqlite"
         "sqlite3-doc"
         "sqlitebrowser"
+        "synaptic"
         "tali"
         "tango-icon-theme"
         "texstudio"
@@ -195,6 +198,53 @@ installDebianPackages () {
         "xsane"
         "zenity"
     )
+    declare -a fontpkgs=(
+        "fonts-cabinsketch"
+        "fonts-cantarell"
+        "fonts-cardo"
+        "fonts-comic-neue"
+        "fonts-courier-prime"
+        "fonts-croscore"
+        "fonts-crosextra-caladea"
+        "fonts-dancingscript"
+        "fonts-dejavu"
+        "fonts-droid-fallback"
+        "fonts-ebgaramond"
+        "fonts-ebgaramond-extra"
+        "fonts-fantasque-sans"
+        "fonts-fanwood"
+        "fonts-freefont"
+        "fonts-goudybookletter"
+        "fonts-hack"
+        "fonts-humor-sans"
+        "fonts-inconsolata"
+        "fonts-lato"
+        "fonts-league-spartan"
+        "fonts-liberation"
+        "fonts-liberation2"
+        "fonts-lindenhill"
+        "fonts-linuxlibertine"
+        "fonts-lobster"
+        "fonts-lobstertwo"
+        "fonts-mononoki"
+        "fonts-noto-color-emoji"
+        "fonts-noto-core"
+        "fonts-noto-extra"
+        "fonts-noto-mono"
+        "fonts-noto-unhinted"
+        "fonts-open-sans"
+        "fonts-prociono"
+        "fonts-quicksand"
+        "fonts-roboto-slab"
+        "fonts-roboto-unhinted"
+        "fonts-texgyre"
+        "fonts-ubuntu"
+        "fonts-urw-base35"
+        "ttf-anonymous-pro"
+        "ttf-bitstream-vera"
+    )
+    # TODO replace ttf-anonymous-pro with fonts-anonymous-pro to the list above after upgrading to Debian bullseye
+    pkgs+=( "${fontpkgs[@]}" ) # append font packages to list
     toInstall=()
     for pkg in "${pkgs[@]}"
     do
@@ -204,6 +254,10 @@ installDebianPackages () {
             install=n
         elif [[ $yes -eq 1 ]]
         then
+            install=y
+        elif [[ $pkg == fonts-* ]] || [[ $pkg == ttf-* ]]
+        then
+            # Always install font packages
             install=y
         else
             if [[ $gui -eq 0 ]]
@@ -230,6 +284,7 @@ installDebianPackages () {
         do
             installDebianPackage "$pkg"
         done
+        fc-cache
     fi
 }
 

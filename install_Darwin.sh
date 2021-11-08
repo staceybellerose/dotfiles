@@ -130,6 +130,12 @@ checkFile () {
     promptToInstall "$name" "$url" "0" "$cmd"
 }
 
+checkFont () {
+    cmd=$1; font=$2; name=$3; url=$4
+    fc-list | grep -q "$font"
+    promptToInstall "$name" "$url" "1" "$cmd"
+}
+
 checkBash () {
     # If default shell is /bin/bash:
     #   it was provided by Apple and is an old version
@@ -248,6 +254,63 @@ then
     checkLibraryCask quicklook-json "QuickLook JSON plugin" "QuickLook/QuickLookJSON.qlgenerator" "http://www.sagtau.com/quicklookjson.html"
     checkLibraryCask webpquicklook "QuickLook WebP plugin" "QuickLook/WebpQuickLook.qlgenerator" "https://github.com/emin/WebPQuickLook"
 
+    # Homebrew Cask Fonts
+    checkFont "font-anonymous-pro" "Anonymous Pro" "Anonymous Pro Font" "https://fonts.google.com/specimen/Anonymous+Pro"
+    checkFont "font-arimo" "Arimo" "Arimo Font" "https://fonts.google.com/specimen/Arimo"
+    checkFont "font-bitstream-vera" "Bitstream Vera" "Bitstream Vera (Sans, Serif, Mono) Fonts" "https://www.gnome.org/fonts/"
+    checkFont "font-cabin-sketch" "CabinSketch" "Cabin Sketch Font" "https://fonts.google.com/specimen/Cabin+Sketch"
+    checkFont "font-caladea" "Caladea" "Caladea Font" "https://fonts.google.com/specimen/Caladea"
+    checkFont "font-cantarell" "Cantarell" "Cantarell Font" "https://fonts.google.com/specimen/Cantarell"
+    checkFont "font-cardo" "Cardo" "Cardo Font" "https://fonts.google.com/specimen/Cardo"
+    checkFont "font-comic-neue" "Comic Neue" "Comic Neue Font" "https://fonts.google.com/specimen/Comic+Neue"
+    checkFont "font-courier-prime" "Courier Prime" "Courier Prime Font" "https://quoteunquoteapps.com/courierprime/"
+    checkFont "font-courier-prime-code" "Courier Prime Code" "Courier Prime Code Font" "https://quoteunquoteapps.com/courierprime/"
+    checkFont "font-courier-prime-sans" "Courier Prime Sans" "Courier Prime Sans Font" "https://quoteunquoteapps.com/courierprime/"
+    checkFont "font-cousine" "Cousine" "Cousine Font" "https://fonts.google.com/specimen/Cousine"
+    checkFont "font-dancing-script" "Dancing Script" "Dancing Script Font" "https://fonts.google.com/specimen/Dancing+Script"
+    checkFont "font-dejavu" "DejaVu" "DejaVu (Sans, Serif, Mono) Fonts" "https://sourceforge.net/projects/dejavu/"
+    checkFont "font-eb-garamond" "EB Garamond" "EB Garamond Font" "https://fonts.google.com/specimen/EB+Garamond"
+    checkFont "font-fantasque-sans-mono" "Fantasque Sans Mono" "Fantasque Sans Mono Font" "https://github.com/belluzj/fantasque-sans"
+    checkFont "font-fanwood-text" "Fanwood" "Fanwood Font" "https://fonts.google.com/specimen/Fanwood+Text"
+    checkFont "font-freefont" "FreeFont" "GNU FreeFont" "https://www.gnu.org/software/freefont/"
+    checkFont "font-goudy-bookletter-1911" "Goudy Bookletter" "Goudy Bookletter 1911 Font" "https://fonts.google.com/specimen/Goudy+Bookletter+1911"
+    checkFont "font-hack" "Hack" "Hack Font" "https://sourcefoundry.org/hack/"
+    checkFont "font-humor-sans" "Humor Sans" "Humor Sans (xkcd) Font" "https://xkcdsucks.blogspot.com.au/2009/03/xkcdsucks-is-proud-to-present-humor.html"
+    checkFont "font-inconsolata" "Inconsolata" "Inconsolata Font" "https://fonts.google.com/specimen/Inconsolata"
+    checkFont "font-lato" "Lato" "Lato Font" "https://fonts.google.com/specimen/Lato"
+    checkFont "font-league-spartan" "League Spartan" "League Spartan Font" "https://www.theleagueofmoveabletype.com/league-spartan"
+    checkFont "font-liberation" "Liberation" "Liberation (Sans, Serif, Mono) Fonts" "https://github.com/liberationfonts/liberation-fonts"
+    checkFont "font-linden-hill" "Linden Hill" "Linden Hill Font" "https://fonts.google.com/specimen/Linden+Hill"
+    checkFont "font-linux-libertine" "Linux Libertine" "Linux Libertine Fonts" "https://sourceforge.net/projects/linuxlibertine/"
+    checkFont "font-lobster" "Lobster-Regular" "Lobster Font" "https://fonts.google.com/specimen/Lobster"
+    checkFont "font-lobster-two" "Lobster Two" "Lobster Two Font" "https://fonts.google.com/specimen/Lobster+Two"
+    checkFont "font-monoid" "Monoid" "Monoid Font" "https://github.com/larsenwork/monoid"
+    checkFont "font-noto-color-emoji" "Noto Color Emoji" "Noto Color Emoji Font" "https://github.com/googlefonts/noto-emoji"
+    checkFont "font-noto-mono" "Noto Mono" "Noto Mono Font" "https://www.google.com/get/noto/#mono-mono"
+    # TODO include other Noto Fonts
+    checkFont "font-open-sans" "Open Sans" "Open Sans Font" "https://fonts.google.com/specimen/Open+Sans"
+    checkFont "font-prociono" "Prociono" "Prociono Font" "https://fonts.google.com/specimen/Prociono"
+    checkFont "font-quicksand" "Quicksand" "Quicksand Font" "https://fonts.google.com/specimen/Quicksand"
+    checkFont "font-roboto" "Roboto" "Roboto Font" "https://fonts.google.com/specimen/Roboto"
+    checkFont "font-roboto-slab" "Roboto Slab" "Roboto Slab Font" "https://fonts.google.com/specimen/Roboto+Slab"
+    checkFont "font-tex-gyre-adventor" "Adventor" "TeX Gyre Adventor Font" "http://www.gust.org.pl/projects/e-foundry/tex-gyre/adventor"
+    checkFont "font-tex-gyre-bonum" "Bonum" "TeX Gyre Bonum Font" "http://www.gust.org.pl/projects/e-foundry/tex-gyre/bonum"
+    checkFont "font-tex-gyre-bonum-math" "Bonum Math" "TeX Gyre Bonum Math Font" "http://www.gust.org.pl/projects/e-foundry/tg-math"
+    checkFont "font-tex-gyre-chorus" "Chorus" "TeX Gyre Chorus Font" "http://www.gust.org.pl/projects/e-foundry/tex-gyre/chorus"
+    checkFont "font-tex-gyre-cursor" "Cursor" "TeX Gyre Cursor Font" "http://www.gust.org.pl/projects/e-foundry/tex-gyre/cursor"
+    checkFont "font-tex-gyre-heros" "Heros" "TeX Gyre Heros Font" "http://www.gust.org.pl/projects/e-foundry/tex-gyre/heros"
+    checkFont "font-tex-gyre-pagella" "Pagella" "TeX Gyre Pagella Font" "http://www.gust.org.pl/projects/e-foundry/tex-gyre/pagella"
+    checkFont "font-tex-gyre-pagella-math" "Pagella Math" "TeX Gyre Pagella Math Font" "http://www.gust.org.pl/projects/e-foundry/tg-math"
+    checkFont "font-tex-gyre-schola" "Schola" "TeX Gyre Schola Font" "http://www.gust.org.pl/projects/e-foundry/tex-gyre/schola"
+    checkFont "font-tex-gyre-schola-math" "Schola Math" "TeX Gyre Schola Math Font" "http://www.gust.org.pl/projects/e-foundry/tg-math"
+    checkFont "font-tex-gyre-termes" "Termes" "TeX Gyre Termes Font" "http://www.gust.org.pl/projects/e-foundry/tex-gyre/termes"
+    checkFont "font-tex-gyre-termes-math" "Termes Math" "TeX Gyre Termes Math Font" "http://www.gust.org.pl/projects/e-foundry/tg-math"
+    checkFont "font-tinos" "Tinos" "Tinos Font" "https://fonts.google.com/specimen/Tinos"
+    checkFont "font-ubuntu" "Ubuntu-Regular" "Ubuntu Font" "https://fonts.google.com/specimen/Ubuntu"
+    checkFont "font-ubuntu-condensed" "Ubuntu Condensed" "Ubuntu Condensed Font" "https://fonts.google.com/specimen/Ubuntu+Condensed"
+    checkFont "font-ubuntu-mono" "Ubuntu Mono" "Ubuntu Mono Font" "https://fonts.google.com/specimen/Ubuntu+Mono"
+    checkFont "font-urw-base35" "C059" "URW++ Base Fonts" "https://github.com/ArtifexSoftware/urw-base35-fonts"
+
     checkJava "Oracle JDK" "1.8" "https://www.oracle.com/technetwork/java/javase/overview/index.html"
 
     # if we aren't installing brew, make sure we update it
@@ -257,6 +320,8 @@ then
         brew update -q
         brew upgrade -q
         brew cleanup -q
+        brew tap | grep -q "^homebrew/cask$" || brew tap -q homebrew/cask
+        brew tab | grep -q "^homebrew/cask-fonts$" || brew tap -q homebrew/cask-fonts
     fi
 
     # Install the Command Line Tools and the Homebrew Bottles
@@ -269,6 +334,8 @@ then
             brew doctor -q
             brew update -q
             brew upgrade -q
+            brew tap -q homebrew/cask
+            brew tap -q homebrew/cask-fonts
         elif [ "$i" == "rvm" ]
         then
             curl -sSL https://get.rvm.io | bash -s stable --ruby --rails
