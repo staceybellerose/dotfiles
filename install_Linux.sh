@@ -20,6 +20,11 @@ else
     CPOPT=-a
 fi
 
+INSTALLDIR=${TMPDIR:-/tmp}/dotfiles-installer
+mkdir -p "$INSTALLDIR"
+
+declare -a deb_extra_packages=()
+
 installFonts () {
     g_bold "Installing Fonts"
     mkdir -p "${HOME}/.fonts"
@@ -64,6 +69,14 @@ installConfig () {
     done
 }
 
+promptForPassword () {
+    if [[ $gui -eq 1 ]]
+    then
+        zenity --info --text="Please return to the terminal to enter your password to allow software installation." \
+            --window-icon=./installer.svg --width=300 --height=100
+    fi
+}
+
 isDebianDerivative () {
     type -P dpkg &> /dev/null
     return $?
@@ -82,6 +95,97 @@ installDebianPackage () {
         sudo apt-get install "$1"
         hasDebianPackage "$1" && g_success "$1 successfully installed" || g_error "$1 not installed"
     fi
+}
+
+configureDebian () {
+    isDebianDerivative || return
+
+    arch=$(dpkg --print-architecture)
+    . /etc/os-release
+
+    promptForPassword
+    installDebianPackage "wget"
+
+    keyrings=/usr/share/keyrings
+    sources=/etc/apt/sources.list.d
+
+    # Add Backports source
+    if [ ! -e "$sources/debian-backports.list" ]
+    then
+        echo "deb http://deb.debian.org/debian ${VERSION_CODENAME}-backports main" | sudo tee "$sources/debian-backports.list"
+    fi
+
+    # Add Atom source
+    if [ ! -e "$sources/atom.list" ]
+    then
+        wget -q https://packagecloud.io/AtomEditor/atom/gpgkey -O- | sudo apt-key add -
+        echo "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main" | sudo tee "$sources/atom.list"
+    fi
+    deb_extra_packages+=( "atom" )
+
+    # Add Beekeeper Studio source
+    if [ ! -e "$sources/beekeeper.list" ]
+    then
+        wget -q https://deb.beekeeperstudio.io/beekeeper.key -O- | sudo apt-key add -
+        echo "deb https://deb.beekeeperstudio.io stable main" | sudo tee "$sources/beekeeper.list"
+    fi
+    deb_extra_packages+=( "beekeeper-studio" )
+
+    # Add GitHub CLI source
+    if [ ! -e "$sources/github-cli.list" ]
+    then
+        wget -q https://cli.github.com/packages/githubcli-archive-keyring.gpg -O- | sudo gpg --dearmor -o "$keyrings/githubcli-archive-keyring.gpg"
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=$keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee "$sources/github-cli.list"
+    fi
+    deb_extra_packages+=( "gh" )
+
+    # Add Spotify source
+    if [ ! -e "$sources/spotify.list" ]
+    then
+        wget -q https://download.spotify.com/debian/pubkey_0D811D58.gpg -O- | sudo apt-key add -
+        echo "deb http://repository.spotify.com stable non-free" | sudo tee "$sources/spotify.list"
+    fi
+    deb_extra_packages+=( "spotify-client" )
+
+    # Set up Steam
+    if [ "$arch" = "amd64" ]
+    then
+        sudo dpkg --add-architecture i386
+        sudo apt update
+        installDebianPackage "software-properties-common"
+        sudo add-apt-repository non-free
+        deb_extra_packages+=( "steam" )
+    fi
+
+    # Add VirtualBox source
+    if [ "$arch" = "amd64" ]
+    then
+        if [ ! -e "$sources/virtualbox.list" ]
+        then
+            wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+            echo "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $VERSION_CODENAME contrib" | sudo tee "$sources/virtualbox.list"
+        fi
+        deb_extra_packages+=( "virtualbox-6.1" )
+    fi
+
+    # Set up VS Code source
+    if [ ! -e "$sources/vscode.list" ]
+    then
+        wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo gpg --dearmor -o "$keyrings/microsoft-packages-keyring.gpg"
+        echo "deb [arch=amd64,arm64,armhf signed-by=$keyrings/microsoft-packages-keyring.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee "$sources/vscode.list"
+    fi
+    deb_extra_packages+=( "code" )
+
+    # Set up VS Codium source
+    if [ ! -e "$sources/vscodium.list" ]
+    then
+        wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg | sudo gpg --dearmor -o "$keyrings/vscodium-archive-keyring.gpg"
+        echo "deb [signed-by=$keyrings/vscodium-archive-keyring.gpg] https://download.vscodium.com/debs vscodium main" | sudo tee "$sources/vscodium.list"
+    fi
+    deb_extra_packages+=( "codium" )
+
+    # Update list of sources
+    sudo apt update
 }
 
 installDebianPackages () {
@@ -213,7 +317,7 @@ installDebianPackages () {
         "fonts-ebgaramond-extra"
         "fonts-fantasque-sans"
         "fonts-fanwood"
-        "fonts-freefont"
+        "fonts-freefont-ttf"
         "fonts-goudybookletter"
         "fonts-hack"
         "fonts-humor-sans"
@@ -245,6 +349,7 @@ installDebianPackages () {
     )
     # TODO replace ttf-anonymous-pro with fonts-anonymous-pro to the list above after upgrading to Debian bullseye
     pkgs+=( "${fontpkgs[@]}" ) # append font packages to list
+    pkgs+=( "${deb_extra_packages[@]}" ) # append extra packages to list
     toInstall=()
     for pkg in "${pkgs[@]}"
     do
@@ -275,11 +380,6 @@ installDebianPackages () {
     done
     if [[ ${#toInstall[@]} -gt 0 ]]
     then
-        if [[ $gui -eq 1 ]]
-        then
-            zenity --info --text="Please return to the terminal to enter your password to allow software installation." \
-                --window-icon=./installer.svg --width=300 --height=100
-        fi
         for pkg in "${toInstall[@]}"
         do
             installDebianPackage "$pkg"
@@ -288,9 +388,51 @@ installDebianPackages () {
     fi
 }
 
+installDebianExternalPackages () {
+    isDebianDerivative || return
+    arch=$(dpkg --print-architecture)
+
+    # Google Chrome
+    if [ "$arch" = "amd64" ]
+    then
+        hasDebianPackage "google-chrome-stable" || {
+            cd "$INSTALLDIR" && {
+                wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+                sudo apt install "$INSTALLDIR/google-chrome-stable_current_amd64.deb"
+            }
+        }
+    fi
+
+    # Dropbox
+    hasDebianPackage "dropbox" || {
+        if [[ "$arch" = "amd64" || "$arch" = "i386" ]]
+        then
+            dropbox_package=dropbox_2020.03.04_${arch}.deb
+            cd "$INSTALLDIR" && {
+                wget -q "https://linux.dropbox.com/packages/debian/$dropbox_package"
+                sudo apt install "$INSTALLDIR/$dropbox_package"
+            }
+        fi
+    }
+}
+
 isRedHatDerivative () {
     type -P rpm &> /dev/null
     return $?
+}
+
+hasRedHatPackage () {
+    ## TODO fix this once running a RedHat-based system
+    false
+}
+
+installRedHatPackage () {
+    isRedHatDerivative || return
+    if ! hasRedHatPackage "$1"
+    then
+        ## TODO add logic here to install package
+        g_error "Unable to install $1 - don't know how"
+    fi
 }
 
 installRedHatPackages () {
@@ -299,18 +441,44 @@ installRedHatPackages () {
     ## TODO add packages here as needed
 }
 
+installRvm () {
+    type rvm &> /dev/null || {
+        # rvm is dependent on curl
+        isDebianDerivative && {
+            installDebianPackage "curl"
+            installDebianPackage "gpg"
+        }
+        isRedHatDerivative && {
+            installRedHatPackage "curl"
+            installRedHatPackage "gpg"
+        }
+        cd "$INSTALLDIR" && {
+            curl -fsSL https://rvm.io/mpapis.asc | gpg -q --import -
+            curl -fsSL https://rvm.io/pkuczynski.asc | gpg -q --import -
+            curl -fsSL https://get.rvm.io -o rvm-installer && bash -- rvm-installer stable --ruby --rails --quiet-curl
+        }
+    }
+}
+
 g_header "Linux Installer"
 
 if [[ $config -eq 1 ]]
 then
     installConfig
 fi
+if [[ $packages -eq 1 ]]
+then
+    isDebianDerivative && {
+        configureDebian
+        installDebianPackages
+        installDebianExternalPackages
+    }
+    isRedHatDerivative && installRedHatPackages
+    installRvm
+fi
 if [[ $fonts -eq 1 ]]
 then
     installFonts
 fi
-if [[ $packages -eq 1 ]]
-then
-    isDebianDerivative && installDebianPackages
-    isRedHatDerivative && installRedHatPackages
-fi
+
+rm -rf "$INSTALLDIR"

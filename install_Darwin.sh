@@ -132,8 +132,14 @@ checkFile () {
 
 checkFont () {
     cmd=$1; font=$2; name=$3; url=$4
-    fc-list | grep -q "$font"
-    promptToInstall "$name" "$url" "1" "$cmd"
+    # Always install fonts
+    if fc-list | grep -q "$font"
+    then
+        g_success "$name is already installed"
+    else
+        g_info "$name is not installed"
+        toInstallCask+=( "${cmd}" )
+    fi
 }
 
 checkBash () {
