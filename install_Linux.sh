@@ -46,7 +46,22 @@ installConfig () {
     mkdir -p "${HOME}/.local"
     cp $CPOPT local/* "${HOME}/.local" && g_success "Installed share files" || g_error "Unable to install share files"
     # fix the absolute path in qt5ct.conf
-    sed -i -- "s:color_scheme_path=.*:color_scheme_path=${HOME}/.config/qt5ct/colors/one dark.conf:g" "${HOME}/.config/qt5ct/qt5ct.conf" && g_success "Updated QT5 config file" || g_error "Unable to update QT5 config file"
+    if sed -i -- "s:color_scheme_path=.*:color_scheme_path=${HOME}/.config/qt5ct/colors/one dark.conf:g" "${HOME}/.config/qt5ct/qt5ct.conf"
+    then
+        g_success "Updated QT5 config file"
+    else
+        g_error "Unable to update QT5 config file"
+    fi
+    mkdir -p "${HOME}/.icons"
+    for tarball in icons/*.tar.tgz
+    do
+        if tar -x -f "$tarball" -z -C "${HOME}/.icons"
+        then
+            g_success "Installed mouse cursor: $(basename -s .tar.gz "$tarball")"
+        else
+            g_error "Unable to install mouse cursor: $(basename -s .tar.gz "$tarball")"
+        fi
+    done
 }
 
 isDebianDerivative () {
