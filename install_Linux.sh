@@ -58,7 +58,7 @@ installConfig () {
         g_error "Unable to update QT5 config file"
     fi
     mkdir -p "${HOME}/.icons"
-    for tarball in icons/*.tar.tgz
+    for tarball in icons/*.tar.gz
     do
         if tar -x -f "$tarball" -z -C "${HOME}/.icons"
         then
