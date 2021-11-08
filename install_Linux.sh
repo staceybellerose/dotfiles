@@ -124,10 +124,10 @@ configureDebian () {
     deb_extra_packages+=( "atom" )
 
     # Add Beekeeper Studio source
-    if [ ! -e "$sources/beekeeper.list" ]
+    if [ ! -e "$sources/beekeeper-studio-app.list" ]
     then
         wget -q https://deb.beekeeperstudio.io/beekeeper.key -O- | sudo apt-key add -
-        echo "deb https://deb.beekeeperstudio.io stable main" | sudo tee "$sources/beekeeper.list"
+        echo "deb https://deb.beekeeperstudio.io stable main" | sudo tee "$sources/beekeeper-studio-app.list"
     fi
     deb_extra_packages+=( "beekeeper-studio" )
 
