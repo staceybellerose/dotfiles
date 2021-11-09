@@ -92,7 +92,7 @@ installDebianPackage () {
     if ! hasDebianPackage "$1"
     then
         g_info "Installing package $1"
-        sudo apt-get install "$1"
+        sudo apt-get -q install "$1"
         hasDebianPackage "$1" && g_success "$1 successfully installed" || g_error "$1 not installed"
     fi
 }
@@ -106,7 +106,7 @@ configureDebian () {
     promptForPassword
     installDebianPackage "wget"
 
-    keyrings=/usr/share/keyrings
+    keyrings=/etc/apt/trusted.gpg.d
     sources=/etc/apt/sources.list.d
 
     # Add Backports source
@@ -118,7 +118,7 @@ configureDebian () {
     # Add Atom source
     if [ ! -e "$sources/atom.list" ]
     then
-        wget -q https://packagecloud.io/AtomEditor/atom/gpgkey -O- | sudo apt-key add -
+        wget -q https://packagecloud.io/AtomEditor/atom/gpgkey -O- | sudo gpg --dearmor -o "$keyrings/atom-keyring.gpg"
         echo "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main" | sudo tee "$sources/atom.list"
     fi
     deb_extra_packages+=( "atom" )
@@ -126,7 +126,7 @@ configureDebian () {
     # Add Beekeeper Studio source
     if [ ! -e "$sources/beekeeper-studio-app.list" ]
     then
-        wget -q https://deb.beekeeperstudio.io/beekeeper.key -O- | sudo apt-key add -
+        wget -q https://deb.beekeeperstudio.io/beekeeper.key -O- | sudo gpg --dearmor -o "$keyrings/beekeeper-studio-keyring.gpg"
         echo "deb https://deb.beekeeperstudio.io stable main" | sudo tee "$sources/beekeeper-studio-app.list"
     fi
     deb_extra_packages+=( "beekeeper-studio" )
@@ -135,7 +135,7 @@ configureDebian () {
     if [ ! -e "$sources/github-cli.list" ]
     then
         wget -q https://cli.github.com/packages/githubcli-archive-keyring.gpg -O- | sudo gpg --dearmor -o "$keyrings/githubcli-archive-keyring.gpg"
-        echo "deb [arch=$(dpkg --print-architecture) signed-by=$keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee "$sources/github-cli.list"
+        echo "deb [arch=$(dpkg --print-architecture)] https://cli.github.com/packages stable main" | sudo tee "$sources/github-cli.list"
     fi
     deb_extra_packages+=( "gh" )
 
@@ -151,8 +151,9 @@ configureDebian () {
     if [ "$arch" = "amd64" ]
     then
         sudo dpkg --add-architecture i386
-        sudo apt update
+        sudo apt-get -q update
         installDebianPackage "software-properties-common"
+        sudo add-apt-repository contrib
         sudo add-apt-repository non-free
         deb_extra_packages+=( "steam" )
     fi
@@ -162,7 +163,7 @@ configureDebian () {
     then
         if [ ! -e "$sources/virtualbox.list" ]
         then
-            wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+            wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo gpg --dearmor -o "$keyrings/virtualbox-keyring.gpg"
             echo "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $VERSION_CODENAME contrib" | sudo tee "$sources/virtualbox.list"
         fi
         deb_extra_packages+=( "virtualbox-6.1" )
@@ -172,7 +173,7 @@ configureDebian () {
     if [ ! -e "$sources/vscode.list" ]
     then
         wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo gpg --dearmor -o "$keyrings/microsoft-packages-keyring.gpg"
-        echo "deb [arch=amd64,arm64,armhf signed-by=$keyrings/microsoft-packages-keyring.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee "$sources/vscode.list"
+        echo "deb [arch=amd64,arm64,armhf] https://packages.microsoft.com/repos/code stable main" | sudo tee "$sources/vscode.list"
     fi
     deb_extra_packages+=( "code" )
 
@@ -180,12 +181,12 @@ configureDebian () {
     if [ ! -e "$sources/vscodium.list" ]
     then
         wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg | sudo gpg --dearmor -o "$keyrings/vscodium-archive-keyring.gpg"
-        echo "deb [signed-by=$keyrings/vscodium-archive-keyring.gpg] https://download.vscodium.com/debs vscodium main" | sudo tee "$sources/vscodium.list"
+        echo "deb https://download.vscodium.com/debs vscodium main" | sudo tee "$sources/vscodium.list"
     fi
     deb_extra_packages+=( "codium" )
 
     # Update list of sources
-    sudo apt update
+    sudo apt-get -q update
 }
 
 installDebianPackages () {
@@ -195,17 +196,20 @@ installDebianPackages () {
         "2048-qt"
         "adb"
         "arc-theme"
+        "ardiuno"
         "atom"
         "atril"
         "audacious"
         "audacity"
         "bash-completion"
+        "bless"
         "calibre"
         "catfish"
         "checkstyle"
         "cowsay"
         "cura"
         "dia"
+        "diffuse"
         "doublecmd-qt"
         "engrampa"
         "exfalso"
@@ -214,6 +218,7 @@ installDebianPackages () {
         "filezilla"
         "firefox-esr"
         "flameshot"
+        "flatpak"
         "font-manager"
         "fontforge-doc"
         "fontforge-extras"
@@ -237,6 +242,7 @@ installDebianPackages () {
         "git-flow"
         "git-lfs"
         "git"
+        "gitg"
         "gpick"
         "gramps"
         "htop"
@@ -244,6 +250,7 @@ installDebianPackages () {
         "inkscape-open-symbols"
         "inkscape-tutorials"
         "inkscape"
+        "jekyll"
         "jmol"
         "jupyter"
         "keepassx"
@@ -258,6 +265,7 @@ installDebianPackages () {
         "meld"
         "meteo-qt"
         "mpg321"
+        "mugshot"
         "nodejs"
         "openyahtzee"
         "pokerth"
@@ -398,7 +406,7 @@ installDebianExternalPackages () {
         hasDebianPackage "google-chrome-stable" || {
             cd "$INSTALLDIR" && {
                 wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-                sudo apt install "$INSTALLDIR/google-chrome-stable_current_amd64.deb"
+                sudo apt-get -q install "$INSTALLDIR/google-chrome-stable_current_amd64.deb"
             }
         }
     fi
@@ -410,7 +418,7 @@ installDebianExternalPackages () {
             dropbox_package=dropbox_2020.03.04_${arch}.deb
             cd "$INSTALLDIR" && {
                 wget -q "https://linux.dropbox.com/packages/debian/$dropbox_package"
-                sudo apt install "$INSTALLDIR/$dropbox_package"
+                sudo apt-get -q install "$INSTALLDIR/$dropbox_package"
             }
         fi
     }
@@ -460,6 +468,79 @@ installRvm () {
     }
 }
 
+hasFlatpak () {
+    flatpak info "$1" &> /dev/null
+    return $?
+}
+
+installFlatpaks () {
+    declare -a flatpaks=(
+        "com.axosoft.GitKraken"
+        "com.jetbrains.PyCharm-Community"
+        "com.getpostman.Postman"
+        "com.github.alecaddd.sequeler"
+        "com.github.arshubham.gitignore"
+        "com.github.fabiocolacio.marker"
+        "com.github.gijsgoudzwaard.image-optimizer"
+        "com.github.PintaProject.Pinta"
+        "com.github.alexkdeveloper.desktop-files-creator"
+        "com.github.artemanufrij.regextester"
+        "com.google.AndroidStudio"
+        "com.notepadqq.Notepadqq"
+        "io.github.cloose.CuteMarkEd"
+        "io.github.lainsce.Colorway"
+        "io.github.martinrotter.textosaurus"
+        "io.github.seadve.Breathing"
+        "io.github.trytonvanmeer.DungeonJournal"
+        "net.rpdev.OpenTodoList"
+        "nl.hjdskes.gcolor3"
+        "org.gnome.design.Contrast"
+        "org.raspberrypi.rpi-imager"
+        "re.sonny.Commit"
+    )
+    # declare -a optionalFlatpaks=(
+    #     "us.zoom.Zoom"
+    # )
+    type flatpak &> /dev/null && {
+        flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+        local toInstall=()
+        for pkg in "${flatpaks[@]}"
+        do
+            if hasFlatpak "$pkg"
+            then
+                g_success "$pkg (flatpak) is already installed"
+                install=n
+            elif [[ $yes -eq 1 ]]
+            then
+                install=y
+            else
+                if [[ $gui -eq 0 ]]
+                then
+                    read -rp "Do you want to install flatpak ${C_FORE_BLUE}$pkg${C_RESET}? [y/${C_BOLD}n${C_RESET}]: " install
+                else
+                    zenity --question --text="Do you want to install flatpak ${pkg}?" \
+                        --window-icon=./installer.svg --width=300 --height=100 && install=y
+                fi
+            fi
+            if [[ $install == "y" ]]
+            then
+                toInstall+=( "${pkg}" )
+            fi
+        done
+        if [[ ${#toInstall[@]} -gt 0 ]]
+        then
+            for pkg in "${toInstall[@]}"
+            do
+                hasFlatpak "$pkg" || {
+                    g_info "Installing flatpak $pkg"
+                    flatpak install -y flathub "$pkg"
+                    hasFlatpak "$pkg" && g_success "$pkg flatpack successfully installed" || g_error "$pkg flatpak not installed"
+                }
+            done
+        fi
+    }
+}
+
 g_header "Linux Installer"
 
 if [[ $config -eq 1 ]]
@@ -475,6 +556,7 @@ then
     }
     isRedHatDerivative && installRedHatPackages
     installRvm
+    installFlatpaks
 fi
 if [[ $fonts -eq 1 ]]
 then
