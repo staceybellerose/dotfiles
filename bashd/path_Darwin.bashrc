@@ -11,4 +11,3 @@ PATH="$(brew --prefix)/opt/grep/libexec/gnubin:$PATH"
 PATH="$(brew --prefix)/opt/findutils/libexec/gnubin:$PATH"
 PATH="$(brew --prefix)/opt/gnu-getopt/libexec/gnubin:$PATH"
 export PATH
-

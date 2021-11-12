@@ -158,9 +158,11 @@ installFonts () {
     find ./fonts \( -iname "*.ttf" -o -iname "*.otf" \) -print0 | while IFS= read -r -d '' filename
     do
         file=$(basename "$filename")
-        test -f "${HOME}/Library/Fonts/$file" || {
-            cp $CPOPT "$filename" "${HOME}/Library/Fonts" && g_success "Installed $file" || g_error "Unable to install $file"
-        }
+        if [ ! -e "${HOME}/Library/Fonts/$file" ]
+        then
+            cp $CPOPT "$filename" "${HOME}/Library/Fonts"
+            reportResult "Installed font $file" "Unable to install font $file"
+        fi
     done
 }
 
@@ -204,6 +206,7 @@ then
     checkInstall kotlin "kotlin" "https://kotlinlang.org/"
     checkInstall magick "ImageMagick" "https://imagemagick.org/"
     checkInstall mysql "MySQL" "https://www.mysql.com/"
+    checkInstall neofetch "neofetch" "https://github.com/dylanaraps/neofetch"
     checkInstall node "Node.js" "https://nodejs.org/en/"
     checkInstall python3 "python3" "https://www.python.org/"
     checkInstall rsync "rsync" "https://rsync.samba.org/"
@@ -228,14 +231,19 @@ then
     checkCask dropbox "Dropbox" "Dropbox.app" "https://www.dropbox.com/"
     checkCask firefox "Firefox" "Firefox.app" "https://www.mozilla.org/en-US/exp/firefox/"
     checkCask fork "Git-Fork" "Fork.app" "https://git-fork.com/"
+    checkCask free-ruler "Free Ruler" "Free Ruler.app" "http://www.pascal.com/software/freeruler/"
     checkCask free42-decimal "Free42 Decimal" "Free42 Decimal.app" "https://thomasokken.com/free42/"
     checkCask gimp "Gimp" "GIMP-2.10.app" "https://www.gimp.org/"
+    checkCask gitkraken "GitKraken" "GitKraken.app" "https://www.gitkraken.com/"
     checkCask google-chrome "Google Chrome" "Google Chrome.app" "https://www.google.com/chrome/"
+    checkCask hex-fiend "Hex Fiend" "Hex Fiend.app" "https://ridiculousfish.com/hexfiend/"
     checkCask inkscape "Inkscape" "Inkscape.app" "https://inkscape.org/"
     checkCask iterm2 "iTerm2" "iTerm.app" "https://www.iterm2.com/"
+    checkCask jiggler "Jiggler" "Jiggler.app" "http://www.sticksoftware.com/software/Jiggler.html"
     checkCask libreoffice "LibreOffice" "LibreOffice.app" "https://www.libreoffice.org/"
     checkCask macdown "MacDown" "MacDown.app" "https://macdown.uranusjr.com/"
     checkCask macvim "MacVim" "MacVim.app" "https://github.com/macvim-dev/macvim"
+    checkCask miro "Miro" "Miro.app" "https://miro.com"
     checkCask mysqlworkbench "MySQL Workbench" "MySQLWorkbench.app" "https://www.mysql.com/products/workbench/"
     checkCask onedrive "OneDrive" "OneDrive.app" "https://onedrive.live.com/"
     checkCask openineditor-lite "OpenInEditor Lite" "OpenInEditor-Lite.app" "https://github.com/Ji4n1ng/OpenInTerminal"
@@ -278,7 +286,7 @@ then
     checkFont "font-eb-garamond" "EB Garamond" "EB Garamond Font" "https://fonts.google.com/specimen/EB+Garamond"
     checkFont "font-fantasque-sans-mono" "Fantasque Sans Mono" "Fantasque Sans Mono Font" "https://github.com/belluzj/fantasque-sans"
     checkFont "font-fanwood-text" "Fanwood" "Fanwood Font" "https://fonts.google.com/specimen/Fanwood+Text"
-    checkFont "font-freefont" "FreeFont" "GNU FreeFont" "https://www.gnu.org/software/freefont/"
+    checkFont "font-freefont" "FreeSerif" "GNU FreeFont" "https://www.gnu.org/software/freefont/"
     checkFont "font-goudy-bookletter-1911" "Goudy Bookletter" "Goudy Bookletter 1911 Font" "https://fonts.google.com/specimen/Goudy+Bookletter+1911"
     checkFont "font-hack" "Hack" "Hack Font" "https://sourcefoundry.org/hack/"
     checkFont "font-humor-sans" "Humor Sans" "Humor Sans (xkcd) Font" "https://xkcdsucks.blogspot.com.au/2009/03/xkcdsucks-is-proud-to-present-humor.html"
@@ -293,34 +301,34 @@ then
     checkFont "font-monoid" "Monoid" "Monoid Font" "https://github.com/larsenwork/monoid"
     checkFont "font-noto-color-emoji" "Noto Color Emoji" "Noto Color Emoji Font" "https://github.com/googlefonts/noto-emoji"
     checkFont "font-noto-mono" "Noto Mono" "Noto Mono Font" "https://www.google.com/get/noto/"
-    checkFont "font-noto-sans" "Noto Sans" "Noto Sans Font" "https://www.google.com/get/noto/"
+    checkFont "font-noto-sans" "NotoSans-Regular" "Noto Sans Font" "https://www.google.com/get/noto/"
     checkFont "font-noto-sans-cherokee" "Noto Sans Cherokee" "Noto Sans Cherokee Font" "https://fonts.google.com/noto/specimen/Noto+Sans+Cherokee"
     checkFont "font-noto-sans-display" "Noto Sans Display" "Noto Sans Display Font" "https://www.google.com/get/noto/"
     checkFont "font-noto-sans-old-hungarian" "Noto Sans Old Hungarian" "Noto Sans Old Hungarian Font" "https://fonts.google.com/specimen/Noto+Sans+Old+Hungarian"
     checkFont "font-noto-sans-math" "Noto Sans Math" "Noto Sans Math Font" "https://fonts.google.com/noto/specimen/Noto+Sans+Math"
     checkFont "font-noto-sans-ogham" "Noto Sans Ogham" "Noto Sans Ogham Font" "https://fonts.google.com/noto/specimen/Noto+Sans+Ogham"
     checkFont "font-noto-sans-runic" "Noto Sans Runic" "Noto Sans Runic Font" "https://fonts.google.com/noto/specimen/Noto+Sans+Runic"
-    checkFont "font-noto-sans-symbols" "Noto Sans Symbols" "Noto Sans Symbols Font" "https://fonts.google.com/noto/specimen/Noto+Sans+Symbols"
-    checkFont "font-noto-sans-symbols-2" "Noto Sans Symbols 2" "Noto Sans Symbols 2 Font" "https://fonts.google.com/noto/specimen/Noto+Sans+Symbols+2"
-    checkFont "font-noto-serif" "Noto Serif" "Noto Serif Font" "https://www.google.com/get/noto/"
+    checkFont "font-noto-sans-symbols" "NotoSansSymbols-Regular" "Noto Sans Symbols Font" "https://fonts.google.com/noto/specimen/Noto+Sans+Symbols"
+    checkFont "font-noto-sans-symbols-2" "NotoSansSymbols2" "Noto Sans Symbols 2 Font" "https://fonts.google.com/noto/specimen/Noto+Sans+Symbols+2"
+    checkFont "font-noto-serif" "NotoSerif-Regular" "Noto Serif Font" "https://www.google.com/get/noto/"
     checkFont "font-noto-serif-display" "Noto Serif Display" "Noto Serif Display Font" "https://www.google.com/get/noto/"
     # TODO include other Noto Fonts as needed for other languages
     checkFont "font-open-sans" "Open Sans" "Open Sans Font" "https://fonts.google.com/specimen/Open+Sans"
     checkFont "font-prociono" "Prociono" "Prociono Font" "https://fonts.google.com/specimen/Prociono"
     checkFont "font-quicksand" "Quicksand" "Quicksand Font" "https://fonts.google.com/specimen/Quicksand"
-    checkFont "font-roboto" "Roboto" "Roboto Font" "https://fonts.google.com/specimen/Roboto"
+    checkFont "font-roboto" "Roboto-Italic" "Roboto Font" "https://fonts.google.com/specimen/Roboto"
     checkFont "font-roboto-slab" "Roboto Slab" "Roboto Slab Font" "https://fonts.google.com/specimen/Roboto+Slab"
     checkFont "font-tex-gyre-adventor" "Adventor" "TeX Gyre Adventor Font" "http://www.gust.org.pl/projects/e-foundry/tex-gyre/adventor"
-    checkFont "font-tex-gyre-bonum" "Bonum" "TeX Gyre Bonum Font" "http://www.gust.org.pl/projects/e-foundry/tex-gyre/bonum"
+    checkFont "font-tex-gyre-bonum" "bonum-regular" "TeX Gyre Bonum Font" "http://www.gust.org.pl/projects/e-foundry/tex-gyre/bonum"
     checkFont "font-tex-gyre-bonum-math" "Bonum Math" "TeX Gyre Bonum Math Font" "http://www.gust.org.pl/projects/e-foundry/tg-math"
     checkFont "font-tex-gyre-chorus" "Chorus" "TeX Gyre Chorus Font" "http://www.gust.org.pl/projects/e-foundry/tex-gyre/chorus"
     checkFont "font-tex-gyre-cursor" "Cursor" "TeX Gyre Cursor Font" "http://www.gust.org.pl/projects/e-foundry/tex-gyre/cursor"
     checkFont "font-tex-gyre-heros" "Heros" "TeX Gyre Heros Font" "http://www.gust.org.pl/projects/e-foundry/tex-gyre/heros"
-    checkFont "font-tex-gyre-pagella" "Pagella" "TeX Gyre Pagella Font" "http://www.gust.org.pl/projects/e-foundry/tex-gyre/pagella"
+    checkFont "font-tex-gyre-pagella" "pagella-regular" "TeX Gyre Pagella Font" "http://www.gust.org.pl/projects/e-foundry/tex-gyre/pagella"
     checkFont "font-tex-gyre-pagella-math" "Pagella Math" "TeX Gyre Pagella Math Font" "http://www.gust.org.pl/projects/e-foundry/tg-math"
-    checkFont "font-tex-gyre-schola" "Schola" "TeX Gyre Schola Font" "http://www.gust.org.pl/projects/e-foundry/tex-gyre/schola"
+    checkFont "font-tex-gyre-schola" "schola-regular" "TeX Gyre Schola Font" "http://www.gust.org.pl/projects/e-foundry/tex-gyre/schola"
     checkFont "font-tex-gyre-schola-math" "Schola Math" "TeX Gyre Schola Math Font" "http://www.gust.org.pl/projects/e-foundry/tg-math"
-    checkFont "font-tex-gyre-termes" "Termes" "TeX Gyre Termes Font" "http://www.gust.org.pl/projects/e-foundry/tex-gyre/termes"
+    checkFont "font-tex-gyre-termes" "termes-regular" "TeX Gyre Termes Font" "http://www.gust.org.pl/projects/e-foundry/tex-gyre/termes"
     checkFont "font-tex-gyre-termes-math" "Termes Math" "TeX Gyre Termes Math Font" "http://www.gust.org.pl/projects/e-foundry/tg-math"
     checkFont "font-tinos" "Tinos" "Tinos Font" "https://fonts.google.com/specimen/Tinos"
     checkFont "font-ubuntu" "Ubuntu-Regular" "Ubuntu Font" "https://fonts.google.com/specimen/Ubuntu"
@@ -338,7 +346,7 @@ then
         brew upgrade -q
         brew cleanup -q
         brew tap | grep -q "^homebrew/cask$" || brew tap -q homebrew/cask
-        brew tab | grep -q "^homebrew/cask-fonts$" || brew tap -q homebrew/cask-fonts
+        brew tap | grep -q "^homebrew/cask-fonts$" || brew tap -q homebrew/cask-fonts
     fi
 
     # Install the Command Line Tools and the Homebrew Bottles
@@ -370,7 +378,7 @@ then
     for i in "${toInstallCask[@]}"
     do
         g_info "Installing $i"
-        brew cask install -q "$i"
+        brew install --cask -q "$i"
     done
 
     # Add items to dock if not already present

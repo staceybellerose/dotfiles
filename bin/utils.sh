@@ -67,7 +67,7 @@ e_note() {
 g_header() {
     if [[ $gui -eq 1 ]]
     then
-        echo "# =" "$@" "=" >&${COPROC[1]}
+        echo "# =" "$@" "=" >& "${COPROC[1]}"
     fi
     # always send the header to STDERR
     >&2 e_header "$@"
@@ -75,7 +75,7 @@ g_header() {
 g_arrow() {
     if [[ $gui -eq 1 ]]
     then
-        echo "#" → "$@" >&${COPROC[1]}
+        echo "#" → "$@" >& "${COPROC[1]}"
     else
         e_arrow "$@"
     fi
@@ -83,7 +83,7 @@ g_arrow() {
 g_success() {
     if [[ $gui -eq 1 ]]
     then
-        echo "#" ✓ "$@" >&${COPROC[1]}
+        echo "#" ✓ "$@" >& "${COPROC[1]}"
     fi
     # always send the message to STDERR
     >&2 e_success "$@"
@@ -91,7 +91,7 @@ g_success() {
 g_error() {
     if [[ $gui -eq 1 ]]
     then
-        echo "#" ✗ "$@" >&${COPROC[1]}
+        echo "#" ✗ "$@" >& "${COPROC[1]}"
     fi
     # always send the error to STDERR
     >&2 e_error "$@"
@@ -99,7 +99,7 @@ g_error() {
 g_warning() {
     if [[ $gui -eq 1 ]]
     then
-        echo "#" ! "$@" >&${COPROC[1]}
+        echo "#" ! "$@" >& "${COPROC[1]}"
     fi
     # always send the warning to STDERR
     e_warning "$@"
@@ -107,7 +107,7 @@ g_warning() {
 g_info() {
     if [[ $gui -eq 1 ]]
     then
-        echo "#" → "$@" >&${COPROC[1]}
+        echo "#" → "$@" >& "${COPROC[1]}"
     fi
     # always send the message to STDERR
     >&2 e_info "$@"
@@ -115,7 +115,7 @@ g_info() {
 g_underline() {
     if [[ $gui -eq 1 ]]
     then
-        echo "#" "$@" >&${COPROC[1]}
+        echo "#" "$@" >& "${COPROC[1]}"
     else
         e_underline "$@"
     fi
@@ -123,7 +123,7 @@ g_underline() {
 g_bold() {
     if [[ $gui -eq 1 ]]
     then
-        echo "#" "$@" >&${COPROC[1]}
+        echo "#" "$@" >& "${COPROC[1]}"
     else
         e_bold "$@"
     fi
@@ -131,7 +131,7 @@ g_bold() {
 g_note() {
     if [[ $gui -eq 1 ]]
     then
-        echo "# Note: " "$@" >&${COPROC[1]}
+        echo "# Note: " "$@" >& "${COPROC[1]}"
     else
         e_note "$@"
     fi
