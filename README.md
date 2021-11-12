@@ -42,7 +42,7 @@ To install manually:
 * Add the following line to the end of your .bash_profile or .bashrc file:
 
 ```bash
-    [ -f ~/.bashd/extra.bashrc ] && . ~/.bashd/extra.bashrc
+    [ -f ~/.bashd/extra.bashrc ] && source ~/.bashd/extra.bashrc
 ```
 
 * Restart your terminal

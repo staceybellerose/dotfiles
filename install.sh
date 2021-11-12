@@ -65,7 +65,7 @@ installBashd () {
     then
         [[ $debug -eq 1 ]] && g_success "bash profile is already configured"
     else
-        echo '[ -f ~/.bashd/extra.bashrc ] && . ~/.bashd/extra.bashrc' >> "${HOME}/.bash_profile"
+        echo '[ -f ~/.bashd/extra.bashrc ] && source ~/.bashd/extra.bashrc' >> "${HOME}/.bash_profile"
         g_success "bash profile configured"
     fi
     if grep -q "bash_profile" "${HOME}/.bashrc" &> /dev/null
@@ -82,7 +82,7 @@ installBashd () {
         then
             [[ $debug -eq 1 ]] && g_success "bash profile is already configured for Android Studio"
         else
-            echo '[ -f ~/.bashd/extra_androidSdk.bashrc ] && . ~/.bashd/extra_androidSdk.bashrc' >> "${HOME}/.bash_profile"
+            echo '[ -f ~/.bashd/extra_androidSdk.bashrc ] && source ~/.bashd/extra_androidSdk.bashrc' >> "${HOME}/.bash_profile"
             g_success "bash profile configured for Android Studio"
         fi
     fi
@@ -334,16 +334,16 @@ then
 fi
 if [[ $vscode -eq 1 ]]
 then
-    . ./install_vscode_extensions.sh $gui $debug
+  source ./install_vscode_extensions.sh $gui $debug
 fi
 
 # Process OS-specific files
-[ -f "./install_${arch}.sh" ] && . "./install_${arch}.sh" $packages $fonts $config $xcode $gui $yes $debug
-[ -f "./install_${arch}_${machinearch}.sh" ] && . "./install_${arch}_${machinearch}.sh" $packages $fonts $config $xcode $gui $yes $debug
+[ -f "./install_${arch}.sh" ] && source "./install_${arch}.sh" $packages $fonts $config $xcode $gui $yes $debug
+[ -f "./install_${arch}_${machinearch}.sh" ] && source "./install_${arch}_${machinearch}.sh" $packages $fonts $config $xcode $gui $yes $debug
 
 if [[ $packages -eq 1 ]]
 then
-    . ./install_Python3.sh $gui $yes $debug
+    source ./install_Python3.sh $gui $yes $debug
 fi
 
 g_success "Done!"

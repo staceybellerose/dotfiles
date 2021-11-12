@@ -24,8 +24,8 @@ export PAGER=less
 
 # Load platform-specific paths
 
-[ -f "$HOME/.bashd/path_$arch.bashrc" ] && . "$HOME/.bashd/path_$arch.bashrc"
-[ -f "$HOME/.bashd/path_${arch}_${machinearch}.bashrc" ] && . "$HOME/.bashd/path_${arch}_${machinearch}.bashrc"
+[ -f "$HOME/.bashd/path_$arch.bashrc" ] && source "$HOME/.bashd/path_$arch.bashrc"
+[ -f "$HOME/.bashd/path_${arch}_${machinearch}.bashrc" ] && source "$HOME/.bashd/path_${arch}_${machinearch}.bashrc"
 
 # define aliases
 if command ls --color -d / &> /dev/null
