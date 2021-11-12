@@ -16,7 +16,12 @@ debug="$7"
 
 if [[ $gui -eq 0 ]]
 then
-    CPOPT=-av
+    if [[ $debug -eq 0 ]]
+    then
+        CPOPT=-a
+    else
+        CPOPT=-av
+    fi
 else
     CPOPT=-a
 fi

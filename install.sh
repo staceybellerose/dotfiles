@@ -211,9 +211,20 @@ do
 done
 shift "$((OPTIND-1))"
 
+if [[ $gui -eq 0 ]]
+then
+    if [[ $debug -eq 0 ]]
+    then
+        CPOPT=-a
+    else
+        CPOPT=-av
+    fi
+else
+    CPOPT=-a
+fi
+
 if [[ $gui -eq 1 && $yes -eq 0 ]]
 then
-    CPOPT=-a
     if [[ $config -eq 1 ]] ; then boolconfig=TRUE ; else boolconfig=FALSE ; fi
     if [[ $fonts -eq 1 ]] ; then boolfonts=TRUE ; else boolfonts=FALSE ; fi
     if [[ $packages -eq 1 ]] ; then boolpackages=TRUE ; else boolpackages=FALSE ; fi
