@@ -61,49 +61,67 @@ EOF
 installBashd () {
     g_bold "Installing bashd files"
     mkdir -p "${HOME}/.bashd"
-    grep -q "extra.bashrc" "${HOME}/.bash_profile" &> /dev/null && g_arrow "bash profile already configured" || {
+    if grep -q "extra.bashrc" "${HOME}/.bash_profile" &> /dev/null
+    then
+        g_arrow "bash profile already configured"
+    else
         echo '[ -f ~/.bashd/extra.bashrc ] && . ~/.bashd/extra.bashrc' >> "${HOME}/.bash_profile"
         g_success "bash profile configured"
-    }
-    grep -q "bash_profile" "${HOME}/.bashrc" &> /dev/null && g_arrow "bashrc already configured" || {
+    fi
+    if grep -q "bash_profile" "${HOME}/.bashrc" &> /dev/null
+    then
+        g_arrow "bashrc already configured"
+    else
         # shellcheck disable=SC2016
         echo '[ -n "$PS1" ] && source ~/.bash_profile' >> "${HOME}/.bashrc"
         g_success "bashrc configured"
-    }
+    fi
     if [[ $android -eq 1 ]]
     then
-        grep -q "extra_androidSdk.bashrc" "${HOME}/.bash_profile" &> /dev/null && g_arrow "bash profile already configured for Android Studio" || {
+        if grep -q "extra_androidSdk.bashrc" "${HOME}/.bash_profile" &> /dev/null
+        then
+            g_arrow "bash profile already configured for Android Studio"
+        else
             echo '[ -f ~/.bashd/extra_androidSdk.bashrc ] && . ~/.bashd/extra_androidSdk.bashrc' >> "${HOME}/.bash_profile"
             g_success "bash profile configured for Android Studio"
-        }
+        fi
     fi
-    cp $CPOPT bashd/* "${HOME}/.bashd" && g_success "Installed bashd files" || g_error "Unable to install bashd files"
+    cp $CPOPT bashd/* "${HOME}/.bashd"
+    reportResult "Installed bashd files" "Unable to install bashd files"
 }
 
 installVim () {
     g_bold "Installing vim files"
     mkdir -p "${HOME}/.vim"
-    cp $CPOPT vim/* "${HOME}/.vim" && g_success "Installed vim files" || g_error "Unable to install vim files"
+    cp $CPOPT vim/* "${HOME}/.vim"
+    reportResult "Installed vim files" "Unable to install vim files"
 }
 
 installBin () {
     g_bold "Installing bin files"
     mkdir -p "${HOME}/bin"
-    cp $CPOPT bin/* "${HOME}/bin" && g_success "Installed bin files" || g_error "Unable to install bin files"
+    cp $CPOPT bin/* "${HOME}/bin"
+    reportResult "Installed bin files" "Unable to install bin files"
 }
 
 installOSBin () {
-    [ -d "./bin_${arch}" ] && {
+    if [ -d "./bin_${arch}" ]
+    then
         g_bold "Installing OS-specific bin files"
-        cp $CPOPT "./bin_${arch}/*" "${HOME}/bin" && g_success "Installed OS-specific bin files" || g_error "Unable to install OS-specific bin files"
+        cp $CPOPT "./bin_${arch}/*" "${HOME}/bin"
+        reportResult "Installed OS-specific bin files" "Unable to install OS-specific bin files"
         true
-    } || g_info "No OS-specific bin files to install"
+    else
+      g_info "No OS-specific bin files to install"
+    fi
 }
 
 installConfig () {
     g_bold "Installing configuration files"
-    cp $CPOPT editorconfig "${HOME}" && g_success "Installed editorconfig file" || g_error "Unable to install editorconfig file"
-    cp $CPOPT dircolors "${HOME}/.dircolors" && g_success "Installed dircolors file" || g_error "Unable to install dircolors file"
+    cp $CPOPT editorconfig "${HOME}"
+    reportResult "Installed editorconfig file" "Unable to install editorconfig file"
+    cp $CPOPT dircolors "${HOME}/.dircolors"
+    reportResult "Installed dircolors file" "Unable to install dircolors file"
 }
 
 header="$(basename "$0") - Dotfiles Installer"

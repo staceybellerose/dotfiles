@@ -37,7 +37,8 @@ installFonts () {
             then
                 g_arrow "${fontname} is already installed"
             else
-                cp $CPOPT "$dir" "${HOME}/.fonts" && g_success "Installed font: ${fontname}" || g_error "Unable to install font: ${fontname}"
+                cp $CPOPT "$dir" "${HOME}/.fonts"
+                reportResult "Installed font: ${fontname}" "Unable to install font: ${fontname}"
             fi
         fi
     done
@@ -47,9 +48,11 @@ installFonts () {
 installConfig () {
     g_bold "Installing Configuration Files"
     mkdir -p "${HOME}/.config"
-    cp $CPOPT config/* "${HOME}/.config" && g_success "Installed config files" || g_error "Unable to install config files"
+    cp $CPOPT config/* "${HOME}/.config"
+    reportResult "Installed config files" "Unable to install config files"
     mkdir -p "${HOME}/.local"
-    cp $CPOPT local/* "${HOME}/.local" && g_success "Installed share files" || g_error "Unable to install share files"
+    cp $CPOPT local/* "${HOME}/.local"
+    reportResult "Installed share files" "Unable to install share files"
     # fix the absolute path in qt5ct.conf
     if sed -i -- "s:color_scheme_path=.*:color_scheme_path=${HOME}/.config/qt5ct/colors/one dark.conf:g" "${HOME}/.config/qt5ct/qt5ct.conf"
     then
@@ -93,7 +96,8 @@ installDebianPackage () {
     then
         g_info "Installing package $1"
         sudo apt-get -q install "$1"
-        hasDebianPackage "$1" && g_success "$1 successfully installed" || g_error "$1 not installed"
+        hasDebianPackage "$1"
+        reportResult "$1 successfully installed" "$1 not installed"
     fi
 }
 
@@ -534,7 +538,8 @@ installFlatpaks () {
                 hasFlatpak "$pkg" || {
                     g_info "Installing flatpak $pkg"
                     flatpak install -y flathub "$pkg"
-                    hasFlatpak "$pkg" && g_success "$pkg flatpack successfully installed" || g_error "$pkg flatpak not installed"
+                    hasFlatpak "$pkg"
+                    reportResult "$pkg flatpack successfully installed" "$pkg flatpak not installed"
                 }
             done
         fi

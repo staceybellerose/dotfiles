@@ -44,7 +44,10 @@ promptToInstall () {
     name=$1; url=$2; useCask=$3
     shift 3
     app=("$@")
-    [[ $test_result -eq 0 ]] && g_success "$name is already installed" || {
+    if [[ $test_result -eq 0 ]]
+    then
+        g_success "$name is already installed"
+    else
         g_info "$name is not installed"
         install="h"
         while [ "$install" == "h" ]
@@ -84,7 +87,7 @@ promptToInstall () {
                 open "$url"
             fi
         done
-    }
+    fi
 }
 
 checkInstall () {

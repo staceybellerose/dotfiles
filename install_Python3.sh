@@ -35,7 +35,8 @@ installPythonPackage () {
     if ! hasPythonPackage "$1"
     then
         pip3 install -q "$1"
-        hasPythonPackage "$1" && g_success "$1 successfully installed" || g_error "$1 not installed"
+        hasPythonPackage "$1"
+        reportResult "$1 successfully installed" "$1 not installed"
     fi
 }
 
