@@ -372,7 +372,7 @@ fi
 ##
 # Load any platform-specific resources
 ##
-[ -f "$HOME/.bashd/extra_$arch.bashrc" ] && . "$HOME/.bashd/extra_$arch.bashrc"
-[ -f "$HOME/.bashd/extra_${arch}_${machinearch}.bashrc" ] && . "$HOME/.bashd/extra_${arch}_${machinearch}.bashrc"
-[ -f "$HOME/.bashd/extra_x11.bashrc" ] && is_within_x && . "$HOME/.bashd/extra_x11.bashrc"
+[ -f "$HOME/.bashd/extra_$arch.bashrc" ] && source "$HOME/.bashd/extra_$arch.bashrc"
+[ -f "$HOME/.bashd/extra_${arch}_${machinearch}.bashrc" ] && source "$HOME/.bashd/extra_${arch}_${machinearch}.bashrc"
+[ -f "$HOME/.bashd/extra_x11.bashrc" ] && is_within_x && source "$HOME/.bashd/extra_x11.bashrc"
 true

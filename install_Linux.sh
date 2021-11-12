@@ -106,7 +106,7 @@ configureDebian () {
     isDebianDerivative || return
 
     arch=$(dpkg --print-architecture)
-    . /etc/os-release
+    source /etc/os-release
 
     promptForPassword
     installDebianPackage "wget"

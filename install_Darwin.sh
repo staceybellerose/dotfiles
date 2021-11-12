@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC1091,SC2181
+# shellcheck disable=SC2181
 
 # Use this script for any Mac (OS X)-based specific installations
 
