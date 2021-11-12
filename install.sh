@@ -63,14 +63,14 @@ installBashd () {
     mkdir -p "${HOME}/.bashd"
     if grep -q "extra.bashrc" "${HOME}/.bash_profile" &> /dev/null
     then
-        g_arrow "bash profile already configured"
+        [[ $debug -eq 1 ]] && g_success "bash profile is already configured"
     else
         echo '[ -f ~/.bashd/extra.bashrc ] && . ~/.bashd/extra.bashrc' >> "${HOME}/.bash_profile"
         g_success "bash profile configured"
     fi
     if grep -q "bash_profile" "${HOME}/.bashrc" &> /dev/null
     then
-        g_arrow "bashrc already configured"
+        [[ $debug -eq 1 ]] && g_success "bashrc is already configured"
     else
         # shellcheck disable=SC2016
         echo '[ -n "$PS1" ] && source ~/.bash_profile' >> "${HOME}/.bashrc"
@@ -80,7 +80,7 @@ installBashd () {
     then
         if grep -q "extra_androidSdk.bashrc" "${HOME}/.bash_profile" &> /dev/null
         then
-            g_arrow "bash profile already configured for Android Studio"
+            [[ $debug -eq 1 ]] && g_success "bash profile is already configured for Android Studio"
         else
             echo '[ -f ~/.bashd/extra_androidSdk.bashrc ] && . ~/.bashd/extra_androidSdk.bashrc' >> "${HOME}/.bash_profile"
             g_success "bash profile configured for Android Studio"
@@ -323,16 +323,16 @@ then
 fi
 if [[ $vscode -eq 1 ]]
 then
-    . ./install_vscode_extensions.sh $gui
+    . ./install_vscode_extensions.sh $gui $debug
 fi
 
 # Process OS-specific files
-[ -f "./install_${arch}.sh" ] && . "./install_${arch}.sh" $packages $fonts $config $xcode $gui $yes
-[ -f "./install_${arch}_${machinearch}.sh" ] && . "./install_${arch}_${machinearch}.sh" $packages $fonts $config $xcode $gui $yes
+[ -f "./install_${arch}.sh" ] && . "./install_${arch}.sh" $packages $fonts $config $xcode $gui $yes $debug
+[ -f "./install_${arch}_${machinearch}.sh" ] && . "./install_${arch}_${machinearch}.sh" $packages $fonts $config $xcode $gui $yes $debug
 
 if [[ $packages -eq 1 ]]
 then
-    . ./install_Python3.sh $gui $yes
+    . ./install_Python3.sh $gui $yes $debug
 fi
 
 g_success "Done!"

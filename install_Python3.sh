@@ -7,6 +7,7 @@ source ./bin/utils.sh
 
 gui="$1"
 yes="$2"
+debug="$3"
 
 TMPDIR=${TMPDIR:-/tmp}
 tmpfile=$$-pip-packages.log
@@ -54,7 +55,7 @@ installPythonPackages () {
     do
         if hasPythonPackage "$pkg"
         then
-            g_success "$pkg is already installed"
+            [[ $debug -eq 1 ]] && g_success "$pkg is already installed"
             install=n
         elif [[ $yes -eq 1 ]]
         then

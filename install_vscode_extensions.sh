@@ -5,6 +5,7 @@ source ./bin/utils.sh
 
 # shellcheck disable=SC2034
 gui="$1"
+debug="$2"
 
 TMPDIR=${TMPDIR:-/tmp}
 
@@ -31,11 +32,14 @@ detectVSCode () {
 
 installVSCodeExtension () {
     ext=$1
-    grep -q "$ext" "${TMPDIR}/${tmpfile}" &>/dev/null || {
+    if grep -q "$ext" "${TMPDIR}/${tmpfile}" &>/dev/null
+    then
+        [[ $debug -eq 1 ]] && g_success "$ext is already installed"
+    else
         g_arrow "Installing $ext"
         "$code" --install-extension "$ext" > /dev/null
         (( installed++ ))
-    }
+    fi
 }
 
 installVSCodeCleanup () {

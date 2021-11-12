@@ -12,6 +12,7 @@ config="$3"
 xcode="$4"
 gui="$5"
 yes="$6"
+debug="$7"
 
 if [[ $gui -eq 0 ]]
 then
@@ -35,7 +36,7 @@ installFonts () {
             fontname=$(basename "$dir")
             if [ -d "${HOME}/.fonts/${fontname}" ]
             then
-                g_arrow "${fontname} is already installed"
+                [[ $debug -eq 1 ]] && g_success "${fontname} is already installed"
             else
                 cp $CPOPT "$dir" "${HOME}/.fonts"
                 reportResult "Installed font: ${fontname}" "Unable to install font: ${fontname}"
@@ -367,7 +368,7 @@ installDebianPackages () {
     do
         if hasDebianPackage "$pkg"
         then
-            g_success "$pkg is already installed"
+            [[ $debug -eq 1 ]] && g_success "$pkg is already installed"
             install=n
         elif [[ $yes -eq 1 ]]
         then
@@ -512,7 +513,7 @@ installFlatpaks () {
         do
             if hasFlatpak "$pkg"
             then
-                g_success "$pkg (flatpak) is already installed"
+                [[ $debug -eq 1 ]] && g_success "$pkg (flatpak) is already installed"
                 install=n
             elif [[ $yes -eq 1 ]]
             then

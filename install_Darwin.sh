@@ -11,6 +11,7 @@ config="$3"
 xcode="$4"
 gui="$5"
 yes="$6"
+debug="$7"
 
 if [[ $gui -eq 0 ]]
 then
@@ -46,7 +47,7 @@ promptToInstall () {
     app=("$@")
     if [[ $test_result -eq 0 ]]
     then
-        g_success "$name is already installed"
+        [[ $debug -eq 1 ]] && g_success "$name is already installed"
     else
         g_info "$name is not installed"
         install="h"
@@ -138,7 +139,7 @@ checkFont () {
     # Always install fonts
     if fc-list | grep -q "$font"
     then
-        g_success "$name is already installed"
+        [[ $debug -eq 1 ]] && g_success "$name is already installed"
     else
         g_info "$name is not installed"
         toInstallCask+=( "${cmd}" )
