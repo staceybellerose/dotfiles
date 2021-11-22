@@ -204,11 +204,14 @@ then
     checkSubCommand gnupg gpg "GNU Pretty Good Privacy" "https://gnupg.org/"
     checkSubCommand imagemagick magick "ImageMagick" "https://www.imagemagick.org/"
     checkNvm nvm "nvm" "https://github.com/nvm-sh/nvm"
+    checkInstall ack "ack" "https://beyondgrep.com/"
     checkInstall archey "archey4" "https://github.com/HorlogeSkynet/archey4"
     checkInstall autoconf "AutoConf" "https://www.gnu.org/software/autoconf"
     checkInstall automake "AutoMake" "https://www.gnu.org/software/automake/"
     checkInstall cowsay "CowSay" "https://github.com/tnalpgge/rank-amateur-cowsay"
     checkInstall dockutil "dockutil" "https://github.com/kcrawford/dockutil"
+    checkInstall fortune "fortune" "https://www.ibiblio.org/pub/linux/games/amusements/fortune/!INDEX.html"
+    checkInstall gawk "gawk" "https://www.gnu.org/software/gawk/"
     checkInstall git "Git" "https://git-scm.com/"
     checkInstall htop "htop" "https://htop.dev/"
     checkInstall jupyter "jupyter" "https://jupyter.org/"
@@ -218,56 +221,79 @@ then
     checkInstall neofetch "neofetch" "https://github.com/dylanaraps/neofetch"
     checkInstall node "Node.js" "https://nodejs.org/en/"
     checkInstall python3 "python3" "https://www.python.org/"
+    checkInstall r "r" "https://r-project.org/"
+    checkInstall rclone "rclone" "https://rclone.org/"
     checkInstall rsync "rsync" "https://rsync.samba.org/"
     checkInstall speedtest-cli "speedtest-cli" "https://github.com/sivel/speedtest-cli"
     checkInstall sqlite3 "SQLite" "https://www.sqlite.org/"
+    checkInstall tldr "tldr" "https://tldr.sh/"
     checkInstall tree "Tree" "http://mama.indstate.edu/users/ice/tree/"
     checkInstall wget "Wget" "https://www.gnu.org/software/wget/"
     checkInstall zenity "zenity" "https://wiki.gnome.org/Projects/Zenity"
     checkFile bash-completion "/usr/local/etc/profile.d/bash_completion.sh" "Bash Completion" "https://salsa.debian.org/debian/bash-completion"
 
     # Homebrew Casks
+    checkCask anaconda "Anaconda" "Anaconda-Navigator.app" "https://www.anaconda.com/"
     checkCask android-file-transfer "Android File Transfer" "Android File Transfer.app" "https://www.android.com/filetransfer/"
     checkCask android-studio "Android Studio" "Android Studio.app" "https://developer.android.com/studio"
     checkCask atom "Atom" "Atom.app" "https://atom.io/"
     checkCask balenaetcher "balena Etcher" "balenaEtcher.app" "https://www.balena.io/etcher/"
     checkCask coteditor "CotEditor" "CotEditor.app" "https://coteditor.com/"
+    checkCask calibre "calibre" "calibre.app" "https://calibre-ebook.com/"
+    checkCask coteditor "CotEditor" "CotEditor.app" "https://coteditor.com/"
     checkCask cpuinfo "CPU Info" "cpuinfo.app" "https://github.com/yusukeshibata/cpuinfo/"
     checkCask db-browser-for-sqlite "DB Browser for SQLite" "DB Browser for SQLite.app" "https://sqlitebrowser.org/"
+    checkCask deepgit "DeepGit" "DeepGit.app" "https://www.syntevo.com/deepgit/"
+    checkCask dia "Dia" "Dia.app" "http://dia-installer.de/"
     checkCask diffmerge "DiffMerge" "DiffMerge.app" "https://sourcegear.com/diffmerge/"
     checkCask docker "Docker" "Docker.app" "https://www.docker.com/products/docker-desktop"
-    checkCask double-commander "Double Commander" "Double Commander.app" "https://doublecmd.sourceforge.io"
     checkCask dropbox "Dropbox" "Dropbox.app" "https://www.dropbox.com/"
     checkCask firefox "Firefox" "Firefox.app" "https://www.mozilla.org/en-US/exp/firefox/"
     checkCask fork "Git-Fork" "Fork.app" "https://git-fork.com/"
     checkCask free-ruler "Free Ruler" "Free Ruler.app" "http://www.pascal.com/software/freeruler/"
     checkCask free42-decimal "Free42 Decimal" "Free42 Decimal.app" "https://thomasokken.com/free42/"
+    checkCask geany "Geany" "Geany.app" "https://www.geany.org/"
+    checkCask genymotion "Genymotion" "Genymotion.app" "https://www.genymotion.com/"
     checkCask gimp "Gimp" "GIMP-2.10.app" "https://www.gimp.org/"
     checkCask gitkraken "GitKraken" "GitKraken.app" "https://www.gitkraken.com/"
     checkCask google-chrome "Google Chrome" "Google Chrome.app" "https://www.google.com/chrome/"
+    checkCask gramps "Gramps" "Gramps.app" "https://gramps-project.org/blog/"
     checkCask hex-fiend "Hex Fiend" "Hex Fiend.app" "https://ridiculousfish.com/hexfiend/"
     checkCask inkscape "Inkscape" "Inkscape.app" "https://inkscape.org/"
     checkCask iterm2 "iTerm2" "iTerm.app" "https://www.iterm2.com/"
+    checkCask keepassx "KeePassX" "KeePassX.app" "https://www.keepassx.org/"
+    checkCask keka "Keka" "Keka.app" "https://www.keka.io/"
+    checkCask kekaexternalhelper "KekaExternalHelper.app" "https://www.keka.io/"
+    checkCask krita "Krita" "krita.app" "https://krita.org/"
     checkCask jiggler "Jiggler" "Jiggler.app" "http://www.sticksoftware.com/software/Jiggler.html"
     checkCask libreoffice "LibreOffice" "LibreOffice.app" "https://www.libreoffice.org/"
+    checkCask lyx "LyX" "LyX.app" "https://www.lyx.org/"
     checkCask macdown "MacDown" "MacDown.app" "https://macdown.uranusjr.com/"
     checkCask macvim "MacVim" "MacVim.app" "https://github.com/macvim-dev/macvim"
+    checkCask meld "Meld" "Meld.app" "https://yousseb.github.io/meld/"
     checkCask miro "Miro" "Miro.app" "https://miro.com"
+    # checkCask moped "Moped" "Moped.app" "https://roberto.machorro.net/Moped/"
     checkCask mysqlworkbench "MySQL Workbench" "MySQLWorkbench.app" "https://www.mysql.com/products/workbench/"
     checkCask onedrive "OneDrive" "OneDrive.app" "https://onedrive.live.com/"
     checkCask openineditor-lite "OpenInEditor Lite" "OpenInEditor-Lite.app" "https://github.com/Ji4n1ng/OpenInTerminal"
     checkCask openinterminal-lite "OpenInTerminal Lite" "OpenInTerminal-Lite.app" "https://github.com/Ji4n1ng/OpenInTerminal"
     checkCask pencil "Pencil" "Pencil.app" "https://pencil.evolus.vn/"
+    checkCask pokerth "PokerTH" "pokerth.app" "https://www.pokerth.net/"
     checkCask postman "Postman" "Postman.app" "https://www.postman.com/"
     checkCask powershell "PowerShell Core" "PowerShell.app" "https://microsoft.com/PowerShell"
     checkCask projectlibre "Project Libre" "ProjectLibre.app" "https://www.projectlibre.com/"
     checkCask pycharm-ce "PyCharm Community Edition" "PyCharm CE.app" "https://www.jetbrains.com/pycharm/"
+    checkCask raspberry-pi-imager "Raspberry Pi Imager" "Raspberry Pi Imager.app" "https://www.raspberrypi.org/downloads/"
+    checkCask rstudio "RStudio" "RStudio.app" "https://www.rstudio.com/"
     checkCask scribus "Scribus" "Scribus.app" "https://www.scribus.net/"
+    checkCask sigil "Sigil" "Sigil.app" "https://sigil-ebook.com/"
     checkCask spotify "Spotify" "Spotify.app" "https://www.spotify.com/"
-    checkCask the-unarchiver "The Unarchiver" "The Unarchiver.app" "https://theunarchiver.com/"
+    checkCask texstudio "TeXstudio" "texstudio.app" "https://texstudio.org/"
     checkCask thunderbird "Mozilla Thunderbird" "Thunderbird.app" "https://www.thunderbird.net/en-US/"
+    checkCask ultimaker-cura "Ultimaker Cura" "Ultimaker Cura.app" "https://ultimaker.com/software/ultimaker-cura"
     checkCask visual-studio-code "Visual Studio Code" "Visual Studio Code.app" "https://code.visualstudio.com/"
     checkCask vlc "VLC Media Player" "VLC.app" "https://www.videolan.org/vlc/"
+    checkCask yubico-yubikey-manager "YubiKey Manager" "YubiKey Manager.app" "https://www.yubico.com/support/download/yubikey-manager/"
     checkCask zoom "Zoom" "zoom.us.app" "https://www.zoom.us/"
     checkLibraryCask qlcolorcode "QuickLook CodeFormatter plugin" "QuickLook/QLColorCode.qlgenerator" "https://github.com/anthonygelibert/QLColorCode"
     checkLibraryCask qlmarkdown "QuickLook Markdown plugin" "QuickLook/QLMarkdown.qlgenerator" "https://github.com/toland/qlmarkdown"
@@ -355,7 +381,9 @@ then
         brew upgrade -q
         brew cleanup -q
         brew tap | grep -q "^homebrew/cask$" || brew tap -q homebrew/cask
+        brew tap | grep -q "^homebrew/cask-drivers$" || brew tap -q homebrew/cask-drivers
         brew tap | grep -q "^homebrew/cask-fonts$" || brew tap -q homebrew/cask-fonts
+        brew tap | grep -q "^staceybellerose/oss$" || brew tap -q staceybellerose/oss
     fi
 
     # Install the Command Line Tools and the Homebrew Bottles
@@ -369,7 +397,9 @@ then
             brew update -q
             brew upgrade -q
             brew tap -q homebrew/cask
+            brew tap -q homebrew/cask-drivers
             brew tap -q homebrew/cask-fonts
+            brew tap -q staceybellerose/oss
         elif [ "$i" == "rvm" ]
         then
             curl -sSL https://get.rvm.io | bash -s stable --ruby --rails
@@ -395,13 +425,16 @@ then
         "Google Chrome"
         "Visual Studio Code"
         "Android Studio"
-        "CotEditor"
+        "Moped"
         "MacDown"
         "Fork"
         "Postman"
         "Spotify"
         "iTerm"
     )
+    # declare -a oldDockItems=(
+    #     "CotEditor"
+    # )
     for item in "${dockItems[@]}"
     do
         (dockutil --find "$item" "$HOME" || dockutil --add "/Applications/$item.app") &> /dev/null
