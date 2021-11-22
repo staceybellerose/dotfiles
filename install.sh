@@ -334,7 +334,7 @@ then
 fi
 if [[ $vscode -eq 1 ]]
 then
-  source ./install_vscode_extensions.sh "$gui" "$debug"
+    source ./install_vscode_extensions.sh "$gui" "$debug"
 fi
 
 # Process OS-specific files

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC1091
+# shellcheck disable=SC1091,SC2024
 
 # Use this script for any Linux-based specific installations
 
@@ -28,6 +28,13 @@ fi
 
 INSTALLDIR=${TMPDIR:-/tmp}/dotfiles-installer
 mkdir -p "$INSTALLDIR"
+initial_wd=$PWD
+if [[ $debug -eq 0 ]]
+then
+    out=/dev/null
+else
+    out=/dev/stdout
+fi
 
 declare -a deb_extra_packages=()
 
@@ -160,11 +167,11 @@ configureDebian () {
     # Set up Steam
     if [ "$arch" = "amd64" ]
     then
-        sudo dpkg --add-architecture i386
-        sudo apt-get -q update
+        sudo dpkg --add-architecture i386 &> "$out"
+        sudo apt-get -q update &> "$out"
         installDebianPackage "software-properties-common"
-        sudo add-apt-repository contrib
-        sudo add-apt-repository non-free
+        sudo add-apt-repository contrib &> "$out"
+        sudo add-apt-repository non-free &> "$out"
         deb_extra_packages+=( "steam" )
     fi
 
@@ -196,7 +203,7 @@ configureDebian () {
     deb_extra_packages+=( "codium" )
 
     # Update list of sources
-    sudo apt-get -q update
+    sudo apt-get -q update &> "$out"
 }
 
 installDebianPackages () {
@@ -204,6 +211,7 @@ installDebianPackages () {
     g_bold "Installing Debian Packages"
     declare -a pkgs=(
         "2048-qt"
+        "ack"
         "adb"
         "arc-theme"
         "ardiuno"
@@ -212,7 +220,6 @@ installDebianPackages () {
         "audacious"
         "audacity"
         "bash-completion"
-        "bless"
         "calibre"
         "catfish"
         "checkstyle"
@@ -253,6 +260,7 @@ installDebianPackages () {
         "git-lfs"
         "git"
         "gitg"
+        "github-backup"
         "gpick"
         "gramps"
         "htop"
@@ -278,6 +286,7 @@ installDebianPackages () {
         "mugshot"
         "nodejs"
         "openyahtzee"
+        "pencil"
         "pokerth"
         "projectlibre"
         "python3"
@@ -306,8 +315,8 @@ installDebianPackages () {
         "tali"
         "tango-icon-theme"
         "texstudio"
-        "texworks"
         "thunderbird"
+        "tldr"
         "ttf-xfree86-nonfree"
         "vim-addon-manager"
         "vim-airline"
@@ -432,6 +441,28 @@ installDebianExternalPackages () {
             }
         fi
     }
+
+    # GitKraken
+    hasDebianPackage "gitkraken" || {
+        if [ "$arch" = "amd64" ]
+        then
+            cd "$INSTALLDIR" && {
+                wget -q https://release.gitkraken.com/linux/gitkraken-amd64.deb
+                sudo apt-get -q install "$INSTALLDIR/gitkraken-amd64.deb"
+            }
+        fi
+    }
+
+    # Raspberry Pi Imager
+    hasDebianPackage "rpi-imager" || {
+        if [ "$arch" = "amd64" ]
+        then
+            cd "$INSTALLDIR" && {
+                wget -q https://downloads.raspberrypi.org/imager/imager_latest_amd64.deb
+                sudo apt-get -q install "$INSTALLDIR/imager_latest_amd64.deb"
+            }
+        fi
+    }
 }
 
 isRedHatDerivative () {
@@ -478,6 +509,35 @@ installRvm () {
     }
 }
 
+installTarball () {
+    # TODO prompt before installing!
+    # return
+    tarball=$1
+    basepath=$2
+    tarpath=$3
+    url=$4
+    if [ -d "$basepath/$tarpath" ]
+    then
+        [[ $debug -eq 1 ]] && g_success "$tarball is already installed"
+    else
+        cd "$INSTALLDIR" && {
+            wget -q "$url" -O "$tarball"
+            if sudo tar -x -f "$tarball" -z -C "$basepath" --owner=root --group=root
+            then
+                sudo chown -R root:root "$basepath/$tarpath"
+                g_success "Installed tarball: $tarball"
+            else
+                g_error "Unable to install tarball: $tarball"
+            fi
+        }
+    fi
+}
+
+installTarballs () {
+    installTarball "free42linux.tar.gz" "/opt" "Free42Linux" "https://thomasokken.com/free42/download/Free42Linux.tgz"
+    installTarball "postman-latest.tar.gz" "/opt" "Postman" "https://dl.pstmn.io/download/latest/linux64"
+}
+
 hasFlatpak () {
     flatpak info "$1" &> /dev/null
     return $?
@@ -485,28 +545,15 @@ hasFlatpak () {
 
 installFlatpaks () {
     declare -a flatpaks=(
-        "com.axosoft.GitKraken"
-        "com.jetbrains.PyCharm-Community"
-        "com.getpostman.Postman"
-        "com.github.alecaddd.sequeler"
-        "com.github.arshubham.gitignore"
-        "com.github.fabiocolacio.marker"
-        "com.github.gijsgoudzwaard.image-optimizer"
-        "com.github.PintaProject.Pinta"
         "com.github.alexkdeveloper.desktop-files-creator"
         "com.github.artemanufrij.regextester"
+        "com.github.gijsgoudzwaard.image-optimizer"
         "com.google.AndroidStudio"
-        "com.notepadqq.Notepadqq"
-        "io.github.cloose.CuteMarkEd"
-        "io.github.lainsce.Colorway"
-        "io.github.martinrotter.textosaurus"
+        "com.jetbrains.PyCharm-Community"
+        "io.github.mmstick.FontFinder"
         "io.github.seadve.Breathing"
         "io.github.trytonvanmeer.DungeonJournal"
-        "net.rpdev.OpenTodoList"
-        "nl.hjdskes.gcolor3"
-        "org.gnome.design.Contrast"
-        "org.raspberrypi.rpi-imager"
-        "re.sonny.Commit"
+        "re.sonny.OhMySVG"
     )
     # declare -a optionalFlatpaks=(
     #     "us.zoom.Zoom"
@@ -567,6 +614,7 @@ then
     }
     isRedHatDerivative && installRedHatPackages
     installRvm
+    installTarballs
     installFlatpaks
 fi
 if [[ $fonts -eq 1 ]]
@@ -574,4 +622,4 @@ then
     installFonts
 fi
 
-rm -rf "$INSTALLDIR"
+cd "$initial_wd" && rm -rf "$INSTALLDIR"
