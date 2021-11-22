@@ -344,6 +344,7 @@ fi
 if [[ $packages -eq 1 ]]
 then
     source ./install_Python3.sh "$gui" "$yes" "$debug"
+    source ./install_ruby_gems.sh "$gui" "$yes" "$debug"
 fi
 
 g_success "Done!"

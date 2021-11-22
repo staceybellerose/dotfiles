@@ -8,25 +8,14 @@ gui="$1"
 yes="$2"
 debug="$3"
 
-TMPDIR=${TMPDIR:-/tmp}
-tmpfile=$$-pip-packages.log
-
 hasPython3 () {
     (type -P python3 && type -P pip3) &> /dev/null
     return $?
 }
 
-retrievePackageList () {
-    pip3 list > "${TMPDIR}/${tmpfile}" 2>&1
-}
-
-cleanUpPackageList () {
-    rm "${TMPDIR}/${tmpfile}"
-}
-
 hasPythonPackage () {
     hasPython3 || return
-    grep -q "$1" "${TMPDIR}/${tmpfile}" &> /dev/null
+    pip3 list | grep -q "$1" &> /dev/null
     return $?
 }
 
@@ -42,7 +31,6 @@ installPythonPackage () {
 
 installPythonPackages () {
     hasPython3 || return
-    retrievePackageList
     g_bold "Installing Python packages"
     declare -a pkgs=(
         "archey4"
@@ -77,7 +65,6 @@ installPythonPackages () {
     do
         installPythonPackage "$pkg"
     done
-    cleanUpPackageList
 }
 
 g_header "Python Package Installer"
