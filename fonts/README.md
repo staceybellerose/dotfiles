@@ -2,7 +2,7 @@
 
 Open Source fonts that I use for various purposes.
 
-| Font                              | Category    | Classification    | Alternative To   | Google Fonts |
+| Font (with source link)           | Category    | Classification    | Alternative To   | Google Fonts |
 |:----------------------------------|:------------|:------------------|:-----------------|:-:|
 | Abelard<sup id="a1">[1](#f1)</sup>| script      | medieval          |                  | — |
 | [ADF-Accanthis][adffonts]         | serif       | old-style         |Galliard, Cloister Old Style| — |
@@ -17,6 +17,7 @@ Open Source fonts that I use for various purposes.
 | AuntJudy<sup>[1](#f1)</sup>       | historic    | uncial            |                  | — |
 | Barbara Plump<sup>[1](#f1)</sup>  | historic    | lombardic, uncial |                  | — |
 | Barbara Svelte<sup>[1](#f1)</sup> | historic    | lombardic, uncial |                  | — |
+| [Bentham][bentham]                | serif       | modern            |                  | [link][g78] |
 | [Besley*][besley]                 | serif       | slab              | Clarendon        | [link][g07] |
 | [Besley Small Caps][besleysc]     | serif       | slab              | Clarendon        | — |
 | Black Chancery<sup id="a4">[4](#f4)</sup>|script| calligraphic      |                  | — |
@@ -50,6 +51,7 @@ Open Source fonts that I use for various purposes.
 | [Font Awesome 4.7][awesome]       | dingbats    | —                 |                  | — |
 | [FPL Neu][fplneu]                 | serif       | old-style         | Palatino         | — |
 | [Gamaliel][gamaliel]              | blackletter | modern            |                  | — |
+| [Geo][geo]                        | sans-serif  | geometric         |                  | [link][g79] |
 | [Great Vibes][greatvibes]         | script      | formal            |                  | [link][g25] |
 | [Inter][inter]                    | monospaced  | neo-grotesk (sans)|                  | [link][g27] |
 | [Isabella][isabella]              | blackletter | textualis         |                  | — |
@@ -72,6 +74,10 @@ Open Source fonts that I use for various purposes.
 | [Merriweather][merriweather]      | serif       | slab              |                  | [link][g39] |
 | [Merriweather Sans][merrisans]    | sans-serif  | humanist          |                  | [link][g40] |
 | [Meslo LG][meslo]                 | monospaced  | grotesk (sans)    |                  | — |
+| [MgOpen Canonica][mgopen]         | serif       | transitional      | Times Roman      | — |
+| [MgOpen Cosmetica][mgopen]        | sans-serif  | humanist          | Optima           | — |
+| [MgOpen Modata][mgopen]           | sans-serif  | neo-grotesk       |                  | — |
+| [MgOpen Moderna][mgopen]          | sans-serif  | neo-grotesk       | Helvetica        | — |
 | [Michroma][michroma]              | sans-serif  | geometric         | Eurostile        | [link][g41] |
 | [Milonga][milonga]                | serif       | swashed           |                  | [link][g42] |
 | [Miltonian][miltonian]            | serif       | swashed           |                  | [link][g43] |
@@ -85,12 +91,15 @@ Open Source fonts that I use for various purposes.
 | [Petit Formal Script][petit]      | script      | formal            |                  | [link][g49] |
 | [Playfair Display][playfair]      | serif       | transitional      |                  | [link][g50] |
 | [Playfair Display SC][playfair]   | serif       | transitional      |                  | [link][g73] |
+| [Puritan][puritan]                | sans-serif  | humanist          |                  | [link][g80] |
 | [Quaerite Regnum Dei][quaerite]   | blackletter | rotunda           |                  | — |
+| [Radis Sans][radis]               | sans-serif  | geometric         |                  | — |
 | [Radley][radley]                  | serif       | old-style         |                  | [link][g53] |
 | [Raleway][raleway]                | sans-serif  | neo-grotesk       |                  | [link][g54] |
 | [Redacted][redacted]              | nonsense    | —                 |                  | — |
 | [Roboto Mono][robotomono]         | monospaced  | neo-grotesk (sans)|                  | [link][g57] |
 | [Rokkitt][rokkitt]                | serif       | slab              | Rockwell         | [link][g59] |
+| [Rosario][rosario]                | sans-serif  | humanist          |                  | [link][g81] |
 | [Sancreek][sancreek]              | serif       | western           |                  | [link][g60] |
 | [Smokum][smokum]                  | serif       | slab, western     | French Clarendon | [link][g61] |
 | [Sorts Mill Goudy][sortsgoudy]    | serif       | old-style         | Goudy Old Style  | [link][g62] |
@@ -99,6 +108,7 @@ Open Source fonts that I use for various purposes.
 | [Source Sans Pro][sourcesans]     | sans-serif  | grotesk           |                  | [link][g64] |
 | [Source Serif Pro][sourceserif]   | serif       | transitional slab | Charter          | [link][g65] |
 | [Spartan][spartan]                | sans-serif  | geometric         | Futura           | [link][g66] |
+| [Squarish Sans][squarishsans]     | sans-serif  | geometric         | Bank Gothic      | — |
 | [Trocchi][trocchi]                | serif       | slab              |                  | [link][g67] |
 | [Uncial Antiqua][uncialantiqua]   | script      | uncial modern     |                  | [link][g71] |
 | [URW Algiers][ghostpdl]           | serif       | glyphic           | Albertus, A028   | — |
@@ -124,11 +134,12 @@ Open Source fonts that I use for various purposes.
 [alegreyasans]: https://www.huertatipografica.com/en/fonts/alegreya-sans-ht
 [atomicage]: https://github.com/SorkinType/Atomic-Age
 [awesome]: https://fontawesome.com/v4.7/
+[bentham]: https://github.com/readingtype/Bentham
 [besley]: https://github.com/indestructible-type/Besley
 [besleysc]: https://github.com/ctrlcctrlv/Besley-Small-Caps
 [bodoni]: https://github.com/indestructible-type/Bodoni
 [cabin]: https://github.com/impallari/Cabin
-[carlito]: https://packages.debian.org/buster/fonts-crosextra-carlito
+[carlito]: https://github.com/googlefonts/carlito
 [cascadia]: https://github.com/microsoft/cascadia-code
 [charter]: https://practicaltypography.com/charter.html
 [chomsky]: https://github.com/ctrlcctrlv/chomsky
@@ -150,6 +161,7 @@ Open Source fonts that I use for various purposes.
 [fira]: https://github.com/bBoxType/FiraSans
 [fplneu]: https://github.com/rstub/fplneu
 [gamaliel]: https://fontlibrary.org/en/font/gamaliel
+[geo]: https://github.com/readingtype/Geo
 [ghostpdl]: http://git.ghostscript.com/?p=ghostpdl.git;a=tree;f=pcl/urwfonts;hb=HEAD
 [greatvibes]: https://github.com/googlefonts/great-vibes
 [inter]: https://github.com/rsms/inter/
@@ -169,6 +181,7 @@ Open Source fonts that I use for various purposes.
 [merrisans]: https://github.com/SorkinType/Merriweather-Sans
 [merriweather]: https://github.com/SorkinType/Merriweather
 [meslo]: https://github.com/andreberg/Meslo-Font
+[mgopen]: https://web.archive.org/web/20090309063533/https://ellak.gr/fonts/MgOpen/index.en.html
 [michroma]: https://github.com/vernnobile/MichromaFont
 [milonga]: https://fonts.google.com/specimen/Milonga
 [miltonian]: https://github.com/impallari/Miltonian
@@ -179,12 +192,15 @@ Open Source fonts that I use for various purposes.
 [orbitron]: https://github.com/theleagueof/orbitron
 [petit]: https://fonts.google.com/specimen/Petit+Formal+Script
 [playfair]: https://github.com/clauseggers/Playfair-Display
+[puritan]: https://github.com/readingtype/Puritan
 [quaerite]: https://github.com/ctrlcctrlv/QuaeriteRegnumDei
+[radis]: https://fontlibrary.org/en/font/radis-sans
 [radley]: https://github.com/googlefonts/RadleyFont
 [raleway]: https://github.com/impallari/Raleway
 [redacted]: https://github.com/christiannaths/redacted-font
 [robotomono]: https://github.com/googlefonts/RobotoMono
 [rokkitt]: https://github.com/googlefonts/RokkittFont
+[rosario]: https://github.com/Omnibus-Type/Rosario
 [sancreek]: https://fonts.google.com/specimen/Sancreek
 [smokum]: https://fonts.google.com/specimen/Smokum
 [sortsgoudy]: https://github.com/theleagueof/sorts-mill-goudy
@@ -193,6 +209,7 @@ Open Source fonts that I use for various purposes.
 [sourcesans]: https://github.com/adobe-fonts/source-sans
 [sourceserif]: https://github.com/adobe-fonts/source-serif
 [spartan]: https://github.com/bghryct/Spartan-MB
+[squarishsans]: http://christtrekker.users.sourceforge.net/fnt/squarishsans.shtml
 [trocchi]: https://github.com/vernnobile/TrocchiFont
 [uncialantiqua]: https://github.com/librefonts/uncialantiqua
 [utopia]: https://ghostscript.com/~tor/stuff/fonts/utopia/
@@ -249,3 +266,7 @@ Open Source fonts that I use for various purposes.
 [g71]: https://fonts.google.com/specimen/Uncial+Antiqua
 [g72]: https://fonts.google.com/specimen/Zilla+Slab
 [g73]: https://fonts.google.com/specimen/Playfair+Display+SC
+[g78]: https://fonts.google.com/specimen/Bentham
+[g79]: https://fonts.google.com/specimen/Geo
+[g80]: https://fonts.google.com/specimen/Puritan
+[g81]: https://fonts.google.com/specimen/Rosario
