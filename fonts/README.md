@@ -26,6 +26,7 @@ Open Source fonts that I use for various purposes.
 | [Carlito][carlito]                | sans-serif  | humanist          | Calibri          | — |
 | Carolingia<sup id="a2">[2](#f2)</sup>| historic | carolingian       |                  | — |
 | [Cascadia Mono][cascadia]         | monospaced  | grotesk (sans)    |                  | — |
+| [Charm][charm]                    | script      | formal            |                  | [link][g82] |
 | [Charter][charter]                | serif       | transitional      |                  | — |
 | [Chomsky][chomsky]                | blackletter | textualis         |                  | — |
 | [Cinzel][cinzel]                  | serif       | incised           | Trajan Pro       | [link][g13] |
@@ -101,7 +102,7 @@ Open Source fonts that I use for various purposes.
 | [Rokkitt][rokkitt]                | serif       | slab              | Rockwell         | [link][g59] |
 | [Rosario][rosario]                | sans-serif  | humanist          |                  | [link][g81] |
 | [Sancreek][sancreek]              | serif       | western           |                  | [link][g60] |
-| [Smokum][smokum]                  | serif       | slab, western     | French Clarendon | [link][g61] |
+| [Smokum][smokum]                  | serif | slab, western | French Clarendon, Playbill | [link][g61] |
 | [Sorts Mill Goudy][sortsgoudy]    | serif       | old-style         | Goudy Old Style  | [link][g62] |
 | [Sorts Mill Kis][sortskis]        | serif       | old-style         | Janson, Kis      | — |
 | [Source Code Pro][sourcecode]     | monospaced  | grotesk (sans)    |                  | [link][g63] |
@@ -109,6 +110,7 @@ Open Source fonts that I use for various purposes.
 | [Source Serif Pro][sourceserif]   | serif       | transitional slab | Charter          | [link][g65] |
 | [Spartan][spartan]                | sans-serif  | geometric         | Futura           | [link][g66] |
 | [Squarish Sans][squarishsans]     | sans-serif  | geometric         | Bank Gothic      | — |
+| [Tangerine][tangerine]            | script      | formal            |                  | [link][g83] |
 | [Trocchi][trocchi]                | serif       | slab              |                  | [link][g67] |
 | [Uncial Antiqua][uncialantiqua]   | script      | uncial modern     |                  | [link][g71] |
 | [URW Algiers][ghostpdl]           | serif       | glyphic           | Albertus, A028   | — |
@@ -141,6 +143,7 @@ Open Source fonts that I use for various purposes.
 [cabin]: https://github.com/impallari/Cabin
 [carlito]: https://github.com/googlefonts/carlito
 [cascadia]: https://github.com/microsoft/cascadia-code
+[charm]: https://github.com/cadsondemak/Charm
 [charter]: https://practicaltypography.com/charter.html
 [chomsky]: https://github.com/ctrlcctrlv/chomsky
 [cinzel]: https://github.com/NDISCOVER/Cinzel
@@ -210,6 +213,7 @@ Open Source fonts that I use for various purposes.
 [sourceserif]: https://github.com/adobe-fonts/source-serif
 [spartan]: https://github.com/bghryct/Spartan-MB
 [squarishsans]: http://christtrekker.users.sourceforge.net/fnt/squarishsans.shtml
+[tangerine]: https://tosche.net/fonts/tangerine
 [trocchi]: https://github.com/vernnobile/TrocchiFont
 [uncialantiqua]: https://github.com/librefonts/uncialantiqua
 [utopia]: https://ghostscript.com/~tor/stuff/fonts/utopia/
@@ -270,3 +274,5 @@ Open Source fonts that I use for various purposes.
 [g79]: https://fonts.google.com/specimen/Geo
 [g80]: https://fonts.google.com/specimen/Puritan
 [g81]: https://fonts.google.com/specimen/Rosario
+[g82]: https://fonts.google.com/specimen/Charm
+[g83]: https://fonts.google.com/specimen/Tangerine
