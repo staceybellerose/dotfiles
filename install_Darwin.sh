@@ -214,6 +214,7 @@ then
     checkInstall gawk "gawk" "https://www.gnu.org/software/gawk/"
     checkInstall git "Git" "https://git-scm.com/"
     checkInstall htop "htop" "https://htop.dev/"
+    checkInstall jq "jq" "https://stedolan.github.io/jq/"
     checkInstall jupyter "jupyter" "https://jupyter.org/"
     checkInstall kotlin "kotlin" "https://kotlinlang.org/"
     checkInstall magick "ImageMagick" "https://imagemagick.org/"

@@ -138,11 +138,11 @@ g_note() {
 }
 
 reportResult () {
-  local result=$?
-  if [[ $result -eq 0 ]]
-  then
-    g_success "$1"
-  else
-    g_error "$2"
-  fi
+    local result=$?
+    if [[ $result -eq 0 ]]
+    then
+        g_success "$1"
+    else
+        g_error "$2"
+    fi
 }

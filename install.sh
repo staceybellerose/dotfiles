@@ -336,6 +336,10 @@ if [[ $vscode -eq 1 ]]
 then
     source ./install_vscode_extensions.sh "$gui" "$debug"
 fi
+if [[ $fonts -eq 1 ]]
+then
+    source ./install_nonfree_fonts.sh "$gui" "$debug"
+fi
 
 # Process OS-specific files
 [ -f "./install_${arch}.sh" ] && source "./install_${arch}.sh" "$packages" "$fonts" "$config" "$xcode" "$gui" "$yes" "$debug"

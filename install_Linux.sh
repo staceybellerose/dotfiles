@@ -270,6 +270,7 @@ installDebianPackages () {
         "inkscape"
         "jekyll"
         "jmol"
+        "jq"
         "jupyter"
         "keepassx"
         "keepassxc"
