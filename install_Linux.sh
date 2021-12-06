@@ -46,7 +46,7 @@ installFonts () {
         if [ -d "$dir" ]
         then
             fontname=$(basename "$dir")
-            if [ -d "${HOME}/.fonts/${fontname}" ]
+            if fc-list | grep -q "$fontname"
             then
                 [[ $debug -eq 1 ]] && g_success "${fontname} is already installed"
             else
