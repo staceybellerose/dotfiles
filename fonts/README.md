@@ -54,7 +54,7 @@ Open Source fonts that I use for various purposes.
 | [Gamaliel][gamaliel]              | blackletter | modern            |                  | — |
 | [Geo][geo]                        | sans-serif  | geometric         |                  | [link][g79] |
 | [Great Vibes][greatvibes]         | script      | formal            |                  | [link][g25] |
-| [Inter][inter]                    | monospaced  | neo-grotesk (sans)|                  | [link][g27] |
+| [Inter][inter]                    | sans-serif  | neo-grotesk       |                  | [link][g27] |
 | [Isabella][isabella]              | blackletter | textualis         |                  | — |
 | [JetBrains Mono][jbmono]          | monospaced  |sans-serif (geometric)|               | — |
 | [Josefin Sans][josefinsans]       | sans-serif  | geometric         |                  | [link][g28] |

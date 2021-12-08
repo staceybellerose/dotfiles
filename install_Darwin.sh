@@ -206,6 +206,7 @@ then
     checkSubCommand imagemagick magick "ImageMagick" "https://www.imagemagick.org/"
     checkNvm nvm "nvm" "https://github.com/nvm-sh/nvm"
     checkInstall ack "ack" "https://beyondgrep.com/"
+    checkInstall alerter "alerter" "https://github.com/vjeantet/alerter"
     checkInstall archey "archey4" "https://github.com/HorlogeSkynet/archey4"
     checkInstall autoconf "AutoConf" "https://www.gnu.org/software/autoconf"
     checkInstall automake "AutoMake" "https://www.gnu.org/software/automake/"
@@ -228,6 +229,7 @@ then
     checkInstall rsync "rsync" "https://rsync.samba.org/"
     checkInstall speedtest-cli "speedtest-cli" "https://github.com/sivel/speedtest-cli"
     checkInstall sqlite3 "SQLite" "https://www.sqlite.org/"
+    checkInstall terminal-notifier "terminal-notifier" "https://github.com/julienXX/terminal-notifier"
     checkInstall tldr "tldr" "https://tldr.sh/"
     checkInstall tree "Tree" "http://mama.indstate.edu/users/ice/tree/"
     checkInstall wget "Wget" "https://www.gnu.org/software/wget/"
@@ -240,6 +242,7 @@ then
     checkCask android-studio "Android Studio" "Android Studio.app" "https://developer.android.com/studio"
     checkCask atom "Atom" "Atom.app" "https://atom.io/"
     checkCask balenaetcher "balena Etcher" "balenaEtcher.app" "https://www.balena.io/etcher/"
+    checkCask box-sync "Box Sync" "Box Sync.app" "https://www.box.com/"
     checkCask coteditor "CotEditor" "CotEditor.app" "https://coteditor.com/"
     checkCask calibre "calibre" "calibre.app" "https://calibre-ebook.com/"
     checkCask coteditor "CotEditor" "CotEditor.app" "https://coteditor.com/"
@@ -386,13 +389,24 @@ then
         g_info "Configuring OpenInEditor Lite"
         if [ -d "/Applications/MacVim.app" ]
         then
-            defaults write wang.jianing.app.OpenInEditor-Lite OIT_EditorBundleIdentifier MacVim
+            defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor MacVim
         elif [ -d "/Applications/Visual Studio Code.app" ]
         then
-            defaults write wang.jianing.app.OpenInEditor-Lite OIT_EditorBundleIdentifier VSCode
+            defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor Visual\ Studio\ Code
+        elif [ -d "/Applications/Atom.app" ]
+        then
+            defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor Atom
         elif [ -d "/Applications/CotEditor.app" ]
         then
-            defaults write wang.jianing.app.OpenInEditor-Lite OIT_EditorBundleIdentifier CotEditor
+            defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor CotEditor
+        elif [ -d "/Applications/Sublime Text.app" ]
+        then
+            defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor Sublime\ Text
+        elif [ -d "/Applications/BBEdit.app" ]
+        then
+            defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor BBEdit
+        else
+            defaults write wang.jianing.app.OpenInEditor-Lite LiteDefaultEditor TextEdit
         fi
     fi
     if [ -d "/Applications/OpenInTerminal-Lite.app" ]
@@ -400,10 +414,10 @@ then
         g_info "Configuring OpenInTerminal Lite"
         if [ -d "/Applications/iTerm.app" ]
         then
-            defaults write wang.jianing.app.OpenInTerminal-Lite OIT_TerminalBundleIdentifier iTerm
+            defaults write wang.jianing.app.OpenInTerminal-Lite LiteDefaultTerminal iTerm
             defaults write com.googlecode.iterm2 OpenFileInNewWindows -bool false
         else
-            defaults write wang.jianing.app.OpenInTerminal-Lite OIT_TerminalBundleIdentifier Terminal
+            defaults write wang.jianing.app.OpenInTerminal-Lite LiteDefaultTerminal Terminal
         fi
     fi
 fi # if [[ $packages ]]
@@ -444,7 +458,7 @@ then
     checkFont "font-linux-libertine" "Linux Libertine" "Linux Libertine Fonts" "https://sourceforge.net/projects/linuxlibertine/"
     checkFont "font-lobster" "Lobster-Regular" "Lobster Font" "https://fonts.google.com/specimen/Lobster"
     checkFont "font-lobster-two" "Lobster Two" "Lobster Two Font" "https://fonts.google.com/specimen/Lobster+Two"
-    checkFont "font-monoid" "Monoid" "Monoid Font" "https://github.com/larsenwork/monoid"
+    checkFont "font-mononoki" "Mononoki" "Mononoki Font" "http://madmalik.github.io/mononoki/"
     checkFont "font-noto-color-emoji" "Noto Color Emoji" "Noto Color Emoji Font" "https://github.com/googlefonts/noto-emoji"
     checkFont "font-noto-sans" "NotoSans-Regular" "Noto Sans Font" "https://www.google.com/get/noto/"
     checkFont "font-noto-sans-cherokee" "Noto Sans Cherokee" "Noto Sans Cherokee Font" "https://fonts.google.com/noto/specimen/Noto+Sans+Cherokee"
@@ -460,7 +474,15 @@ then
     checkFont "font-noto-serif-display" "Noto Serif Display" "Noto Serif Display Font" "https://www.google.com/get/noto/"
     # TODO include other Noto Fonts as needed for other languages
     checkFont "font-open-sans" "Open Sans" "Open Sans Font" "https://fonts.google.com/specimen/Open+Sans"
+    checkFont "font-oxygen" "Oxygen-Regular" "Oxygen Font" "https://fonts.google.com/specimen/Oxygen"
+    checkFont "font-oxygen-mono" "OxygenMono" "Oxygen Mono Font" "https://fonts.google.com/specimen/Oxygen+Mono"
     checkFont "font-prociono" "Prociono" "Prociono Font" "https://fonts.google.com/specimen/Prociono"
+    checkFont "font-pt-mono" "PT Mono" "PT Mono Font" "https://company.paratype.com/pt-sans-pt-serif"
+    checkFont "font-pt-sans" "PT Sans" "PT Sans Font" "https://company.paratype.com/pt-sans-pt-serif"
+    checkFont "font-pt-sans-caption" "PT Sans Caption" "PT Sans Caption Font" "https://company.paratype.com/pt-sans-pt-serif"
+    checkFont "font-pt-sans-narrow" "PT Sans Narrow" "PT Sans Narrow Font" "https://company.paratype.com/pt-sans-pt-serif"
+    checkFont "font-pt-serif" "PT Serif" "PT Serif Font" "https://company.paratype.com/pt-sans-pt-serif"
+    checkFont "font-pt-serif-caption" "PT Serif Caption" "PT Serif Caption Font" "https://company.paratype.com/pt-sans-pt-serif"
     checkFont "font-quicksand" "Quicksand" "Quicksand Font" "https://fonts.google.com/specimen/Quicksand"
     checkFont "font-roboto" "Roboto-Italic" "Roboto Font" "https://fonts.google.com/specimen/Roboto"
     checkFont "font-roboto-slab" "Roboto Slab" "Roboto Slab Font" "https://fonts.google.com/specimen/Roboto+Slab"

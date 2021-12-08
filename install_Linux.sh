@@ -368,6 +368,8 @@ installDebianPackages () {
         "fonts-noto-mono"
         "fonts-noto-unhinted"
         "fonts-open-sans"
+        "fonts-oxygen"
+        "fonts-paratype"
         "fonts-prociono"
         "fonts-quicksand"
         "fonts-roboto-slab"
