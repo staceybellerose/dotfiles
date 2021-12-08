@@ -434,6 +434,8 @@ then
     checkFont "font-caladea" "Caladea" "Caladea Font" "https://fonts.google.com/specimen/Caladea"
     checkFont "font-cantarell" "Cantarell" "Cantarell Font" "https://fonts.google.com/specimen/Cantarell"
     checkFont "font-cardo" "Cardo" "Cardo Font" "https://fonts.google.com/specimen/Cardo"
+    checkFont "font-cascadia-code" "CascadiaCode" "Cascadia Code Font" "https://github.com/microsoft/cascadia-code"
+    checkFont "font-cascadia-mono" "CascadiaMono" "Cascadia Mono Font" "https://github.com/microsoft/cascadia-code"
     checkFont "font-comic-neue" "Comic Neue" "Comic Neue Font" "https://fonts.google.com/specimen/Comic+Neue"
     checkFont "font-computer-modern" "CMU Serif" "Computer Modern (Sans, Serif, Typewriter, Bright, Concrete) Fonts" "https://cm-unicode.sourceforge.io/"
     checkFont "font-courier-prime" "Courier Prime" "Courier Prime Font" "https://quoteunquoteapps.com/courierprime/"

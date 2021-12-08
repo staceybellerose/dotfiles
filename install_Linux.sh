@@ -335,6 +335,7 @@ installDebianPackages () {
         "fonts-cabinsketch"
         "fonts-cantarell"
         "fonts-cardo"
+        "fonts-cascadia-code"
         "fonts-cmu"
         "fonts-comic-neue"
         "fonts-courier-prime"
