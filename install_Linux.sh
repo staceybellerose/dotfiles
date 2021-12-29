@@ -159,7 +159,7 @@ configureDebian () {
     # Add Spotify source
     if [ ! -e "$sources/spotify.list" ]
     then
-        wget -q https://download.spotify.com/debian/pubkey_0D811D58.gpg -O- | sudo apt-key add -
+        wget -q https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg -O- | sudo apt-key add -
         echo "deb http://repository.spotify.com stable non-free" | sudo tee "$sources/spotify.list"
     fi
     deb_extra_packages+=( "spotify-client" )
