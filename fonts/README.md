@@ -13,6 +13,11 @@ Open Source fonts that I use for various purposes.
 | [Alegreya SC][alegreya]           | serif       | old-style         |                  | [link][g02] |
 | [Alegreya Sans][alegreyasans]     | sans-serif  | humanist          |                  | [link][g03] |
 | [Alegreya Sans SC][alegreyasans]  | sans-serif  | humanist          |                  | [link][g04] |
+| [Archivo][archivo]                | sans-serif  | grotesk           |                  | [link][g87] |
+| [Archivo Black][archivob]         | sans-serif  | grotesk           |                  | [link][g88] |
+| [Archivo Narrow][archivon]        | sans-serif  | grotesk           |                  | [link][g89] |
+| [ASAP][asap]                      | sans-serif  | humanist          |                  | [link][g90] |
+| [ASAP Condensed][asapc]           | sans-serif  | humanist          |                  | [link][g91] |
 | [Atomic Age][atomicage]           | serif       | glyphic, swashed  |                  | [link][g06] |
 | AuntJudy<sup>[1](#f1)</sup>       | historic    | uncial            |                  | — |
 | Barbara Plump<sup>[1](#f1)</sup>  | historic    | lombardic, uncial |                  | — |
@@ -28,6 +33,7 @@ Open Source fonts that I use for various purposes.
 | [Cascadia Mono][cascadia]         | monospaced  | grotesk (sans)    |                  | — |
 | [Charm][charm]                    | script      | formal            |                  | [link][g82] |
 | [Charter][charter]                | serif       | transitional      |                  | — |
+| [Chivo][chivo]                    | sans-serif  | neo-grotesk       |                  | [link][g92] |
 | [Chomsky][chomsky]                | blackletter | textualis         |                  | — |
 | [Cinzel][cinzel]                  | serif       | incised           | Trajan Pro       | [link][g13] |
 | [Coelacanth][coelacanth]          | serif       | old-style         | Centaur          | — |
@@ -47,6 +53,7 @@ Open Source fonts that I use for various purposes.
 | [Enriqueta][enriqueta]            | serif       | slab              | Rockwell         | [link][g20] |
 | [Essays 1743][essays]             | serif       | old-style         |                  | — |
 | [ET Book][etbook]                 | serif       | old-style         | Bembo            | — |
+| [Faustina][faustina]              | serif       | wedge             |                  | [link][g84] |
 | [Fira Mono][fira]                 | monospaced  | humanist (sans)   |                  | [link][g22] |
 | [Fira Sans][fira]                 | sans-serif  | humanist          |                  | [link][g23] |
 | [Font Awesome 4.7][awesome]       | dingbats    | —                 |                  | — |
@@ -72,6 +79,7 @@ Open Source fonts that I use for various purposes.
 | Luxi Mono<sup id="a3">[3](#f3)</sup>| monospaced| slab (serif)      |                  | — |
 | Luxi Sans<sup>[3](#f3)</sup>      | sans-serif  | humanist          |                  | — |
 | Luxi Serif<sup>[3](#f3)</sup>     | serif       | didone            |                  | — |
+| [Manuale][manuale]                | serif       | wedge             |                  | [link][g93] |
 | [Merriweather][merriweather]      | serif       | slab              |                  | [link][g39] |
 | [Merriweather Sans][merrisans]    | sans-serif  | humanist          |                  | [link][g40] |
 | [Meslo LG][meslo]                 | monospaced  | grotesk (sans)    |                  | — |
@@ -86,6 +94,7 @@ Open Source fonts that I use for various purposes.
 | [Monoid][monoid]                  | monospaced  | grotesk (sans)    |                  | — |
 | [Montserrat][montserrat]          | sans-serif  | geometric         | Gotham           | [link][g45] |
 |[Montserrat Alternatives][montserrat]| sans-serif| geometric         | Gotham           | [link][g46] |
+| [Museo Moderno][museomoderno]     | sans-serif  | geometric, decorative |              | [link][g94] |
 | [Nunito][nunito]                  | sans-serif  | humanist    | Avenir, Gotham Rounded | [link][g47] |
 | [Open Baskerville][obaskerville]  | serif       | transitional      | Baskerville      | — |
 | [Orbitron][orbitron]              | sans-serif  | geometric         | Bank Gothic      | [link][g48] |
@@ -102,6 +111,8 @@ Open Source fonts that I use for various purposes.
 | [Rokkitt][rokkitt]                | serif       | slab              | Rockwell         | [link][g59] |
 | [Rosario][rosario]                | sans-serif  | humanist          |                  | [link][g81] |
 | [Sancreek][sancreek]              | serif       | western           |                  | [link][g60] |
+| [Sansita][sansita]                | sans-serif  | humanist          |                  | [link][g95] |
+| [Sansita Swashed][sansitas]       | sans-serif  | humanist, swashed |                  | [link][g96] |
 | [Smokum][smokum]                  | serif | slab, western | French Clarendon, Playbill | [link][g61] |
 | [Sorts Mill Goudy][sortsgoudy]    | serif       | old-style         | Goudy Old Style  | [link][g62] |
 | [Sorts Mill Kis][sortskis]        | serif       | old-style         | Janson, Kis      | — |
@@ -113,12 +124,15 @@ Open Source fonts that I use for various purposes.
 | [Tangerine][tangerine]            | script      | formal            |                  | [link][g83] |
 | [Trocchi][trocchi]                | serif       | slab              |                  | [link][g67] |
 | [Uncial Antiqua][uncialantiqua]   | script      | uncial modern     |                  | [link][g71] |
+| [Unna][unna]                      | serif       | transitional      |                  | [link][g97] |
 | [URW Algiers][ghostpdl]           | serif       | glyphic           | Albertus, A028   | — |
 | [URW Antique Olive][ghostpdl]     | sans-serif  | humanist          |                  | — |
 | [URW C093][ghostpdl]              | script      | formal            | Coronet          | — |
 | [URW Classico][ghostpdl]          | sans-serif  | humanist          | Optima           | — |
 | [URW U001][ghostpdl]              | sans-serif  | neo-grotesk       | Univers          | — |
 | [Utopia][utopia]                  | serif       | transitional      |                  | — |
+| [Vollkorn][vollkorn]              | serif       | transitional      |                  | [link][g85] |
+| [Vollkorn SC][vollkorn]           | serif       | transitional      |                  | [link][g86] |
 | [Zilla Slab][zilla]               | serif       | slab              | Museo Slab       | [link][g72] |
 
 ### Notes
@@ -134,6 +148,11 @@ Open Source fonts that I use for various purposes.
 [adffonts]: https://arkandis.tuxfamily.org/adffonts.html
 [alegreya]: https://www.huertatipografica.com/en/fonts/alegreya-ht-pro
 [alegreyasans]: https://www.huertatipografica.com/en/fonts/alegreya-sans-ht
+[archivo]: https://github.com/Omnibus-Type/Archivo
+[archivob]: https://github.com/Omnibus-Type/ArchivoBlack
+[archivon]: https://github.com/Omnibus-Type/ArchivoNarrow
+[asap]: https://github.com/Omnibus-Type/Asap
+[asapc]: https://github.com/Omnibus-Type/AsapCondensed
 [atomicage]: https://github.com/SorkinType/Atomic-Age
 [awesome]: https://fontawesome.com/v4.7/
 [bentham]: https://github.com/readingtype/Bentham
@@ -145,6 +164,7 @@ Open Source fonts that I use for various purposes.
 [cascadia]: https://github.com/microsoft/cascadia-code
 [charm]: https://github.com/cadsondemak/Charm
 [charter]: https://practicaltypography.com/charter.html
+[chivo]: https://github.com/Omnibus-Type/Chivo
 [chomsky]: https://github.com/ctrlcctrlv/chomsky
 [cinzel]: https://github.com/NDISCOVER/Cinzel
 [coelacanth]: https://github.com/Fuzzypeg/Coelacanth
@@ -161,6 +181,7 @@ Open Source fonts that I use for various purposes.
 [enriqueta]: https://github.com/vv-monsalve/Enriqueta_2019
 [essays]: https://www.thibault.org/fonts/essays/
 [etbook]: https://github.com/edwardtufte/et-book
+[faustina]: https://github.com/Omnibus-Type/Faustina
 [fira]: https://github.com/bBoxType/FiraSans
 [fplneu]: https://github.com/rstub/fplneu
 [gamaliel]: https://fontlibrary.org/en/font/gamaliel
@@ -181,6 +202,7 @@ Open Source fonts that I use for various purposes.
 [lcaslon]: https://github.com/impallari/Libre-Caslon-Text
 [lfranklin]: https://github.com/impallari/Libre-Franklin
 [limelight]: https://fonts.google.com/specimen/Limelight
+[manuale]: https://github.com/Omnibus-Type/Manuale
 [merrisans]: https://github.com/SorkinType/Merriweather-Sans
 [merriweather]: https://github.com/SorkinType/Merriweather
 [meslo]: https://github.com/andreberg/Meslo-Font
@@ -190,6 +212,7 @@ Open Source fonts that I use for various purposes.
 [miltonian]: https://github.com/impallari/Miltonian
 [monoid]: https://github.com/larsenwork/monoid
 [montserrat]: https://github.com/JulietaUla/Montserrat
+[museomoderno]: https://github.com/Omnibus-Type/MuseoModerno
 [nunito]: https://github.com/googlefonts/nunito
 [obaskerville]: https://github.com/klepas/open-baskerville
 [orbitron]: https://github.com/theleagueof/orbitron
@@ -205,6 +228,8 @@ Open Source fonts that I use for various purposes.
 [rokkitt]: https://github.com/googlefonts/RokkittFont
 [rosario]: https://github.com/Omnibus-Type/Rosario
 [sancreek]: https://fonts.google.com/specimen/Sancreek
+[sansita]: https://github.com/Omnibus-Type/Sansita
+[sansitas]: https://github.com/Omnibus-Type/Sansita-Swashed
 [smokum]: https://fonts.google.com/specimen/Smokum
 [sortsgoudy]: https://github.com/theleagueof/sorts-mill-goudy
 [sortskis]: https://bitbucket.org/sortsmill/sortsmill-fonts/src/master/kis/
@@ -216,7 +241,9 @@ Open Source fonts that I use for various purposes.
 [tangerine]: https://tosche.net/fonts/tangerine
 [trocchi]: https://github.com/vernnobile/TrocchiFont
 [uncialantiqua]: https://github.com/librefonts/uncialantiqua
+[unna]: https://github.com/Omnibus-Type/Unna
 [utopia]: https://ghostscript.com/~tor/stuff/fonts/utopia/
+[vollkorn]: https://github.com/FAlthausen/Vollkorn-Typeface
 [zilla]: https://github.com/mozilla/zilla-slab
 [g01]: https://fonts.google.com/specimen/Alegreya
 [g02]: https://fonts.google.com/specimen/Alegreya+SC
@@ -276,3 +303,17 @@ Open Source fonts that I use for various purposes.
 [g81]: https://fonts.google.com/specimen/Rosario
 [g82]: https://fonts.google.com/specimen/Charm
 [g83]: https://fonts.google.com/specimen/Tangerine
+[g84]: https://fonts.google.com/specimen/Faustina
+[g85]: https://fonts.google.com/specimen/Vollkorn
+[g86]: https://fonts.google.com/specimen/Vollkorn+SC
+[g87]: https://fonts.google.com/specimen/Archivo
+[g88]: https://fonts.google.com/specimen/Archivo+Black
+[g89]: https://fonts.google.com/specimen/Archivo+Narrow
+[g90]: https://fonts.google.com/specimen/Asap
+[g91]: https://fonts.google.com/specimen/Asap+Condensed
+[g92]: https://fonts.google.com/specimen/Chivo
+[g93]: https://fonts.google.com/specimen/Manuale
+[g94]: https://fonts.google.com/specimen/MuseoModerno
+[g95]: https://fonts.google.com/specimen/Sansita
+[g96]: https://fonts.google.com/specimen/Sansita+Swashed
+[g97]: https://fonts.google.com/specimen/Unna
