@@ -61,6 +61,7 @@ Open Source fonts that I use for various purposes.
 | [Gamaliel][gamaliel]              | blackletter | modern            |                  | — |
 | [Geo][geo]                        | sans-serif  | geometric         |                  | [link][g79] |
 | [Great Vibes][greatvibes]         | script      | formal            |                  | [link][g25] |
+| [Hind][hind]                      | sans-serif  | geometric         | Futura           | [link][g98] |
 | [Inter][inter]                    | sans-serif  | neo-grotesk       |                  | [link][g27] |
 | [Isabella][isabella]              | blackletter | textualis         |                  | — |
 | [JetBrains Mono][jbmono]          | monospaced  |sans-serif (geometric)|               | — |
@@ -188,6 +189,7 @@ Open Source fonts that I use for various purposes.
 [geo]: https://github.com/readingtype/Geo
 [ghostpdl]: http://git.ghostscript.com/?p=ghostpdl.git;a=tree;f=pcl/urwfonts;hb=HEAD
 [greatvibes]: https://github.com/googlefonts/great-vibes
+[hind]: https://github.com/itfoundry/hind
 [inter]: https://github.com/rsms/inter/
 [isabella]: https://www.thibault.org/fonts/isabella/
 [jbmono]: https://github.com/JetBrains/JetBrainsMono
@@ -317,3 +319,4 @@ Open Source fonts that I use for various purposes.
 [g95]: https://fonts.google.com/specimen/Sansita
 [g96]: https://fonts.google.com/specimen/Sansita+Swashed
 [g97]: https://fonts.google.com/specimen/Unna
+[g98]: https://fonts.google.com/specimen/Hind
