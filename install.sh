@@ -332,10 +332,6 @@ if [[ $config -eq 1 ]]
 then
     installConfig
 fi
-if [[ $vscode -eq 1 ]]
-then
-    source ./install_vscode_extensions.sh "$gui" "$debug"
-fi
 if [[ $fonts -eq 1 ]]
 then
     source ./install_nonfree_fonts.sh "$gui" "$debug"
@@ -345,6 +341,10 @@ fi
 [ -f "./install_${arch}.sh" ] && source "./install_${arch}.sh" "$packages" "$fonts" "$config" "$xcode" "$gui" "$yes" "$debug"
 [ -f "./install_${arch}_${machinearch}.sh" ] && source "./install_${arch}_${machinearch}.sh" "$packages" "$fonts" "$config" "$xcode" "$gui" "$yes" "$debug"
 
+if [[ $vscode -eq 1 ]]
+then
+    source ./install_vscode_extensions.sh "$gui" "$debug"
+fi
 if [[ $packages -eq 1 ]]
 then
     source ./install_Python3.sh "$gui" "$yes" "$debug"

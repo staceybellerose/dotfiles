@@ -49,22 +49,48 @@ installAllVSCodeExtensions () {
     # Install Visual Studio Code/codium extensions
     detectVSCode && {
         g_bold "Installing VS Code/codium Extensions"
-        # General Extensions
-        installVSCodeExtension ms-vsliveshare.vsliveshare # Live Share
-        installVSCodeExtension CoenraadS.bracket-pair-colorizer-2 # Bracket Pair Colorizer 2
-        installVSCodeExtension ybaumes.highlight-trailing-white-spaces # Highlight Trailing White Spaces
-        installVSCodeExtension oderwat.indent-rainbow # Indent Rainbow
-        installVSCodeExtension eriklynd.json-tools # JSON Tools
-        installVSCodeExtension DotJoshJohnson.xml # XML Tools
-        installVSCodeExtension redhat.vscode-yaml # YAML
-        # installVSCodeExtension eamodio.gitlens # Git Lens
+
+        # Common Tools
         installVSCodeExtension ms-azuretools.vscode-docker # Docker
+        installVSCodeExtension mikestead.dotenv # DotENV
+        installVSCodeExtension ms-vsliveshare.vsliveshare # Live Share
+        installVSCodeExtension redhat.vscode-yaml # YAML
+        installVSCodeExtension DotJoshJohnson.xml # XML Tools
+        installVSCodeExtension fnando.linter # Lint all the code
+        installVSCodeExtension VisualStudioExptTeam.vscodeintellicode # Visual Studio Intellicode
+        installVSCodeExtension eamodio.gitlens # Git Lens
+
+        # Visualization Extensions
+        # installVSCodeExtension CoenraadS.bracket-pair-colorizer-2 # Bracket Pair Colorizer 2 - deprecated
+        installVSCodeExtension oderwat.indent-rainbow # Indent Rainbow
+        installVSCodeExtension ybaumes.highlight-trailing-white-spaces # Highlight Trailing White Spaces
         installVSCodeExtension aaron-bond.better-comments # Better Comments
+        installVSCodeExtension wayou.vscode-todo-highlight # TO DO highlight
+        installVSCodeExtension Gruntfuggly.todo-tree # TO DO tree in explorer pane
+        installVSCodeExtension ExodiusStudios.comment-anchors # Comment anchors
+
+        # Text Manipulation Extensions
         installVSCodeExtension wmaurer.change-case # Change Case
         installVSCodeExtension Tyriar.sort-lines # Sort Lines
         installVSCodeExtension dakara.transformer # Text Transformer
-        installVSCodeExtension fnando.linter # Linter
-        installVSCodeExtension jerrygoyal.shortcut-menu-bar # Shortcut Menu Bar
+
+        # JSON Extensions
+        installVSCodeExtension renatorodrigues.json-to-js # JSON to JS converter
+        installVSCodeExtension eriklynd.json-tools # JSON Tools
+
+        # Markdown extensions
+        installVSCodeExtension yzhang.markdown-all-in-one # Markdown All in One
+        installVSCodeExtension DavidAnson.vscode-markdownlint # Markdown Lint
+
+        # Diff extensions
+        installVSCodeExtension rafaelmaiolla.diff # diff syntax highlighting
+        installVSCodeExtension fabiospampinato.vscode-diff # diff file comparator
+
+        # Miscellaneous Extensions
+        installVSCodeExtension johnpapa.vscode-peacock # Peacock
+        installVSCodeExtension christian-kohler.path-intellisense # Path Intellisense
+        installVSCodeExtension ionutvmi.path-autocomplete # Path Autocomplete
+        installVSCodeExtension techer.open-in-browser # Open in Browser
 
         # Ruby / Rails extensions
         installVSCodeExtension rebornix.ruby # Ruby
@@ -79,6 +105,7 @@ installAllVSCodeExtensions () {
         installVSCodeExtension dsznajder.es7-react-js-snippets # ES7 Snippets
         installVSCodeExtension msjsdiag.debugger-for-chrome # Debugger for Chrome
         installVSCodeExtension firefox-devtools.vscode-firefox-debug # Debugger for Firefox
+        installVSCodeExtension burkeholland.simple-react-snippets # Simple React Snippets
 
         # Java Extensions
         installVSCodeExtension vscjava.vscode-java-pack # Java Extension Pack
@@ -87,17 +114,6 @@ installAllVSCodeExtensions () {
         installVSCodeExtension vscjava.vscode-java-debug # Debugger for Java
         installVSCodeExtension vscjava.vscode-java-dependency # Dependency Viewer for Java
         installVSCodeExtension vscjava.vscode-java-test # Java Test Runner
-        installVSCodeExtension VisualStudioExptTeam.vscodeintellicode # Visual Studio Intellicode
-
-        # Bash Extensions
-        installVSCodeExtension lizebang.bash-extension-pack # Bash Extension Pack
-        installVSCodeExtension foxundermoon.shell-format # Shell format
-        installVSCodeExtension Remisa.shellman # Shell snippets
-        installVSCodeExtension timonwong.shellcheck # Shellcheck for VS Code
-        installVSCodeExtension mads-hartmann.bash-ide-vscode # IDE for Bash
-        installVSCodeExtension rogalmic.bash-debug # Bash Debugger
-        installVSCodeExtension rpinski.shebang-snippets # Shebang Snippets
-        installVSCodeExtension ms-vscode.powershell # Powershell
 
         # Kotlin Extensions
         installVSCodeExtension sethjones.kotlin-on-vscode # Kotlin Extension Pack
@@ -108,9 +124,22 @@ installAllVSCodeExtensions () {
         installVSCodeExtension naco-siren.gradle-language # Gradle Language Support
         installVSCodeExtension esafirm.kotlin-formatter # Kotlin Formatter using ktlint
 
-        # Python Extensions
+        # Data Science Extensions
         installVSCodeExtension ms-python.python # Python Extension
         installVSCodeExtension ms-python.vscode-pylance # Pylance Extension
+        installVSCodeExtension ms-toolsai.jupyter # Jupyter Notebook support
+        installVSCodeExtension ikuyadeu.r # R programming language
+        installVSCodeExtension mikhail-arkhipov.r # R tools
+
+        # Shell Scripting Extensions
+        installVSCodeExtension lizebang.bash-extension-pack # Bash Extension Pack
+        installVSCodeExtension foxundermoon.shell-format # Shell format
+        installVSCodeExtension Remisa.shellman # Shell snippets
+        installVSCodeExtension timonwong.shellcheck # Shellcheck for VS Code
+        installVSCodeExtension mads-hartmann.bash-ide-vscode # IDE for Bash
+        installVSCodeExtension rogalmic.bash-debug # Bash Debugger
+        installVSCodeExtension rpinski.shebang-snippets # Shebang Snippets
+        installVSCodeExtension ms-vscode.powershell # Powershell
 
         # Database Extensions
         installVSCodeExtension alexcvzz.vscode-sqlite # SQLite Databases
@@ -119,18 +148,8 @@ installAllVSCodeExtensions () {
         installVSCodeExtension mtxr.sqltools # Database management tools
 
         # Misc Extensions
-        installVSCodeExtension rafaelmaiolla.diff # diff syntax highlighting
-        installVSCodeExtension fabiospampinato.vscode-diff # diff file comparator
         installVSCodeExtension EditorConfig.EditorConfig # EditorConfig support
-        installVSCodeExtension yzhang.markdown-all-in-one # Markdown All in One
-        installVSCodeExtension DavidAnson.vscode-markdownlint # Markdown Lint
         installVSCodeExtension dunstontc.viml # vim syntax highlighting
-        installVSCodeExtension ionutvmi.path-autocomplete # Path Autocomplete
-        installVSCodeExtension mikestead.dotenv # DotENV
-        installVSCodeExtension ms-toolsai.jupyter # Jupyter Notebook support
-        installVSCodeExtension wayou.vscode-todo-highlight # TO DO highlight
-        installVSCodeExtension Gruntfuggly.todo-tree # TO DO tree in explorer pane
-        installVSCodeExtension ExodiusStudios.comment-anchors # Comment anchors
         installVSCodeExtension jerrygoyal.shortcut-menu-bar # Add buttons to editor menu bar (since no toolbar)
 
         # Themes
