@@ -92,6 +92,7 @@ installBashd () {
 
 installVim () {
     g_bold "Installing vim files"
+	cp $CPOPT vimrc "${HOME}/.vimrc"
     mkdir -p "${HOME}/.vim"
     cp $CPOPT vim/* "${HOME}/.vim"
     reportResult "Installed vim files" "Unable to install vim files"
