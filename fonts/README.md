@@ -60,11 +60,13 @@ Open Source fonts that I use for various purposes.
 | [FPL Neu][fplneu]                 | serif       | old-style         | Palatino         | — |
 | [Gamaliel][gamaliel]              | blackletter | modern            |                  | — |
 | [Geo][geo]                        | sans-serif  | geometric         |                  | [link][g79] |
+| [Go][go]                          | sans-serif  | humanist          |                  | — |
+| [Go Mono][go]                     | monospaced  | slab (serif)      |                  | — |
 | [Great Vibes][greatvibes]         | script      | formal            |                  | [link][g25] |
 | [Hind][hind]                      | sans-serif  | geometric         | Futura           | [link][g98] |
 | [Inter][inter]                    | sans-serif  | neo-grotesk       |                  | [link][g27] |
 | [Isabella][isabella]              | blackletter | textualis         |                  | — |
-| [JetBrains Mono][jbmono]          | monospaced  |sans-serif (geometric)|               | — |
+| [JetBrains Mono][jbmono]          | monospaced  | geometric (sans)  |                  | — |
 | [Josefin Sans][josefinsans]       | sans-serif  | geometric         |                  | [link][g28] |
 | [Josefin Slab][josefinslab]       | serif       | slab              |                  | [link][g29] |
 | [Jost*][jost]                     | sans-serif  | geometric         | Futura           | [link][g30] |
@@ -188,6 +190,7 @@ Open Source fonts that I use for various purposes.
 [gamaliel]: https://fontlibrary.org/en/font/gamaliel
 [geo]: https://github.com/readingtype/Geo
 [ghostpdl]: http://git.ghostscript.com/?p=ghostpdl.git;a=tree;f=pcl/urwfonts;hb=HEAD
+[go]: https://go.dev/blog/go-fonts
 [greatvibes]: https://github.com/googlefonts/great-vibes
 [hind]: https://github.com/itfoundry/hind
 [inter]: https://github.com/rsms/inter/
