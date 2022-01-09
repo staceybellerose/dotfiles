@@ -69,7 +69,7 @@ If a font is dual licensed under the SIL OFL and another license, I have elected
 * Black Chancery is released into the public domain.
 * Charter is licensed under the Bitstream Charter permissive license.
 * Essays 1743 is licensed under the GNU Lesser General Public License (LGPL), Version 2.1.
-* ET Book and Sorts Mill Kis are licensed under the MIT License.
+* ET Book, Sorts Mill Kis, and Textura Libera are licensed under the MIT License.
 * George Williams and Go fonts are licensed under the Modified (3-clause) BSD License.
 * Accanthis ADF, FPL Neu, Gillius ADF, and Ornements ADF are licensed under the GNU General Public License (GPL), Version 2 or later, with font exception.
 * Luxi fonts are licensed under the Luxi font license.

@@ -38,7 +38,7 @@ then
     # Determine the base folder used by Dropbox (I don't like using ~/Dropbox).
     DROPBOXHOME=$(jq -r '.personal.path' "$HOME/.dropbox/info.json")
     # Check to see if the font folder exists locally.
-    if [ -d "$DROPBOXHOME/Fonts" ]
+    if [ "$DROPBOXHOME" != "null" ] && [ -d "$DROPBOXHOME/Fonts" ]
     then
         mkdir -p "$FONTSDIR" && {
             e_bold "Installing Fonts"
