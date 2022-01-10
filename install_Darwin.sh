@@ -28,10 +28,11 @@ fi
 toInstall=()
 toInstallCask=()
 toInstallFont=()
+toInstallMas=()
 brewUpdated=0
 
 initXCode () {
-    if [[ -d "$('xcode-select' -print-path 2>/dev/null)" ]]
+    if [[ ! -d "$('xcode-select' -print-path 2>/dev/null)" ]]
     then
         g_bold "Initializing XCode Command Line Tools"
         xcode-select --install 2>/dev/null
@@ -49,7 +50,7 @@ getShell () {
 
 promptToInstall () {
     test_result=$?
-    name=$1; url=$2; useCask=$3
+    name=$1; url=$2; appType=$3
     shift 3
     app=("$@")
     if [[ $test_result -eq 0 ]]
@@ -67,6 +68,7 @@ promptToInstall () {
                 if [[ $gui -eq 0 ]]
                 then
                     read -rp "Do you want to install ${C_FORE_BLUE}$name${C_RESET}? [y/${C_BOLD}n${C_RESET}/h]: " install
+                    install=${install:0:1} # use only first letter
                 else
                     result=$(zenity --question --text="Do you want to install ${name}?" \
                         --extra-button="Help" --window-icon=./installer.svg --width=300 --height=100)
@@ -84,12 +86,11 @@ promptToInstall () {
             fi
             if [ "$install" == "y" ]
             then
-                if [ "$useCask" == "1" ]
-                then
-                    toInstallCask+=( "${app[@]}" )
-                else
-                    toInstall+=( "${app[@]}" )
-                fi
+                case "${appType}" in
+                  0) toInstall+=( "${app[@]}" ) ;;
+                  1) toInstallCask+=( "${app[@]}" ) ;;
+                  2) toInstallMas+=( "${app[@]}" ) ;;
+                esac
             elif [ "$install" == "h" ]
             then
                 open "$url"
@@ -120,6 +121,12 @@ checkLibraryCask () {
     cask=$1; name=$2; cmd=$3; url=$4
     test -d "${HOME}/Library/$cmd"
     promptToInstall "$name" "$url" "1" "$cask"
+}
+
+checkAppStoreCommand () {
+    code=$1; name=$2; cmd=$3; url=$4
+    test -d "/Applications/$cmd"
+    promptToInstall "$name" "$url" "2" "$code"
 }
 
 checkJava () {
@@ -221,6 +228,7 @@ then
     checkInstall htop "htop" "https://htop.dev/"
     checkInstall jq "jq" "https://stedolan.github.io/jq/"
     checkInstall kotlin "kotlin" "https://kotlinlang.org/"
+    checkInstall mas "mas" "https://github.com/mas-cli/mas"
     checkInstall mysql "MySQL" "https://www.mysql.com/"
     checkInstall neofetch "neofetch" "https://github.com/dylanaraps/neofetch"
     checkInstall node "Node.js" "https://nodejs.org/en/"
@@ -315,6 +323,9 @@ then
 
     checkJava "Oracle JDK" "1.8" "https://www.oracle.com/technetwork/java/javase/overview/index.html"
 
+    # mas programs
+    checkAppStoreCommand 1477419086 "Moped" "Moped.app" "https://roberto.machorro.net/Moped/"
+
     # if we aren't installing brew, make sure we update it
     if [[ ! " ${toInstall[*]} " =~ " brew " ]]
     then
@@ -328,6 +339,10 @@ then
         brew tap | grep -q "^staceybellerose/oss$" || brew tap -q staceybellerose/oss
         brewUpdated=1
     fi
+
+    export HOMEBREW_NO_INSTALL_CLEANUP=1
+    export HOMEBREW_NO_ENV_HINTS=1
+    export HOMEBREW_UPDATE_PREINSTALL=0
 
     # Install the Command Line Tools and the Homebrew Bottles
     for i in "${toInstall[@]}"
@@ -363,6 +378,19 @@ then
         g_info "Installing $i"
         brew install --cask -q "$i"
     done
+
+    # Install apps from App Store via mas
+    for i in "${toInstallMas[@]}"
+    do
+        g_info "Installing $i"
+        mas install "$i"
+    done
+
+    unset HOMEBREW_UPDATE_PREINSTALL
+    unset HOMEBREW_NO_ENV_HINTS
+    unset HOMEBREW_NO_INSTALL_CLEANUP
+
+    brew cleanup -q
 
     # Add items to dock if not already present
     declare -a dockItems=(
@@ -431,6 +459,10 @@ fi # if [[ $packages ]]
 if [[ $fonts -eq 1 ]]
 then
     installFonts
+
+    export HOMEBREW_NO_INSTALL_CLEANUP=1
+    export HOMEBREW_NO_ENV_HINTS=1
+    export HOMEBREW_UPDATE_PREINSTALL=0
 
     # Homebrew Cask Fonts
     checkFont "font-anonymous-pro" "Anonymous Pro" "Anonymous Pro Font" "https://fonts.google.com/specimen/Anonymous+Pro"
@@ -512,6 +544,10 @@ then
     checkFont "font-ubuntu-mono" "Ubuntu Mono" "Ubuntu Mono Font" "https://fonts.google.com/specimen/Ubuntu+Mono"
     checkFont "font-urw-base35" "C059" "URW++ Base Fonts" "https://github.com/ArtifexSoftware/urw-base35-fonts"
 
+    unset HOMEBREW_UPDATE_PREINSTALL
+    unset HOMEBREW_NO_ENV_HINTS
+    unset HOMEBREW_NO_INSTALL_CLEANUP
+
     if type -P brew &> /dev/null
     then
         if [[ ${#toInstallFont[@]} -gt 0 && $brewUpdated -eq 0 ]]
@@ -530,7 +566,8 @@ then
         g_info "Installing $i"
         brew install --cask -q "$i"
     done
-    fc-cache
+    brew cleanup -q
+    fc-cache -f
 fi
 
 if [[ $config -eq 1 ]]
