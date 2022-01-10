@@ -23,9 +23,12 @@ Open Source fonts that I use for various purposes.
 | AuntJudy<sup>[1](#f1)</sup>       | historic    | uncial            |                  | — |
 | Barbara Plump<sup>[1](#f1)</sup>  | historic    | lombardic, uncial |                  | — |
 | Barbara Svelte<sup>[1](#f1)</sup> | historic    | lombardic, uncial |                  | — |
+| [Bellota][bellota]                | sans-serif  | humanist, swashed |                  | [link][g104] |
+| [Bellota Text][bellota]           | sans-serif  | humanist          |                  | [link][g105] |
 | [Bentham][bentham]                | serif       | modern            |                  | [link][g78] |
 | [Besley*][besley]                 | serif       | slab              | Clarendon        | [link][g07] |
 | [Besley Small Caps][besleysc]     | serif       | slab              | Clarendon        | — |
+| [Bitter][bitter]                  | serif       | slab              |                  | [link][g107] |
 | Black Chancery<sup id="a4">[4](#f4)</sup>|script| calligraphic      |                  | — |
 | [Bodoni*][bodoni]                 | serif       | didone            | Bodoni           | [link][g08] |
 | [Cabin][cabin]                    | sans-serif  | grotesk           |                  | [link][g09] |
@@ -131,6 +134,7 @@ Open Source fonts that I use for various purposes.
 | [Source Serif Pro][sourceserif]   | serif       | transitional slab | Charter          | [link][g65] |
 | [Spartan][spartan]                | sans-serif  | geometric         | Futura           | [link][g66] |
 | [Squarish Sans][squarishsans]     | sans-serif  | geometric         | Bank Gothic      | — |
+| [Suez One][suez]                  | serif       | slab              |                  | [lik][g106] |
 | [Tangerine][tangerine]            | script      | formal            |                  | [link][g83] |
 | [TexturaLibera][texturalibera]    | blackletter | textualis         |                  | — |
 | [Trocchi][trocchi]                | serif       | slab              |                  | [link][g67] |
@@ -167,9 +171,11 @@ Open Source fonts that I use for various purposes.
 [asapc]: https://github.com/Omnibus-Type/AsapCondensed
 [atomicage]: https://github.com/SorkinType/Atomic-Age
 [awesome]: https://fontawesome.com/v4.7/
+[bellota]: https://github.com/kemie/Bellota-Font
 [bentham]: https://github.com/readingtype/Bentham
 [besley]: https://github.com/indestructible-type/Besley
 [besleysc]: https://github.com/ctrlcctrlv/Besley-Small-Caps
+[bitter]: https://www.huertatipografica.com/en/fonts/bitter-ht
 [bodoni]: https://github.com/indestructible-type/Bodoni
 [cabin]: https://github.com/impallari/Cabin
 [carlito]: https://github.com/googlefonts/carlito
@@ -258,6 +264,7 @@ Open Source fonts that I use for various purposes.
 [sourceserif]: https://github.com/adobe-fonts/source-serif
 [spartan]: https://github.com/bghryct/Spartan-MB
 [squarishsans]: http://christtrekker.users.sourceforge.net/fnt/squarishsans.shtml
+[suez]: https://github.com/MichalSahar/Suez
 [tangerine]: https://tosche.net/fonts/tangerine
 [texturalibera]: https://github.com/MihailJP/TexturaLibera
 [trocchi]: https://github.com/vernnobile/TrocchiFont
@@ -344,3 +351,7 @@ Open Source fonts that I use for various purposes.
 [g101]: https://fonts.google.com/specimen/Sofia
 [g102]: https://fonts.google.com/specimen/Grand+Hotel
 [g103]: https://fonts.google.com/specimen/Kaushan+Script
+[g104]: https://fonts.google.com/specimen/Bellota
+[g105]: https://fonts.google.com/specimen/Bellota+Text
+[g106]: https://fonts.google.com/specimen/Suez+One
+[g107]: https://fonts.google.com/specimen/Bitter
