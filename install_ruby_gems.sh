@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2181
 
 # Use this script for any Ruby gem installations
 
@@ -9,6 +8,13 @@ gui="$1"
 yes="$2"
 debug="$3"
 
+(( installed=0 ))
+
+declare -a gems=(
+    "bundler"
+    "jekyll"
+)
+
 hasRuby () {
     (type -P ruby && type -P gem) &> /dev/null
     return $?
@@ -16,37 +22,24 @@ hasRuby () {
 
 hasRubyGem () {
     hasRuby || return
-    gem list | grep -q "$1" &> /dev/null
+    gem list | grep "$1" &> /dev/null
     return $?
 }
 
 installRubyGem () {
     hasRuby || return
-    gem="$1"
-    system="$2"
-    if ! hasRubyGem "$gem"
+    if ! hasRubyGem "$1"
     then
-        if [[ $system -eq 1 ]]
-        then
-            gem install -q "$gem"
-        else
-            gem install -q --user-install "$gem"
-        fi
-        hasRubyGem "$gem"
-        reportResult "$gem successfully installed" "$gem not installed"
+        gem install -q "$1"
+        hasRubyGem "$1"
+        (( installed++ ))
+        reportResult "$1 successfully installed" "$1 not installed"
     fi
 }
 
 installRubyGems () {
     hasRuby || return
-    gems=$1
-    system=$2
-    if [[ $system -eq 1 ]]
-    then
-        g_bold "Installing Ruby system gems"
-    else
-        g_bold "Installing Ruby user gems"
-    fi
+    g_bold "Installing Ruby gems"
     toInstall=()
     for gem in "${gems[@]}"
     do
@@ -73,17 +66,14 @@ installRubyGems () {
     done
     for gem in "${toInstall[@]}"
     do
-        installRubyGem "$gem" "$system"
+        installRubyGem "$gem"
     done
+    if ((installed > 0)); then
+        g_success "$installed gems installed"
+    else
+        g_info "No gems to install"
+    fi
 }
 
-declare -a system_gems=(
-    "bundler"
-)
-declare -a user_gems=(
-    "jekyll"
-)
-
 g_header "Ruby Gem Installer"
-installRubyGems "${system_gems[@]}" 1
-installRubyGems "${user_gems[@]}" 0
+installRubyGems

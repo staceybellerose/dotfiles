@@ -214,7 +214,7 @@ installDebianPackages () {
         "ack"
         "adb"
         "arc-theme"
-        "ardiuno"
+        "arduino"
         "atom"
         "atril"
         "audacious"
@@ -338,7 +338,6 @@ installDebianPackages () {
         "fonts-cabinsketch"
         "fonts-cantarell"
         "fonts-cardo"
-        "fonts-cascadia-code"
         "fonts-cmu"
         "fonts-comic-neue"
         "fonts-courier-prime"
@@ -384,6 +383,7 @@ installDebianPackages () {
         "ttf-anonymous-pro"
         "ttf-bitstream-vera"
     )
+    # TODO add "fonts-cascadia-code" to the list above after upgrading to Debian bullseye
     # TODO replace ttf-anonymous-pro with fonts-anonymous-pro to the list above after upgrading to Debian bullseye
     pkgs+=( "${fontpkgs[@]}" ) # append font packages to list
     pkgs+=( "${deb_extra_packages[@]}" ) # append extra packages to list
@@ -433,6 +433,7 @@ installDebianExternalPackages () {
     if [ "$arch" = "amd64" ]
     then
         hasDebianPackage "google-chrome-stable" || {
+            g_info "Installing package google-chrome-stable"
             cd "$INSTALLDIR" && {
                 wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
                 sudo apt-get -q install "$INSTALLDIR/google-chrome-stable_current_amd64.deb"
@@ -445,6 +446,7 @@ installDebianExternalPackages () {
         if [[ "$arch" = "amd64" || "$arch" = "i386" ]]
         then
             dropbox_package=dropbox_2020.03.04_${arch}.deb
+            g_info "Installing package dropbox"
             cd "$INSTALLDIR" && {
                 wget -q "https://linux.dropbox.com/packages/debian/$dropbox_package"
                 sudo apt-get -q install "$INSTALLDIR/$dropbox_package"
@@ -456,6 +458,7 @@ installDebianExternalPackages () {
     hasDebianPackage "gitkraken" || {
         if [ "$arch" = "amd64" ]
         then
+            g_info "Installing package gitkraken"
             cd "$INSTALLDIR" && {
                 wget -q https://release.gitkraken.com/linux/gitkraken-amd64.deb
                 sudo apt-get -q install "$INSTALLDIR/gitkraken-amd64.deb"
@@ -467,6 +470,7 @@ installDebianExternalPackages () {
     hasDebianPackage "rpi-imager" || {
         if [ "$arch" = "amd64" ]
         then
+            g_info "Installing package rpi-imager"
             cd "$INSTALLDIR" && {
                 wget -q https://downloads.raspberrypi.org/imager/imager_latest_amd64.deb
                 sudo apt-get -q install "$INSTALLDIR/imager_latest_amd64.deb"
@@ -521,7 +525,6 @@ installRvm () {
 
 installTarball () {
     # TODO prompt before installing!
-    # return
     tarball=$1
     basepath=$2
     tarpath=$3
@@ -544,6 +547,7 @@ installTarball () {
 }
 
 installTarballs () {
+    g_bold "Installing Tarballs"
     installTarball "free42linux.tar.gz" "/opt" "Free42Linux" "https://thomasokken.com/free42/download/Free42Linux.tgz"
     installTarball "postman-latest.tar.gz" "/opt" "Postman" "https://dl.pstmn.io/download/latest/linux64"
 }
@@ -554,6 +558,7 @@ hasFlatpak () {
 }
 
 installFlatpaks () {
+    g_bold "Installing Flatpaks"
     declare -a flatpaks=(
         "com.github.alexkdeveloper.desktop-files-creator"
         "com.github.artemanufrij.regextester"

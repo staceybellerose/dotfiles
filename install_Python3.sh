@@ -1,12 +1,23 @@
 #!/usr/bin/env bash
 
-# Use this script for any Linux-based specific installations
+# Use this script for any Python3 package installations
 
 source ./bin/utils.sh
 
 gui="$1"
 yes="$2"
 debug="$3"
+
+(( installed=0 ))
+
+declare -a pkgs=(
+    "archey4"
+    "adafruit-board-toolkit"
+    "beautifulsoup4"
+    "lxml"
+    "mu-editor"
+    "requests"
+)
 
 hasPython3 () {
     (type -P python3 && type -P pip3) &> /dev/null
@@ -15,7 +26,7 @@ hasPython3 () {
 
 hasPythonPackage () {
     hasPython3 || return
-    pip3 list | grep -q "$1" &> /dev/null
+    pip3 list | grep "$1" &> /dev/null
     return $?
 }
 
@@ -25,6 +36,7 @@ installPythonPackage () {
     then
         pip3 install -q "$1"
         hasPythonPackage "$1"
+        (( installed++ ))
         reportResult "$1 successfully installed" "$1 not installed"
     fi
 }
@@ -32,11 +44,6 @@ installPythonPackage () {
 installPythonPackages () {
     hasPython3 || return
     g_bold "Installing Python packages"
-    declare -a pkgs=(
-        "archey4"
-        "adafruit-board-toolkit"
-        "mu-editor"
-    )
     toInstall=()
     for pkg in "${pkgs[@]}"
     do
@@ -65,6 +72,11 @@ installPythonPackages () {
     do
         installPythonPackage "$pkg"
     done
+    if ((installed > 0)); then
+        g_success "$installed packages installed"
+    else
+        g_info "No packages to install"
+    fi
 }
 
 g_header "Python Package Installer"

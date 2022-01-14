@@ -14,12 +14,11 @@ The following applications should be downloaded manually, and then installed:
 
 The following applications are installed from the Linux install script:
 
+* [Dropbox][dropbox]: Store, share, and access files across devices
 * [Free42][free42]: HP-42S RPN Scientific Calculator simulator
-  * [download link](https://thomasokken.com/free42/download/Free42Linux.tgz)
 * [GitKraken][gitkraken]: Git client
 * [Google Chrome][chrome]: Web browser
 * [Postman][postman]: API platform for building and using APIs
-  * [download link](https://dl.pstmn.io/download/latest/linux64)
 * [Raspberry Pi Imager][rpi-imager]: SD card writer for Raspberry Pi
 
 The following applications can be installed either natively or via flatpaks:

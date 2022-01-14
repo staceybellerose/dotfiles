@@ -109,11 +109,11 @@ installOSBin () {
     if [ -d "./bin_${arch}" ]
     then
         g_bold "Installing OS-specific bin files"
-        cp $CPOPT "./bin_${arch}/*" "${HOME}/bin"
+        cp $CPOPT ./bin_"${arch}"/* "${HOME}/bin"
         reportResult "Installed OS-specific bin files" "Unable to install OS-specific bin files"
         true
     else
-      g_info "No OS-specific bin files to install"
+        g_info "No OS-specific bin files to install"
     fi
 }
 

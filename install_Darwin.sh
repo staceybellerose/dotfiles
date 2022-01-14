@@ -262,6 +262,7 @@ then
     checkCask dia "Dia" "Dia.app" "http://dia-installer.de/"
     checkCask diffmerge "DiffMerge" "DiffMerge.app" "https://sourcegear.com/diffmerge/"
     checkCask docker "Docker" "Docker.app" "https://www.docker.com/products/docker-desktop"
+    checkCask drivethrurpg "DriveThruRPG" "DriveThruRPG.app" "https://www.drivethrurpg.com/library_client.php"
     checkCask dropbox "Dropbox" "Dropbox.app" "https://www.dropbox.com/"
     checkCask flux "F.Lux" "Flux.app" "https://justgetflux.com/"
     checkCask firefox "Firefox" "Firefox.app" "https://www.mozilla.org/en-US/exp/firefox/"
