@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+if [ "$1" = "" ] || [ "$1" = "-h" ] || [ "$1" = "-?" ]
+then
+	echo Usage: "$(basename "$0")" isofile [ mount_point ]
+	exit 1
+fi
+
+isofile=$1
+mountpoint=${2:-$HOME/iso}
+
+if [ ! -r "$isofile" ]
+then
+	echo Error: unable to read ISO file: "$isofile"
+	exit 1
+fi
+
+mkdir -p "$mountpoint" || {
+	echo Error: unable to create mount point: "$mountpoint"
+	exit 1
+}
+
+fuseiso9660 -o ro "$isofile" "$mountpoint"

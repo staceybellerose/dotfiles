@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+mountpoint=${1:-$HOME/iso}
+
+fusermount -u "$mountpoint"
