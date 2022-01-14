@@ -337,6 +337,11 @@ if [[ $fonts -eq 1 ]]
 then
     source ./install_nonfree_fonts.sh "$gui" "$debug"
 fi
+if [[ $packages -eq 1 ]]
+then
+    source ./install_Python3.sh "$gui" "$yes" "$debug"
+    source ./install_ruby_gems.sh "$gui" "$yes" "$debug"
+fi
 
 # Process OS-specific files
 [ -f "./install_${arch}.sh" ] && source "./install_${arch}.sh" "$packages" "$fonts" "$config" "$xcode" "$gui" "$yes" "$debug"
@@ -345,11 +350,6 @@ fi
 if [[ $vscode -eq 1 ]]
 then
     source ./install_vscode_extensions.sh "$gui" "$debug"
-fi
-if [[ $packages -eq 1 ]]
-then
-    source ./install_Python3.sh "$gui" "$yes" "$debug"
-    source ./install_ruby_gems.sh "$gui" "$yes" "$debug"
 fi
 
 g_success "Done!"
