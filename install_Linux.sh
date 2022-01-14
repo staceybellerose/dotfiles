@@ -445,11 +445,12 @@ installDebianExternalPackages () {
     hasDebianPackage "dropbox" || {
         if [[ "$arch" = "amd64" || "$arch" = "i386" ]]
         then
-            dropbox_package=dropbox_2020.03.04_${arch}.deb
             g_info "Installing package dropbox"
             cd "$INSTALLDIR" && {
-                wget -q "https://linux.dropbox.com/packages/debian/$dropbox_package"
-                sudo apt-get -q install "$INSTALLDIR/$dropbox_package"
+                url=$(python3 "$initial_wd/get_html_href.py" https://linux.dropbox.com/packages/debian/ | grep "\.deb$" | grep "$arch" | tail -1)
+                filename=$(python3 "$initial_wd/get_url_file.py" "$url")
+                wget -q "$url"
+                sudo apt-get -q install "$INSTALLDIR/$filename"
             }
         fi
     }
@@ -474,6 +475,34 @@ installDebianExternalPackages () {
             cd "$INSTALLDIR" && {
                 wget -q https://downloads.raspberrypi.org/imager/imager_latest_amd64.deb
                 sudo apt-get -q install "$INSTALLDIR/imager_latest_amd64.deb"
+            }
+        fi
+    }
+
+    # DeepGit
+    hasDebianPackage "deepgit" || {
+        if [ "$arch" = "amd64" ]
+        then
+            g_info "Installing package deepgit"
+            cd "$INSTALLDIR" && {
+                url=$(python3 "$initial_wd/get_html_href.py" https://www.syntevo.com/deepgit/download/ | grep "\.deb$" | head -n 1)
+                filename=$(python3 "$initial_wd/get_url_file.py" "$url")
+                wget -q "$url"
+                sudo apt-get -q install "$INSTALLDIR/$filename"
+            }
+        fi
+    }
+
+    # RStudio
+    hasDebianPackage "rstudio" || {
+        if [ "$arch" = "amd64" ]
+        then
+            g_info "Installing package rstudio"
+            cd "$INSTALLDIR" && {
+                url=$(python3 "$initial_wd/get_html_href.py" https://www.rstudio.com/products/rstudio/download/ | grep "\.deb$" | head -n 1)
+                filename=$(python3 "$initial_wd/get_url_file.py" "$url")
+                wget -q "$url"
+                sudo apt-get -q install "$INSTALLDIR/$filename"
             }
         fi
     }

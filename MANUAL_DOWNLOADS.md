@@ -6,20 +6,20 @@ The following applications should be downloaded manually, and then installed:
 
 * [Anaconda][anaconda]: Data Science platform
 * [Android SDK Tools][androidstudio]: Command line tools for Android development
-* [DeepGit][deepgit]: Code history analysis
 * [Genymotion][genymotion]: Android virtual machines
 * [PdfBooklet][pdfbooklet]: Convert PDFs to booklets
 * [ProjectLibre][projectlibre]: Project management software
-* [RStudio][rstudio]: IDE for R development
 
 The following applications are installed from the Linux install script:
 
+* [DeepGit][deepgit]: Code history analysis
 * [Dropbox][dropbox]: Store, share, and access files across devices
 * [Free42][free42]: HP-42S RPN Scientific Calculator simulator
 * [GitKraken][gitkraken]: Git client
 * [Google Chrome][chrome]: Web browser
 * [Postman][postman]: API platform for building and using APIs
 * [Raspberry Pi Imager][rpi-imager]: SD card writer for Raspberry Pi
+* [RStudio][rstudio]: IDE for R development
 
 The following applications can be installed either natively or via flatpaks:
 
@@ -30,6 +30,7 @@ The following applications can be installed either natively or via flatpaks:
 [androidstudio]: https://developer.android.com/studio#downloads
 [chrome]: https://www.google.com/chrome/
 [deepgit]: https://www.syntevo.com/deepgit/download/
+[dropbox]: https://dropbox.com/
 [free42]: https://thomasokken.com/free42/
 [genymotion]: https://www.genymotion.com/download/
 [gitkraken]: https://www.gitkraken.com/download
