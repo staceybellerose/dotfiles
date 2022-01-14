@@ -1,0 +1,134 @@
+#!/usr/bin/env bash
+
+# Backup all remote git repositories
+#
+# Required: git, curl, jq, bash v4+
+
+help () {
+	cat <<EOF
+Back up remote git repositories - Stacey Adams - https://staceyadams.me/
+
+Usage: $(basename "$0") [ options ]
+
+Options:
+
+    -d directory Directory to use for backups, default: current directory
+    -u username  Github username for the API calls
+    -l username  Gitlab username for the API calls
+    -L           Process Gitlab using same username as Github
+    -h           Print this help text
+    -q           Quiet mode (good for cron)
+
+EOF
+}
+
+errormsg () {
+	echo "$1" >&2
+	exit "$2"
+}
+
+verbose () {
+	if [[ $quiet == 0 ]]
+	then
+		"$@"
+	else
+		"$@" &> /dev/null
+	fi
+}
+
+clone_new_repos () {
+	for repo
+	do
+		if grep -q "url = $repo" ./*.git/config
+		then
+			verbose echo "Skipping $repo"
+		else
+			verbose echo "Cloning $repo..."
+			verbose git clone --mirror "$repo"
+		fi
+	done
+}
+
+basedir=.
+hubname=
+labname=
+labsame=
+max=100
+quiet=0
+
+while getopts "c:d:u:l:Lh?q" opt
+do
+	case "$opt" in
+		h|\?) help >&2; exit ;;
+		d) basedir="$OPTARG" ;;
+		l) labname="$OPTARG" ;;
+		L) labsame=1         ;;
+		u) hubname="$OPTARG" ;;
+		q) quiet=1           ;;
+		*) help >&2 ; exit 2 ;;
+	esac
+done
+if [[ $labsame == 1 ]]
+then
+	labname=$hubname
+fi
+
+# Validate the command line
+
+if [ ! -d "$basedir" ]
+then
+	errormsg "Error accessing directory: $dir" 1
+fi
+
+if [ ! -w "$basedir" ]
+then
+	errormsg "Error writing to directory: $dir" 1
+fi
+
+pushd "$basedir" > /dev/null || errormsg "Unable to change directory to $basedir" 2
+
+# Update the existing bare git repositories
+
+for dir in *.git/
+do
+	verbose echo "Processing $dir..."
+	pushd "$dir" > /dev/null || errormsg "Unable to change directory to $dir" 2
+	verbose git remote update --prune
+	popd > /dev/null || errormsg "Unable to pop directory" 2
+done
+
+# Backup any new git repositories from Github
+
+if [ -n "$hubname" ]
+then
+	page=1
+	while : ; do
+		readarray -t repos < <(curl -fsSL "https://api.github.com/users/$hubname/repos?page=$page&per_page=$max" | jq -r '.[].git_url')
+
+		# Only clone repos not yet cloned
+		clone_new_repos "${repos[@]}"
+		((page++))
+
+		# Break loop if fewer than $max items reported
+		[[ ${#repos[@]} -lt $max ]] && break
+	done
+fi
+
+# Backup any new git repositories from Gitlab
+
+if [ -n "$labname" ]
+then
+	page=1
+	while : ; do
+		readarray -t repos < <(curl -fsSL "https://gitlab.com/api/v4/users/$labname/projects?page=$page&per_page=$max" | jq -r '.[].http_url_to_repo')
+
+		# Only clone repos not yet cloned
+		clone_new_repos "${repos[@]}"
+		((page++))
+
+		# Break loop if fewer than $max items reported
+		[[ ${#repos[@]} -lt $max ]] && break
+	done
+fi
+
+popd > /dev/null || errormsg "Unable to pop directory" 2
