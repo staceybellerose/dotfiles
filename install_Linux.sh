@@ -99,7 +99,7 @@ isDebianDerivative () {
 }
 
 hasDebianPackage () {
-    dpkg -s "$1" &> /dev/null
+    dpkg-query -W -f='${Status}' "$1" | grep 'installed' &> /dev/null
     return $?
 }
 
@@ -309,7 +309,6 @@ installDebianPackages () {
         "scribus-template"
         "scribus"
         "sigil"
-        "snapd"
         "solaar"
         "speedtest-cli"
         "sqlite-doc"
@@ -322,7 +321,6 @@ installDebianPackages () {
         "texstudio"
         "thunderbird"
         "tldr"
-        "ttf-xfree86-nonfree"
         "vim-addon-manager"
         "vim-airline"
         "vim-gtk"

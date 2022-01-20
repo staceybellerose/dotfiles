@@ -211,6 +211,7 @@ then
     checkSubCommand openssh scp "OpenSSH" "https://www.openssh.com/"
     checkSubCommand gnupg gpg "GNU Pretty Good Privacy" "https://gnupg.org/"
     checkSubCommand imagemagick magick "ImageMagick" "https://www.imagemagick.org/"
+    checkSubCommand sqlite sqlite3 "SQLite" "https://www.sqlite.org/"
     checkNvm nvm "nvm" "https://github.com/nvm-sh/nvm"
     checkInstall ack "ack" "https://beyondgrep.com/"
     checkInstall alerter "alerter" "https://github.com/vjeantet/alerter"
@@ -237,7 +238,6 @@ then
     checkInstall rclone "rclone" "https://rclone.org/"
     checkInstall rsync "rsync" "https://rsync.samba.org/"
     checkInstall speedtest-cli "speedtest-cli" "https://github.com/sivel/speedtest-cli"
-    checkInstall sqlite "SQLite" "https://www.sqlite.org/"
     checkInstall terminal-notifier "terminal-notifier" "https://github.com/julienXX/terminal-notifier"
     checkInstall tldr "tldr" "https://tldr.sh/"
     checkInstall tree "Tree" "http://mama.indstate.edu/users/ice/tree/"
@@ -269,7 +269,6 @@ then
     checkCask fork "Git-Fork" "Fork.app" "https://git-fork.com/"
     checkCask free-ruler "Free Ruler" "Free Ruler.app" "http://www.pascal.com/software/freeruler/"
     checkCask free42-decimal "Free42 Decimal" "Free42 Decimal.app" "https://thomasokken.com/free42/"
-    checkCask geany "Geany" "Geany.app" "https://www.geany.org/"
     checkCask genymotion "Genymotion" "Genymotion.app" "https://www.genymotion.com/"
     checkCask gimp "Gimp" "GIMP-2.10.app" "https://www.gimp.org/"
     checkCask gitkraken "GitKraken" "GitKraken.app" "https://www.gitkraken.com/"
@@ -381,6 +380,12 @@ then
     done
 
     # Install apps from App Store via mas
+    if [[ ! " ${toInstall[*]} " =~ " mas " ]]
+    then
+        g_info "Updating mas"
+        mas upgrade
+    fi
+
     for i in "${toInstallMas[@]}"
     do
         g_info "Installing $i"
@@ -499,7 +504,7 @@ then
     checkFont "font-linux-libertine" "Linux Libertine" "Linux Libertine Fonts" "https://sourceforge.net/projects/linuxlibertine/"
     checkFont "font-lobster" "Lobster-Regular" "Lobster Font" "https://fonts.google.com/specimen/Lobster"
     checkFont "font-lobster-two" "Lobster Two" "Lobster Two Font" "https://fonts.google.com/specimen/Lobster+Two"
-    checkFont "font-mononoki" "Mononoki" "Mononoki Font" "http://madmalik.github.io/mononoki/"
+    checkFont "font-mononoki" "mononoki" "Mononoki Font" "http://madmalik.github.io/mononoki/"
     checkFont "font-noto-color-emoji" "Noto Color Emoji" "Noto Color Emoji Font" "https://github.com/googlefonts/noto-emoji"
     checkFont "font-noto-sans" "NotoSans-Regular" "Noto Sans Font" "https://www.google.com/get/noto/"
     checkFont "font-noto-sans-cherokee" "Noto Sans Cherokee" "Noto Sans Cherokee Font" "https://fonts.google.com/noto/specimen/Noto+Sans+Cherokee"
