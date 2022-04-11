@@ -325,6 +325,7 @@ then
 
     # mas programs
     checkAppStoreCommand 1477419086 "Moped" "Moped.app" "https://roberto.machorro.net/Moped/"
+    checkAppStoreCommand 448340648 "Tincta" "Tincta.app" "https://codingfriends.github.io/Tincta/"
 
     # if we aren't installing brew, make sure we update it
     if [[ ! " ${toInstall[*]} " =~ " brew " ]]
