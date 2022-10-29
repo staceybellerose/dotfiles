@@ -120,25 +120,29 @@ configureDebian () {
     arch=$(dpkg --print-architecture)
     source /etc/os-release
 
+    isRaspberryPi=0
+    if [ "$arch" = "arm64" ] || [ "$arch" = "armhf" ]
+    then
+        if grep -q "BCM(283(5|6|7)|270(8|9)|2711)" /proc/cpuinfo &> /dev/null
+        then
+            isRaspberryPi=1
+        fi
+    fi
+
     promptForPassword
     installDebianPackage "wget"
 
     keyrings=/etc/apt/trusted.gpg.d
     sources=/etc/apt/sources.list.d
 
-    # Add Backports source
-    if [ ! -e "$sources/debian-backports.list" ]
+    # Add Backports source for amd64 (x86_64) only
+    if [ "$arch" = "amd64" ]
     then
-        echo "deb http://deb.debian.org/debian ${VERSION_CODENAME}-backports main" | sudo tee "$sources/debian-backports.list"
+        if [ ! -e "$sources/debian-backports.list" ]
+        then
+            echo "deb http://deb.debian.org/debian ${VERSION_CODENAME}-backports main" | sudo tee "$sources/debian-backports.list"
+        fi
     fi
-
-    # Add Atom source
-    if [ ! -e "$sources/atom.list" ]
-    then
-        wget -q https://packagecloud.io/AtomEditor/atom/gpgkey -O- | sudo gpg --dearmor -o "$keyrings/atom-keyring.gpg"
-        echo "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main" | sudo tee "$sources/atom.list"
-    fi
-    deb_extra_packages+=( "atom" )
 
     # Add Beekeeper Studio source
     if [ ! -e "$sources/beekeeper-studio-app.list" ]
@@ -157,12 +161,15 @@ configureDebian () {
     deb_extra_packages+=( "gh" )
 
     # Add Spotify source
-    if [ ! -e "$sources/spotify.list" ]
+    if [ "$arch" = "amd64" ]
     then
-        wget -q https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg -O- | sudo apt-key add -
-        echo "deb http://repository.spotify.com stable non-free" | sudo tee "$sources/spotify.list"
+        if [ ! -e "$sources/spotify.list" ]
+        then
+            wget -q https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg -O- | sudo apt-key add -
+            echo "deb http://repository.spotify.com stable non-free" | sudo tee "$sources/spotify.list"
+        fi
+        deb_extra_packages+=( "spotify-client" )
     fi
-    deb_extra_packages+=( "spotify-client" )
 
     # Set up Steam
     if [ "$arch" = "amd64" ]
@@ -187,20 +194,50 @@ configureDebian () {
     fi
 
     # Set up VS Code source
-    if [ ! -e "$sources/vscode.list" ]
+    if [ "$arch" = "amd64" ]
     then
-        wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo gpg --dearmor -o "$keyrings/microsoft-packages-keyring.gpg"
-        echo "deb [arch=amd64,arm64,armhf] https://packages.microsoft.com/repos/code stable main" | sudo tee "$sources/vscode.list"
+        if [ ! -e "$sources/vscode.list" ]
+        then
+            wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo gpg --dearmor -o "$keyrings/microsoft-packages-keyring.gpg"
+            echo "deb [arch=amd64,arm64,armhf] https://packages.microsoft.com/repos/code stable main" | sudo tee "$sources/vscode.list"
+        fi
+        deb_extra_packages+=( "code" )
+    elif [ "$isRaspberryPi" = "1" ]
+    then
+        # VS Code is set up in the standard Raspberry Pi package repository
+        deb_extra_packages+=( "code" )
     fi
-    deb_extra_packages+=( "code" )
 
-    # Set up VS Codium source
-    if [ ! -e "$sources/vscodium.list" ]
+    # Add WineHQ source
+    if [ "$arch" = "amd64" ]
     then
-        wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg | sudo gpg --dearmor -o "$keyrings/vscodium-archive-keyring.gpg"
-        echo "deb https://download.vscodium.com/debs vscodium main" | sudo tee "$sources/vscodium.list"
+        if [ ! -e "$sources/winehq.list" ]
+        then
+            wget -q https://dl.winehq.org/wine-builds/winehq.key -O- | sudo apt-key add -
+            echo "deb https://dl.winehq.org/wine-builds/debian/ ${VERSION_CODENAME} main" | sudo tee "$sources/winehq.list"
+        fi
+        deb_extra_packages+=( "winehq-stable" )
     fi
-    deb_extra_packages+=( "codium" )
+
+    # Add YACReader source
+    if [ ! -e "$sources/home:selmf.list" ]
+    then
+        if [ "$arch" = "amd64" ]
+        then
+            name="Debian"
+        elif [ "$isRaspberryPi" = 1 ]
+        then
+            name="Raspbian"
+        else
+            name="?"
+        fi
+        if [ "$name" != "?" ]
+        then
+            wget -q "https://download.opensuse.org/repositories/home:selmf/${name}_${VERSION_ID}/Release.key" -O- | sudo gpg --dearmor -o "$keyrings/home_selmf.gpg"
+            echo "deb http://download.opensuse.org/repositories/home:/selmf/${name}_${VERSION_ID}/ /" | sudo tee "$sources/home:selmf.list"
+        fi
+    fi
+    deb_extra_packages+=( "yacreader" )
 
     # Update list of sources
     sudo apt-get -q update &> "$out"
@@ -215,7 +252,6 @@ installDebianPackages () {
         "adb"
         "arc-theme"
         "arduino"
-        "atom"
         "atril"
         "audacious"
         "audacity"
@@ -294,6 +330,7 @@ installDebianPackages () {
         "pokerth"
         "projectlibre"
         "python3"
+        "qdirstat"
         "rails"
         "rake"
         "rclone"
@@ -326,6 +363,7 @@ installDebianPackages () {
         "vim-gtk"
         "vim"
         "vlc"
+        "webhttrack"
         "wget"
         "xcowsay"
         "xfburn"
@@ -453,17 +491,17 @@ installDebianExternalPackages () {
         fi
     }
 
-    # GitKraken
-    hasDebianPackage "gitkraken" || {
-        if [ "$arch" = "amd64" ]
-        then
-            g_info "Installing package gitkraken"
-            cd "$INSTALLDIR" && {
-                wget -q https://release.gitkraken.com/linux/gitkraken-amd64.deb
-                sudo apt-get -q install "$INSTALLDIR/gitkraken-amd64.deb"
-            }
-        fi
-    }
+    # # GitKraken
+    # hasDebianPackage "gitkraken" || {
+    #     if [ "$arch" = "amd64" ]
+    #     then
+    #         g_info "Installing package gitkraken"
+    #         cd "$INSTALLDIR" && {
+    #             wget -q https://release.gitkraken.com/linux/gitkraken-amd64.deb
+    #             sudo apt-get -q install "$INSTALLDIR/gitkraken-amd64.deb"
+    #         }
+    #     fi
+    # }
 
     # Raspberry Pi Imager
     hasDebianPackage "rpi-imager" || {
@@ -591,8 +629,8 @@ installFlatpaks () {
         "com.github.artemanufrij.regextester"
         "com.github.gijsgoudzwaard.image-optimizer"
         "com.google.AndroidStudio"
+        "com.jetbrains.IntelliJ-IDEA-Community"
         "com.jetbrains.PyCharm-Community"
-        "io.github.mmstick.FontFinder"
         "io.github.seadve.Breathing"
         "io.github.trytonvanmeer.DungeonJournal"
         "re.sonny.OhMySVG"
