@@ -222,6 +222,7 @@ then
     checkInstall dialog "dialog" "https://invisible-island.net/dialog/"
     checkInstall dmg2img "dmg2img" "http://vu1tur.eu.org/tools/"
     checkInstall dockutil "dockutil" "https://github.com/kcrawford/dockutil"
+    checkinstall eslint "eslint" "https://eslint.org/"
     checkInstall fortune "fortune" "https://www.ibiblio.org/pub/linux/games/amusements/fortune/!INDEX.html"
     checkInstall gawk "gawk" "https://www.gnu.org/software/gawk/"
     checkInstall git "Git" "https://git-scm.com/"
