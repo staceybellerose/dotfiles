@@ -151,6 +151,8 @@ installAllVSCodeExtensions () {
         installVSCodeExtension EditorConfig.EditorConfig # EditorConfig support
         installVSCodeExtension dunstontc.viml # vim syntax highlighting
         installVSCodeExtension jerrygoyal.shortcut-menu-bar # Add buttons to editor menu bar (since no toolbar)
+        installVSCodeExtension joedevivo.vscode-circuitpython # CircuitPython support
+        installVSCodeExtension magicstack.magicpython # syntax highlighter for python
 
         # Themes
         installVSCodeExtension zhuangtongfa.material-theme # One Dark Pro
