@@ -17,6 +17,7 @@ For partial installs, use the following command line options:
 |   -g   | Run in GUI mode (requires zenity in $PATH) |
 |   -y   | Answer Yes to all prompts |
 |   -a   | Enable Android Studio configuration changes |
+|   -s   | only install server packages (no desktop packages or fonts) |
 |   -c   | Suppress configuration changes |
 |   -f   | Suppress font installation |
 |   -p   | Suppress package updates |
@@ -27,6 +28,17 @@ For partial installs, use the following command line options:
 |   -P   | Only run package updates |
 |   -V   | Only run VSCode extension installation |
 |   -X   | Only run XCode initialization  (OS X only) |
+
+### Requirements before installing
+
+The following applications are used in the installer. If the installer
+is run multiple times, they will be available on runs after the first.
+
+zenity (optional, for GUI installer)
+jq (optional, for non-free fonts, from Dropbox)
+dropbox (optional, for non-free fonts)
+python3 (optional, for installing python packages)
+ruby (optional, for installing ruby gems)
 
 ### Manual (Minimal) Installation
 

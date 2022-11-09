@@ -17,6 +17,15 @@ setXcode () {
     fi
 }
 
+setServerOnly () {
+    if [ -e "${HOME}/.bashd/serveronly" ]
+    then
+        serveronly=1
+    else
+        serveronly=0
+    fi
+}
+
 android=0
 gui=0
 packages=1
@@ -26,6 +35,7 @@ config=1
 only=0
 yes=0
 debug=0 # hidden option
+setServerOnly
 setXcode
 
 CPOPT=-av
@@ -41,6 +51,7 @@ Options:
   -g   Run in GUI mode (requires zenity in \$PATH)
   -y   Answer Yes to all prompts
   -a   Enable Android Studio configuration changes
+  -s   only install server packages (no desktop packages or fonts)
   -c   Suppress configuration changes
   -f   Suppress font installation
   -p   Suppress package updates
@@ -125,9 +136,19 @@ installConfig () {
     reportResult "Installed dircolors file" "Unable to install dircolors file"
 }
 
+rememberServerOnly () {
+    if [[ $serveronly -eq 1 ]]
+    then
+        mkdir -p "${HOME}/.bashd"
+        touch "${HOME}/.bashd/serveronly"
+    else
+        rm "${HOME}/.bashd/serveronly" &> /dev/null
+    fi
+}
+
 header="$(basename "$0") - Dotfiles Installer"
 
-while getopts "h?adgcfpvxyCFPVX" opt
+while getopts "h?asdgcfpvxyCFPVX" opt
 do
     case $opt in
         h|\?)
@@ -139,6 +160,9 @@ do
             ;;
         a)
             android=1
+            ;;
+        s)
+            serveronly=1
             ;;
         g)
             if command -v zenity &> /dev/null
@@ -234,6 +258,7 @@ then
         if [[ $xcode -eq 1 ]] ; then boolxcode=TRUE ; else boolxcode=FALSE ; fi
     fi
     if [[ $android -eq 1 ]] ; then boolAndroid=TRUE ; else boolAndroid=FALSE ; fi
+    if [[ $serveronly -eq 1 ]] ; then boolServerOnly=TRUE ; else boolServerOnly=FALSE ; fi
     if [[ $only -eq 1 ]] ; then boolOnly=TRUE ; else boolOnly=FALSE ; fi
     # shellcheck disable=SC2046
     options=$(zenity --list --checklist --multiple --width=450 --height=300 \
@@ -246,6 +271,7 @@ then
         "$boolvscode" "VS Code Extensions" \
         ${boolxcode:+ $boolxcode "XCode Initialization"} \
         "$boolAndroid" "Enable Android Studio Configuration Changes" \
+        "$boolServerOnly" "Install server packages only (not desktop)" \
         "$boolOnly" "Only install selected")
     result=$?
     if [ $result -ne 0 ]
@@ -261,6 +287,7 @@ then
     packages=0
     vscode=0
     xcode=0
+    serveronly=0
     only=0
 
     # parse flags from zenity
@@ -284,6 +311,9 @@ then
                 ;;
             "Enable Android Studio Configuration Changes")
                 android=1
+                ;;
+            "Install server packages only (not desktop)")
+                serveronly=1
                 ;;
             "Only install selected")
                 only=1
@@ -309,6 +339,8 @@ then
         echo $xcode
         echo -n "  android: "
         echo $android
+        echo -n "  serveronly: "
+        echo $serveronly
         echo -n "  ONLY:    "
         echo $only
     fi
@@ -322,6 +354,8 @@ fi
 
 g_header "$header"
 
+rememberServerOnly
+
 if [[ $only -eq 0 ]]
 then
     installBashd
@@ -329,11 +363,11 @@ then
     installOSBin
     installVim
 fi
-if [[ $config -eq 1 ]]
+if [[ $config -eq 1 && $serveronly -ne 1 ]]
 then
     installConfig
 fi
-if [[ $fonts -eq 1 ]]
+if [[ $fonts -eq 1 && $serveronly -ne 1 ]]
 then
     source ./install_nonfree_fonts.sh "$gui" "$debug"
 fi
@@ -344,10 +378,10 @@ then
 fi
 
 # Process OS-specific files
-[ -f "./install_${arch}.sh" ] && source "./install_${arch}.sh" "$packages" "$fonts" "$config" "$xcode" "$gui" "$yes" "$debug"
-[ -f "./install_${arch}_${machinearch}.sh" ] && source "./install_${arch}_${machinearch}.sh" "$packages" "$fonts" "$config" "$xcode" "$gui" "$yes" "$debug"
+[ -f "./install_${arch}.sh" ] && source "./install_${arch}.sh" "$packages" "$fonts" "$config" "$xcode" "$gui" "$yes" "$debug" "$serveronly"
+[ -f "./install_${arch}_${machinearch}.sh" ] && source "./install_${arch}_${machinearch}.sh" "$packages" "$fonts" "$config" "$xcode" "$gui" "$yes" "$debug" "$serveronly"
 
-if [[ $vscode -eq 1 ]]
+if [[ $vscode -eq 1 && $serveronly -ne 1 ]]
 then
     source ./install_vscode_extensions.sh "$gui" "$debug"
 fi
