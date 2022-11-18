@@ -82,7 +82,6 @@ installFlatpaks () {
         "com.github.tchx84.Flatseal"
         "com.jetbrains.IntelliJ-IDEA-Community"
         "com.jetbrains.PyCharm-Community"
-        "com.jetpackduba.Gitnuro"
         "com.poweriso.PowerISO"
         "com.syntevo.SmartGit"
         "com.syntevo.SmartSynchronize"
