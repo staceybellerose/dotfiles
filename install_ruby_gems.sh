@@ -10,9 +10,8 @@ debug="$3"
 
 (( installed=0 ))
 
+# Currently, there are no gems to install
 declare -a gems=(
-    "bundler"
-    "jekyll"
 )
 
 hasRuby () {

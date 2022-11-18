@@ -12,6 +12,7 @@ xcode="$4"
 gui="$5"
 yes="$6"
 debug="$7"
+# shellcheck disable=SC2034
 serveronly="$8"
 
 if [[ $gui -eq 0 ]]
@@ -278,6 +279,7 @@ then
     checkCask gramps "Gramps" "Gramps.app" "https://gramps-project.org/blog/"
     checkCask hex-fiend "Hex Fiend" "Hex Fiend.app" "https://ridiculousfish.com/hexfiend/"
     checkCask inkscape "Inkscape" "Inkscape.app" "https://inkscape.org/"
+    checkCask intellij-idea-ce "IntelliJ IDEA CE" "IntelliJ IDEA CE.app" "https://www.jetbrains.com/idea/"
     checkCask iterm2 "iTerm2" "iTerm.app" "https://www.iterm2.com/"
     checkCask jupyterlab "JupyterLab" "JupyterLab.app" "https://jupyter.org/"
     checkCask keepassx "KeePassX" "KeePassX.app" "https://www.keepassx.org/"
@@ -365,7 +367,8 @@ then
         elif [ "$i" == "rvm" ]
         then
             curl -sSL https://get.rvm.io | bash -s stable --ruby --rails
-            gem install bundler -v '=1.17.3'
+            gem install bundler
+            gem install jekyll
             rvm docs generate-ri
         elif [ "$i" == "nvm" ]
         then
