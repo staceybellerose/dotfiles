@@ -525,167 +525,166 @@ installDebianExternalPackages () {
 
 	if [[ $serveronly -ne 1 ]]
 	then
-
-    # Google Chrome
-    if [ "$arch" = "amd64" ]
-    then
-        hasDebianPackage "google-chrome-stable" || {
-            g_info "Installing package google-chrome-stable"
-            cd "$INSTALLDIR" && {
-                wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-                sudo apt-get -q install "$INSTALLDIR/google-chrome-stable_current_amd64.deb"
-            }
-        }
-    fi
-
-    # Raspberry Pi Imager
-    hasDebianPackage "rpi-imager" || {
+        # Google Chrome
         if [ "$arch" = "amd64" ]
         then
-            g_info "Installing package rpi-imager"
-            cd "$INSTALLDIR" && {
-                wget -q https://downloads.raspberrypi.org/imager/imager_latest_amd64.deb
-                sudo apt-get -q install "$INSTALLDIR/imager_latest_amd64.deb"
-            }
-        fi
-    }
-
-    # Discord
-    hasDebianPackage "discord" || {
-        if [ "$arch" = "amd64" ]
-        then
-            g_info "Installing package discord"
-            cd "$INSTALLDIR" && {
-                wget -q "https://discord.com/api/download?platform=linux&format=deb" -O discord-latest.deb
-                sudo apt-get -q install "$INSTALLDIR/discord-latest.deb"
-            }
-        fi
-    }
-
-    # Mega
-    hasDebianPackage "megasync" || {
-        if [ "$arch" = "amd64" ]
-        then
-            g_info "Installing package megasync"
-            url1=""
-            url2=""
-            url3=""
-            if [ "$VERSION_ID" = "10" ]
-            then
-                url1="https://mega.nz/linux/repo/Debian_10.0/amd64/megasync-Debian_10.0_amd64.deb"
-                url2="https://mega.nz/linux/repo/Debian_10.0/amd64/thunar-megasync-Debian_10.0_amd64.deb"
-                url3="https://mega.nz/linux/repo/Debian_10.0/amd64/megacmd-Debian_10.0_amd64.deb"
-            elif [ "$VERSION_ID" = "11" ]
-            then
-                url1="https://mega.nz/linux/repo/Debian_11/amd64/megasync-Debian_11_amd64.deb"
-                url2="https://mega.nz/linux/repo/Debian_11/amd64/thunar-megasync-Debian_11_amd64.deb"
-                url3="https://mega.nz/linux/repo/Debian_11/amd64/megacmd-Debian_11_amd64.deb"
-            fi
-            if [ -n "$url1" ] && [ -n "$url2" ] && [ -n "$url3" ]
-            then
+            hasDebianPackage "google-chrome-stable" || {
+                g_info "Installing package google-chrome-stable"
                 cd "$INSTALLDIR" && {
-                    wget -q "$url1" -O megasync-latest.deb
-                    sudo apt-get -q install "$INSTALLDIR/megasync-latest.deb"
-                    wget -q "$url2" -O thunar-megasync.deb
-                    sudo apt-get -q install "$INSTALLDIR/thunar-megasync.deb"
-                    wget -q "$url3" -O megacmd-latest.deb
-                    sudo apt-get -q install "$INSTALLDIR/megacmd-latest.deb"
+                    wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+                    sudo apt-get -q install "$INSTALLDIR/google-chrome-stable_current_amd64.deb"
+                }
+            }
+        fi
+
+        # Raspberry Pi Imager
+        hasDebianPackage "rpi-imager" || {
+            if [ "$arch" = "amd64" ]
+            then
+                g_info "Installing package rpi-imager"
+                cd "$INSTALLDIR" && {
+                    wget -q https://downloads.raspberrypi.org/imager/imager_latest_amd64.deb
+                    sudo apt-get -q install "$INSTALLDIR/imager_latest_amd64.deb"
                 }
             fi
-        fi
-    }
+        }
 
-    # ProjectLibre
-    hasDebianPackage "projectlibre" || {
-        if [ "$arch" = "amd64" ]
-        then
-            g_info "Installing package projectlibre"
-            cd "$INSTALLDIR" && {
-                wget -q -nv -O projectlibre-release.json "https://sourceforge.net/projects/projectlibre/best_release.json"
-                mimetype=$(jq -r ".platform_releases.linux.mime_type" projectlibre-release.json)
-                if [[ $mimetype =~ "application/x-debian-package" ]]
+        # Discord
+        hasDebianPackage "discord" || {
+            if [ "$arch" = "amd64" ]
+            then
+                g_info "Installing package discord"
+                cd "$INSTALLDIR" && {
+                    wget -q "https://discord.com/api/download?platform=linux&format=deb" -O discord-latest.deb
+                    sudo apt-get -q install "$INSTALLDIR/discord-latest.deb"
+                }
+            fi
+        }
+
+        # Mega
+        hasDebianPackage "megasync" || {
+            if [ "$arch" = "amd64" ]
+            then
+                g_info "Installing package megasync"
+                url1=""
+                url2=""
+                url3=""
+                if [ "$VERSION_ID" = "10" ]
                 then
-                    url=$(jq -r ".platform_releases.linux.url" projectlibre-release.json)
-                    wget -q "$url" -O projectlibre.deb
-                    sudo apt-get -q install "$INSTALLDIR/projectlibre.deb"
-                else
-                    e_error "Unable to locate DEB file for ProjectLibre - skipping installation"
+                    url1="https://mega.nz/linux/repo/Debian_10.0/amd64/megasync-Debian_10.0_amd64.deb"
+                    url2="https://mega.nz/linux/repo/Debian_10.0/amd64/thunar-megasync-Debian_10.0_amd64.deb"
+                    url3="https://mega.nz/linux/repo/Debian_10.0/amd64/megacmd-Debian_10.0_amd64.deb"
+                elif [ "$VERSION_ID" = "11" ]
+                then
+                    url1="https://mega.nz/linux/repo/Debian_11/amd64/megasync-Debian_11_amd64.deb"
+                    url2="https://mega.nz/linux/repo/Debian_11/amd64/thunar-megasync-Debian_11_amd64.deb"
+                    url3="https://mega.nz/linux/repo/Debian_11/amd64/megacmd-Debian_11_amd64.deb"
                 fi
-            }
-        fi
-    }
+                if [ -n "$url1" ] && [ -n "$url2" ] && [ -n "$url3" ]
+                then
+                    cd "$INSTALLDIR" && {
+                        wget -q "$url1" -O megasync-latest.deb
+                        sudo apt-get -q install "$INSTALLDIR/megasync-latest.deb"
+                        wget -q "$url2" -O thunar-megasync.deb
+                        sudo apt-get -q install "$INSTALLDIR/thunar-megasync.deb"
+                        wget -q "$url3" -O megacmd-latest.deb
+                        sudo apt-get -q install "$INSTALLDIR/megacmd-latest.deb"
+                    }
+                fi
+            fi
+        }
 
-    # RStudio
-    hasDebianPackage "rstudio" || {
-        if [ "$arch" = "amd64" ]
-        then
-            g_info "Installing package rstudio"
-            cd "$INSTALLDIR" && {
-                url=$(python3 "$initial_wd/get_html_href.py" https://www.rstudio.com/products/rstudio/download/ | grep "\.deb$" | head -n 1)
-                filename=$(python3 "$initial_wd/get_url_file.py" "$url")
-                wget -q "$url"
-                sudo apt-get -q install "$INSTALLDIR/$filename"
-            }
-        fi
-    }
+        # ProjectLibre
+        hasDebianPackage "projectlibre" || {
+            if [ "$arch" = "amd64" ]
+            then
+                g_info "Installing package projectlibre"
+                cd "$INSTALLDIR" && {
+                    wget -q -nv -O projectlibre-release.json "https://sourceforge.net/projects/projectlibre/best_release.json"
+                    mimetype=$(jq -r ".platform_releases.linux.mime_type" projectlibre-release.json)
+                    if [[ $mimetype =~ "application/x-debian-package" ]]
+                    then
+                        url=$(jq -r ".platform_releases.linux.url" projectlibre-release.json)
+                        wget -q "$url" -O projectlibre.deb
+                        sudo apt-get -q install "$INSTALLDIR/projectlibre.deb"
+                    else
+                        e_error "Unable to locate DEB file for ProjectLibre - skipping installation"
+                    fi
+                }
+            fi
+        }
 
-    # PDF Booklet
-    hasDebianPackage "pdfbooklet" || {
-        if [ "$arch" = "amd64" ]
-        then
-            g_info "Installing package pdfbooklet"
-            cd "$INSTALLDIR" && {
-                url=$(python3 "$initial_wd/get_html_href.py" https://pdfbooklet.sourceforge.io/wordpress/download/ | grep "\.deb" | head -n 1)
-                filename=$(python3 "$initial_wd/get_url_file.py" "$url")
-                wget -q "$url"
-                sudo apt-get -q install "$INSTALLDIR/$filename"
-            }
-        fi
-    }
+        # RStudio
+        hasDebianPackage "rstudio" || {
+            if [ "$arch" = "amd64" ]
+            then
+                g_info "Installing package rstudio"
+                cd "$INSTALLDIR" && {
+                    url=$(python3 "$initial_wd/get_html_href.py" https://www.rstudio.com/products/rstudio/download/ | grep "\.deb$" | head -n 1)
+                    filename=$(python3 "$initial_wd/get_url_file.py" "$url")
+                    wget -q "$url"
+                    sudo apt-get -q install "$INSTALLDIR/$filename"
+                }
+            fi
+        }
 
-    # Pencil Project
-    hasDebianPackage "pencil" || {
-        if [ "$arch" = "amd64" ]
-        then
-            g_info "Installing package pencil"
-            cd "$INSTALLDIR" && {
-                url=$(python3 "$initial_wd/get_html_href.py" https://pencil.evolus.vn/Downloads.html | grep "amd64\.deb" | head -n 1)
-                filename=$(python3 "$initial_wd/get_url_file.py" "$url")
-                wget -q "$url"
-                sudo apt-get -q install "$INSTALLDIR/$filename"
-            }
-        fi
-    }
+        # PDF Booklet
+        hasDebianPackage "pdfbooklet" || {
+            if [ "$arch" = "amd64" ]
+            then
+                g_info "Installing package pdfbooklet"
+                cd "$INSTALLDIR" && {
+                    url=$(python3 "$initial_wd/get_html_href.py" https://pdfbooklet.sourceforge.io/wordpress/download/ | grep "\.deb" | head -n 1)
+                    filename=$(python3 "$initial_wd/get_url_file.py" "$url")
+                    wget -q "$url"
+                    sudo apt-get -q install "$INSTALLDIR/$filename"
+                }
+            fi
+        }
 
-    # duf (Disk Usage/Free Utility)
-    hasDebianPackage "duf" || {
-        if [ "$arch" = "amd64" ] || [ "$arch" = "arm64" ]
-        then
-            g_info "Installing package duf"
-            cd "$INSTALLDIR" && {
-                getLatestGithubResource "muesli/duf" "linux_${arch}.deb"
-                url=$githubDownload
-                filename=$(python3 "$initial_wd/get_url_file.py" "$url")
-                wget -q "$url"
-                sudo apt-get -q install "$INSTALLDIR/$filename"
-            }
-        fi
-    }
+        # Pencil Project
+        hasDebianPackage "pencil" || {
+            if [ "$arch" = "amd64" ]
+            then
+                g_info "Installing package pencil"
+                cd "$INSTALLDIR" && {
+                    url=$(python3 "$initial_wd/get_html_href.py" https://pencil.evolus.vn/Downloads.html | grep "amd64\.deb" | head -n 1)
+                    filename=$(python3 "$initial_wd/get_url_file.py" "$url")
+                    wget -q "$url"
+                    sudo apt-get -q install "$INSTALLDIR/$filename"
+                }
+            fi
+        }
 
-    # Advanced REST Client
-    hasDebianPackage "advanced-rest-client" || {
-        if [ "$arch" = "amd64" ]
-        then
-            g_info "Installing package advanced-rest-client"
-            cd "$INSTALLDIR" && {
-                getLatestGithubResource "advanced-rest-client/arc-electron" "linux.+amd64.deb"
-                url=$githubDownload
-                filename=$(python3 "$initial_wd/get_url_file.py" "$url")
-                wget -q "$url"
-                sudo apt-get -q install "$INSTALLDIR/$filename"
-            }
-        fi
-    }
+        # duf (Disk Usage/Free Utility)
+        hasDebianPackage "duf" || {
+            if [ "$arch" = "amd64" ] || [ "$arch" = "arm64" ]
+            then
+                g_info "Installing package duf"
+                cd "$INSTALLDIR" && {
+                    getLatestGithubResource "muesli/duf" "linux_${arch}.deb"
+                    url=$githubDownload
+                    filename=$(python3 "$initial_wd/get_url_file.py" "$url")
+                    wget -q "$url"
+                    sudo apt-get -q install "$INSTALLDIR/$filename"
+                }
+            fi
+        }
+
+        # Advanced REST Client
+        hasDebianPackage "advanced-rest-client" || {
+            if [ "$arch" = "amd64" ]
+            then
+                g_info "Installing package advanced-rest-client"
+                cd "$INSTALLDIR" && {
+                    getLatestGithubResource "advanced-rest-client/arc-electron" "linux.+amd64.deb"
+                    url=$githubDownload
+                    filename=$(python3 "$initial_wd/get_url_file.py" "$url")
+                    wget -q "$url"
+                    sudo apt-get -q install "$INSTALLDIR/$filename"
+                }
+            fi
+        }
     fi
 }
 
