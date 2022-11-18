@@ -12,6 +12,7 @@ xcode="$4"
 gui="$5"
 yes="$6"
 debug="$7"
+serveronly="$8"
 
 if [[ $gui -eq 0 ]]
 then

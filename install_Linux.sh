@@ -13,6 +13,7 @@ xcode="$4"
 gui="$5"
 yes="$6"
 debug="$7"
+serveronly="$8"
 
 if [[ $gui -eq 0 ]]
 then
@@ -41,17 +42,22 @@ declare -a deb_extra_packages=()
 installFonts () {
     g_bold "Installing Fonts"
     mkdir -p "${HOME}/.fonts"
-    for dir in fonts/*
+    for dir in "$initial_wd"/fonts/*
     do
         if [ -d "$dir" ]
         then
             fontname=$(basename "$dir")
-            if fc-list | grep -q "$fontname"
+            if [[ $serveronly -ne 1 || -e "$dir/.serverallowed" ]]
             then
-                [[ $debug -eq 1 ]] && g_success "${fontname} is already installed"
+                if fc-list | grep -q "$fontname"
+                then
+                    [[ $debug -eq 1 ]] && g_success "${fontname} is already installed"
+                else
+                    cp $CPOPT "$dir" "${HOME}/.fonts"
+                    reportResult "Installed font: ${fontname}" "Unable to install font: ${fontname}"
+                fi
             else
-                cp $CPOPT "$dir" "${HOME}/.fonts"
-                reportResult "Installed font: ${fontname}" "Unable to install font: ${fontname}"
+                [[ $debug -eq 1 ]] && g_warning "skipping ${fontname}: not tagged as server font"
             fi
         fi
     done
@@ -99,7 +105,7 @@ isDebianDerivative () {
 }
 
 hasDebianPackage () {
-    dpkg-query -W -f='${Status}' "$1" | grep 'installed' &> /dev/null
+    dpkg-query -W -f='${Status}' "$1" | grep -P '(?<!not-)installed' &> /dev/null
     return $?
 }
 
@@ -141,16 +147,9 @@ configureDebian () {
         if [ ! -e "$sources/debian-backports.list" ]
         then
             echo "deb http://deb.debian.org/debian ${VERSION_CODENAME}-backports main" | sudo tee "$sources/debian-backports.list"
+            echo "deb-src http://deb.debian.org/debian ${VERSION_CODENAME}-backports main" | sudo tee -a "$sources/debian-backports.list"
         fi
     fi
-
-    # Add Beekeeper Studio source
-    if [ ! -e "$sources/beekeeper-studio-app.list" ]
-    then
-        wget -q https://deb.beekeeperstudio.io/beekeeper.key -O- | sudo gpg --dearmor -o "$keyrings/beekeeper-studio-keyring.gpg"
-        echo "deb https://deb.beekeeperstudio.io stable main" | sudo tee "$sources/beekeeper-studio-app.list"
-    fi
-    deb_extra_packages+=( "beekeeper-studio" )
 
     # Add GitHub CLI source
     if [ ! -e "$sources/github-cli.list" ]
@@ -160,84 +159,95 @@ configureDebian () {
     fi
     deb_extra_packages+=( "gh" )
 
-    # Add Spotify source
-    if [ "$arch" = "amd64" ]
+    # Add Beekeeper Studio source
+    if [[ $serveronly -ne 1 ]]
     then
-        if [ ! -e "$sources/spotify.list" ]
+        if [ ! -e "$sources/beekeeper-studio-app.list" ]
         then
-            wget -q https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg -O- | sudo apt-key add -
-            echo "deb http://repository.spotify.com stable non-free" | sudo tee "$sources/spotify.list"
+            wget -q https://deb.beekeeperstudio.io/beekeeper.key -O- | sudo gpg --dearmor -o "$keyrings/beekeeper-studio-keyring.gpg"
+            echo "deb https://deb.beekeeperstudio.io stable main" | sudo tee "$sources/beekeeper-studio-app.list"
         fi
-        deb_extra_packages+=( "spotify-client" )
-    fi
+        deb_extra_packages+=( "beekeeper-studio" )
 
-    # Set up Steam
-    if [ "$arch" = "amd64" ]
-    then
-        sudo dpkg --add-architecture i386 &> "$out"
-        sudo apt-get -q update &> "$out"
-        installDebianPackage "software-properties-common"
-        sudo add-apt-repository contrib &> "$out"
-        sudo add-apt-repository non-free &> "$out"
-        deb_extra_packages+=( "steam" )
-    fi
-
-    # Add VirtualBox source
-    if [ "$arch" = "amd64" ]
-    then
-        if [ ! -e "$sources/virtualbox.list" ]
-        then
-            wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo gpg --dearmor -o "$keyrings/virtualbox-keyring.gpg"
-            echo "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $VERSION_CODENAME contrib" | sudo tee "$sources/virtualbox.list"
-        fi
-        deb_extra_packages+=( "virtualbox-6.1" )
-    fi
-
-    # Set up VS Code source
-    if [ "$arch" = "amd64" ]
-    then
-        if [ ! -e "$sources/vscode.list" ]
-        then
-            wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo gpg --dearmor -o "$keyrings/microsoft-packages-keyring.gpg"
-            echo "deb [arch=amd64,arm64,armhf] https://packages.microsoft.com/repos/code stable main" | sudo tee "$sources/vscode.list"
-        fi
-        deb_extra_packages+=( "code" )
-    elif [ "$isRaspberryPi" = "1" ]
-    then
-        # VS Code is set up in the standard Raspberry Pi package repository
-        deb_extra_packages+=( "code" )
-    fi
-
-    # Add WineHQ source
-    if [ "$arch" = "amd64" ]
-    then
-        if [ ! -e "$sources/winehq.list" ]
-        then
-            wget -q https://dl.winehq.org/wine-builds/winehq.key -O- | sudo apt-key add -
-            echo "deb https://dl.winehq.org/wine-builds/debian/ ${VERSION_CODENAME} main" | sudo tee "$sources/winehq.list"
-        fi
-        deb_extra_packages+=( "winehq-stable" )
-    fi
-
-    # Add YACReader source
-    if [ ! -e "$sources/home:selmf.list" ]
-    then
+        # Add Spotify source
         if [ "$arch" = "amd64" ]
         then
-            name="Debian"
-        elif [ "$isRaspberryPi" = 1 ]
-        then
-            name="Raspbian"
-        else
-            name="?"
+            if [ ! -e "$sources/spotify.list" ]
+            then
+                wget -q https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg -O- | sudo apt-key add -
+                echo "deb http://repository.spotify.com stable non-free" | sudo tee "$sources/spotify.list"
+            fi
+            deb_extra_packages+=( "spotify-client" )
         fi
-        if [ "$name" != "?" ]
+
+        # Set up Steam
+        if [ "$arch" = "amd64" ]
         then
-            wget -q "https://download.opensuse.org/repositories/home:selmf/${name}_${VERSION_ID}/Release.key" -O- | sudo gpg --dearmor -o "$keyrings/home_selmf.gpg"
-            echo "deb http://download.opensuse.org/repositories/home:/selmf/${name}_${VERSION_ID}/ /" | sudo tee "$sources/home:selmf.list"
+            sudo dpkg --add-architecture i386 &> "$out"
+            sudo apt-get -q update &> "$out"
+            installDebianPackage "software-properties-common"
+            sudo add-apt-repository contrib &> "$out"
+            sudo add-apt-repository non-free &> "$out"
+            deb_extra_packages+=( "steam" )
         fi
+
+        # Add VirtualBox source
+        if [ "$arch" = "amd64" ]
+        then
+            if [ ! -e "$sources/virtualbox.list" ]
+            then
+                wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo gpg --dearmor -o "$keyrings/virtualbox-keyring.gpg"
+                echo "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $VERSION_CODENAME contrib" | sudo tee "$sources/virtualbox.list"
+            fi
+            deb_extra_packages+=( "virtualbox-6.1" )
+        fi
+
+        # Set up VS Code source
+        if [ "$arch" = "amd64" ]
+        then
+            if [ ! -e "$sources/vscode.list" ]
+            then
+                wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo gpg --dearmor -o "$keyrings/microsoft-packages-keyring.gpg"
+                echo "deb [arch=amd64,arm64,armhf] https://packages.microsoft.com/repos/code stable main" | sudo tee "$sources/vscode.list"
+            fi
+            deb_extra_packages+=( "code" )
+        elif [ "$isRaspberryPi" = "1" ]
+        then
+            # VS Code is set up in the standard Raspberry Pi package repository
+            deb_extra_packages+=( "code" )
+        fi
+
+        # Add WineHQ source
+        if [ "$arch" = "amd64" ]
+        then
+            if [ ! -e "$sources/winehq.list" ]
+            then
+                wget -q https://dl.winehq.org/wine-builds/winehq.key -O- | sudo apt-key add -
+                echo "deb https://dl.winehq.org/wine-builds/debian/ ${VERSION_CODENAME} main" | sudo tee "$sources/winehq.list"
+            fi
+            deb_extra_packages+=( "winehq-stable" )
+        fi
+
+        # Add YACReader source
+        if [ ! -e "$sources/home:selmf.list" ]
+        then
+            if [ "$arch" = "amd64" ]
+            then
+                name="Debian"
+            elif [ "$isRaspberryPi" = 1 ]
+            then
+                name="Raspbian"
+            else
+                name="?"
+            fi
+            if [ "$name" != "?" ]
+            then
+                wget -q "https://download.opensuse.org/repositories/home:selmf/${name}_${VERSION_ID}/Release.key" -O- | sudo gpg --dearmor -o "$keyrings/home_selmf.gpg"
+                echo "deb http://download.opensuse.org/repositories/home:/selmf/${name}_${VERSION_ID}/ /" | sudo tee "$sources/home:selmf.list"
+            fi
+        fi
+        deb_extra_packages+=( "yacreader" )
     fi
-    deb_extra_packages+=( "yacreader" )
 
     # Update list of sources
     sudo apt-get -q update &> "$out"
@@ -246,44 +256,28 @@ configureDebian () {
 installDebianPackages () {
     isDebianDerivative || return
     g_bold "Installing Debian Packages"
-    declare -a pkgs=(
+    declare -a desktoppkgs=(
         "2048-qt"
-        "ack"
         "adb"
-        "arc-theme"
         "arduino"
         "atril"
         "audacious"
         "audacity"
-        "bash-completion"
         "calibre"
         "catfish"
         "checkstyle"
-        "cowsay"
         "cura"
-        "davfs2"
         "dia"
-        "diffuse"
-        "doublecmd-qt"
         "engrampa"
         "exfalso"
-        "feathernotes"
-        "featherpad"
-        "filezilla"
-        "firefox-esr"
         "flameshot"
         "flatpak"
-        "font-manager"
         "fontforge-doc"
         "fontforge-extras"
         "fontforge"
-        "fortunes"
         "freecad-python3"
         "fritzing"
         "frozen-bubble"
-        "fuse"
-        "fuseiso9660"
-        "galculator"
         "ghostwriter"
         "gimp-data-extras"
         "gimp-gutenprint"
@@ -292,6 +286,61 @@ installDebianPackages () {
         "gimp-python"
         "gimp-texturize"
         "gimp"
+        "gpick"
+        "gramps"
+        "inkscape-open-symbols"
+        "inkscape-tutorials"
+        "inkscape"
+        "jmol"
+        "krita"
+        "libreoffice"
+        "lyx"
+        "meteo-qt"
+        "mpg321"
+        "openyahtzee"
+        "pencil"
+        "pokerth"
+        "projectlibre"
+        "qdirstat"
+        "ristretto"
+        "scite"
+        "sciteproj"
+        "scribus-doc"
+        "scribus-template"
+        "scribus"
+        "sigil"
+        "solaar"
+        "tali"
+        "texstudio"
+        "thunderbird"
+        "vlc"
+        "xcowsay"
+        "xfburn"
+        "xsane"
+    )
+    declare -a pkgs=(
+        "ack"
+        "arc-theme"
+        "autoconf"
+        "automake"
+        "bison"
+        "gawk"
+        "bash-completion"
+        "build-essential"
+        "cowsay"
+        "curl"
+        "davfs2"
+        "diffuse"
+        "doublecmd-qt"
+        "feathernotes"
+        "featherpad"
+        "filezilla"
+        "firefox-esr"
+        "font-manager"
+        "fortunes"
+        "fuse"
+        "fuseiso9660"
+        "galculator"
         "gip"
         "git-doc"
         "git-extras"
@@ -300,75 +349,53 @@ installDebianPackages () {
         "git"
         "gitg"
         "github-backup"
-        "gpick"
-        "gramps"
         "htop"
         "imagemagick"
-        "inkscape-open-symbols"
-        "inkscape-tutorials"
-        "inkscape"
         "jekyll"
-        "jmol"
         "jq"
         "jupyter"
         "keepassx"
         "keepassxc"
-        "krita"
         "less"
-        "libreoffice"
         "logrotate"
-        "lyx"
         "manpages-dev"
         "manpages"
         "meld"
-        "meteo-qt"
-        "mpg321"
         "mugshot"
+        "net-tools"
         "nodejs"
-        "openyahtzee"
-        "pencil"
-        "pokerth"
-        "projectlibre"
         "python3"
-        "qdirstat"
+        "python3-gpg"
+        "qemu"
         "rails"
         "rake"
         "rclone"
         "rclone-browser"
-        "ristretto"
+        "rfkill"
         "rsnapshot"
-        "rstudio"
         "rsync"
         "ruby"
-        "scite"
-        "sciteproj"
-        "scribus-doc"
-        "scribus-template"
-        "scribus"
-        "sigil"
-        "solaar"
+        "ruby-dev"
         "speedtest-cli"
-        "sqlite-doc"
-        "sqlite"
+        "sqlite3"
         "sqlite3-doc"
         "sqlitebrowser"
         "synaptic"
-        "tali"
         "tango-icon-theme"
-        "texstudio"
-        "thunderbird"
         "tldr"
         "vim-addon-manager"
         "vim-airline"
         "vim-gtk"
         "vim"
-        "vlc"
         "webhttrack"
         "wget"
-        "xcowsay"
-        "xfburn"
-        "xsane"
+        "wireless-tools"
         "zenity"
+        "fonts-lato"
+        "fonts-roboto-slab"
+        "fonts-roboto-unhinted"
+        "fonts-texgyre"
+        "fonts-urw-base35"
     )
     declare -a fontpkgs=(
         "fonts-cabinsketch"
@@ -392,7 +419,6 @@ installDebianPackages () {
         "fonts-humor-sans"
         "fonts-inconsolata"
         "fonts-jura"
-        "fonts-lato"
         "fonts-league-spartan"
         "fonts-liberation"
         "fonts-liberation2"
@@ -411,17 +437,31 @@ installDebianPackages () {
         "fonts-paratype"
         "fonts-prociono"
         "fonts-quicksand"
-        "fonts-roboto-slab"
-        "fonts-roboto-unhinted"
-        "fonts-texgyre"
         "fonts-ubuntu"
-        "fonts-urw-base35"
-        "ttf-anonymous-pro"
         "ttf-bitstream-vera"
     )
-    # TODO add "fonts-cascadia-code" to the list above after upgrading to Debian bullseye
-    # TODO replace ttf-anonymous-pro with fonts-anonymous-pro to the list above after upgrading to Debian bullseye
-    pkgs+=( "${fontpkgs[@]}" ) # append font packages to list
+    declare -a pkgsv10=(
+        "ttf-anonymous-pro"
+        "sqlite-doc"
+        "sqlite"
+    )
+    declare -a pkgsv11=(
+        "fonts-anonymous-pro"
+        "fonts-cascadia-code"
+        "free42-nologo"
+    )
+    if [[ $VERSION_ID -eq 10 ]]
+    then
+        pkgs+=( "${pkgsv10[@]}" ) # append packages for Debian 10
+    elif [[ $VERSION_ID -ge 11 ]]
+    then
+        pkgs+=( "${pkgsv11[@]}" ) # append packages for Debian 11+
+    fi
+    if [[ $serveronly -ne 1 ]]
+    then
+        pkgs+=( "${desktoppkgs[@]}" ) # append desktop packages
+        pkgs+=( "${fontpkgs[@]}" ) # append font packages to list
+    fi
     pkgs+=( "${deb_extra_packages[@]}" ) # append extra packages to list
     toInstall=()
     for pkg in "${pkgs[@]}"
@@ -465,18 +505,6 @@ installDebianExternalPackages () {
     isDebianDerivative || return
     arch=$(dpkg --print-architecture)
 
-    # Google Chrome
-    if [ "$arch" = "amd64" ]
-    then
-        hasDebianPackage "google-chrome-stable" || {
-            g_info "Installing package google-chrome-stable"
-            cd "$INSTALLDIR" && {
-                wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-                sudo apt-get -q install "$INSTALLDIR/google-chrome-stable_current_amd64.deb"
-            }
-        }
-    fi
-
     # Dropbox
     hasDebianPackage "dropbox" || {
         if [[ "$arch" = "amd64" || "$arch" = "i386" ]]
@@ -490,6 +518,36 @@ installDebianExternalPackages () {
             }
         fi
     }
+
+    # DeepGit
+    hasDebianPackage "deepgit" || {
+        if [ "$arch" = "amd64" ]
+        then
+            g_info "Installing package deepgit"
+            cd "$INSTALLDIR" && {
+                url=$(python3 "$initial_wd/get_html_href.py" https://www.syntevo.com/deepgit/download/ | grep "\.deb$" | head -n 1)
+                filename=$(python3 "$initial_wd/get_url_file.py" "$url")
+                wget -q "$url"
+                sudo apt-get -q install "$INSTALLDIR/$filename"
+            }
+        fi
+    }
+
+
+	if [[ $serveronly -ne 1 ]]
+	then
+
+    # Google Chrome
+    if [ "$arch" = "amd64" ]
+    then
+        hasDebianPackage "google-chrome-stable" || {
+            g_info "Installing package google-chrome-stable"
+            cd "$INSTALLDIR" && {
+                wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+                sudo apt-get -q install "$INSTALLDIR/google-chrome-stable_current_amd64.deb"
+            }
+        }
+    fi
 
     # # GitKraken
     # hasDebianPackage "gitkraken" || {
@@ -515,20 +573,6 @@ installDebianExternalPackages () {
         fi
     }
 
-    # DeepGit
-    hasDebianPackage "deepgit" || {
-        if [ "$arch" = "amd64" ]
-        then
-            g_info "Installing package deepgit"
-            cd "$INSTALLDIR" && {
-                url=$(python3 "$initial_wd/get_html_href.py" https://www.syntevo.com/deepgit/download/ | grep "\.deb$" | head -n 1)
-                filename=$(python3 "$initial_wd/get_url_file.py" "$url")
-                wget -q "$url"
-                sudo apt-get -q install "$INSTALLDIR/$filename"
-            }
-        fi
-    }
-
     # RStudio
     hasDebianPackage "rstudio" || {
         if [ "$arch" = "amd64" ]
@@ -542,6 +586,8 @@ installDebianExternalPackages () {
             }
         fi
     }
+
+    fi
 }
 
 isRedHatDerivative () {
@@ -638,6 +684,9 @@ installFlatpaks () {
     # declare -a optionalFlatpaks=(
     #     "us.zoom.Zoom"
     # )
+    type flatpak &> /dev/null || {
+        g_info "Flatpack not installed. Skipping."
+    }
     type flatpak &> /dev/null && {
         flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
         local toInstall=()
