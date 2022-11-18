@@ -227,26 +227,6 @@ configureDebian () {
             fi
             deb_extra_packages+=( "winehq-stable" )
         fi
-
-        # Add YACReader source
-        if [ ! -e "$sources/home:selmf.list" ]
-        then
-            if [ "$arch" = "amd64" ]
-            then
-                name="Debian"
-            elif [ "$isRaspberryPi" = 1 ]
-            then
-                name="Raspbian"
-            else
-                name="?"
-            fi
-            if [ "$name" != "?" ]
-            then
-                wget -q "https://download.opensuse.org/repositories/home:selmf/${name}_${VERSION_ID}/Release.key" -O- | sudo gpg --dearmor -o "$keyrings/home_selmf.gpg"
-                echo "deb http://download.opensuse.org/repositories/home:/selmf/${name}_${VERSION_ID}/ /" | sudo tee "$sources/home:selmf.list"
-            fi
-        fi
-        deb_extra_packages+=( "yacreader" )
     fi
 
     # Update list of sources
@@ -298,6 +278,7 @@ installDebianPackages () {
         "meteo-qt"
         "mpg321"
         "openyahtzee"
+        "paulstretch"
         "pencil"
         "pokerth"
         "projectlibre"
@@ -314,6 +295,7 @@ installDebianPackages () {
         "texstudio"
         "thunderbird"
         "vlc"
+        "xaos"
         "xcowsay"
         "xfburn"
         "xsane"
@@ -501,6 +483,14 @@ installDebianPackages () {
     fi
 }
 
+getLatestGithubResource () {
+    repo=$1
+    search=$2
+    githubDownload=$(wget -q -nv -O- https://api.github.com/repos/"${repo}"/releases/latest 2>/dev/null | jq -r ".assets[] | select(.name | test(\"${search}\")) | .browser_download_url")
+}
+
+#TODO write script to manually update these packages (except for those that add themselves as repositories, e.g. chrome)
+
 installDebianExternalPackages () {
     isDebianDerivative || return
     arch=$(dpkg --print-architecture)
@@ -533,7 +523,6 @@ installDebianExternalPackages () {
         fi
     }
 
-
 	if [[ $serveronly -ne 1 ]]
 	then
 
@@ -549,18 +538,6 @@ installDebianExternalPackages () {
         }
     fi
 
-    # # GitKraken
-    # hasDebianPackage "gitkraken" || {
-    #     if [ "$arch" = "amd64" ]
-    #     then
-    #         g_info "Installing package gitkraken"
-    #         cd "$INSTALLDIR" && {
-    #             wget -q https://release.gitkraken.com/linux/gitkraken-amd64.deb
-    #             sudo apt-get -q install "$INSTALLDIR/gitkraken-amd64.deb"
-    #         }
-    #     fi
-    # }
-
     # Raspberry Pi Imager
     hasDebianPackage "rpi-imager" || {
         if [ "$arch" = "amd64" ]
@@ -569,6 +546,71 @@ installDebianExternalPackages () {
             cd "$INSTALLDIR" && {
                 wget -q https://downloads.raspberrypi.org/imager/imager_latest_amd64.deb
                 sudo apt-get -q install "$INSTALLDIR/imager_latest_amd64.deb"
+            }
+        fi
+    }
+
+    # Discord
+    hasDebianPackage "discord" || {
+        if [ "$arch" = "amd64" ]
+        then
+            g_info "Installing package discord"
+            cd "$INSTALLDIR" && {
+                wget -q "https://discord.com/api/download?platform=linux&format=deb" -O discord-latest.deb
+                sudo apt-get -q install "$INSTALLDIR/discord-latest.deb"
+            }
+        fi
+    }
+
+    # Mega
+    hasDebianPackage "megasync" || {
+        if [ "$arch" = "amd64" ]
+        then
+            g_info "Installing package megasync"
+            url1=""
+            url2=""
+            url3=""
+            if [ "$VERSION_ID" = "10" ]
+            then
+                url1="https://mega.nz/linux/repo/Debian_10.0/amd64/megasync-Debian_10.0_amd64.deb"
+                url2="https://mega.nz/linux/repo/Debian_10.0/amd64/thunar-megasync-Debian_10.0_amd64.deb"
+                url3="https://mega.nz/linux/repo/Debian_10.0/amd64/megacmd-Debian_10.0_amd64.deb"
+            elif [ "$VERSION_ID" = "11" ]
+            then
+                url1="https://mega.nz/linux/repo/Debian_11/amd64/megasync-Debian_11_amd64.deb"
+                url2="https://mega.nz/linux/repo/Debian_11/amd64/thunar-megasync-Debian_11_amd64.deb"
+                url3="https://mega.nz/linux/repo/Debian_11/amd64/megacmd-Debian_11_amd64.deb"
+            fi
+            if [ -n "$url1" ] && [ -n "$url2" ] && [ -n "$url3" ]
+            then
+                cd "$INSTALLDIR" && {
+                    wget -q "$url1" -O megasync-latest.deb
+                    sudo apt-get -q install "$INSTALLDIR/megasync-latest.deb"
+                    wget -q "$url2" -O thunar-megasync.deb
+                    sudo apt-get -q install "$INSTALLDIR/thunar-megasync.deb"
+                    wget -q "$url3" -O megacmd-latest.deb
+                    sudo apt-get -q install "$INSTALLDIR/megacmd-latest.deb"
+                }
+            fi
+        fi
+    }
+
+    # ProjectLibre
+    hasDebianPackage "projectlibre" || {
+        if [ "$arch" = "amd64" ]
+        then
+            g_info "Installing package projectlibre"
+            cd "$INSTALLDIR" && {
+                wget -q -nv -O projectlibre-release.json "https://sourceforge.net/projects/projectlibre/best_release.json"
+                mimetype=$(jq -r ".platform_releases.linux.mime_type" projectlibre-release.json)
+                if [[ $mimetype =~ "application/x-debian-package" ]]
+                then
+                    url=$(jq -r ".platform_releases.linux.url" projectlibre-release.json)
+                    wget -q "$url" -O projectlibre.deb
+                    sudo apt-get -q install "$INSTALLDIR/projectlibre.deb"
+                else
+                    e_error "Unable to locate DEB file for ProjectLibre - skipping installation"
+                fi
             }
         fi
     }
@@ -587,6 +629,63 @@ installDebianExternalPackages () {
         fi
     }
 
+    # PDF Booklet
+    hasDebianPackage "pdfbooklet" || {
+        if [ "$arch" = "amd64" ]
+        then
+            g_info "Installing package pdfbooklet"
+            cd "$INSTALLDIR" && {
+                url=$(python3 "$initial_wd/get_html_href.py" https://pdfbooklet.sourceforge.io/wordpress/download/ | grep "\.deb" | head -n 1)
+                filename=$(python3 "$initial_wd/get_url_file.py" "$url")
+                wget -q "$url"
+                sudo apt-get -q install "$INSTALLDIR/$filename"
+            }
+        fi
+    }
+
+    # Pencil Project
+    hasDebianPackage "pencil" || {
+        if [ "$arch" = "amd64" ]
+        then
+            g_info "Installing package pencil"
+            cd "$INSTALLDIR" && {
+                url=$(python3 "$initial_wd/get_html_href.py" https://pencil.evolus.vn/Downloads.html | grep "amd64\.deb" | head -n 1)
+                filename=$(python3 "$initial_wd/get_url_file.py" "$url")
+                wget -q "$url"
+                sudo apt-get -q install "$INSTALLDIR/$filename"
+            }
+        fi
+    }
+
+    # duf (Disk Usage/Free Utility)
+    hasDebianPackage "duf" || {
+        if [ "$arch" = "amd64" ] || [ "$arch" = "arm64" ]
+        then
+            g_info "Installing package duf"
+            cd "$INSTALLDIR" && {
+                getLatestGithubResource "muesli/duf" "linux_${arch}.deb"
+                url=$githubDownload
+                filename=$(python3 "$initial_wd/get_url_file.py" "$url")
+                wget -q "$url"
+                sudo apt-get -q install "$INSTALLDIR/$filename"
+            }
+        fi
+    }
+
+    # Advanced REST Client
+    hasDebianPackage "advanced-rest-client" || {
+        if [ "$arch" = "amd64" ]
+        then
+            g_info "Installing package advanced-rest-client"
+            cd "$INSTALLDIR" && {
+                getLatestGithubResource "advanced-rest-client/arc-electron" "linux.+amd64.deb"
+                url=$githubDownload
+                filename=$(python3 "$initial_wd/get_url_file.py" "$url")
+                wget -q "$url"
+                sudo apt-get -q install "$INSTALLDIR/$filename"
+            }
+        fi
+    }
     fi
 }
 
@@ -595,24 +694,10 @@ isRedHatDerivative () {
     return $?
 }
 
-hasRedHatPackage () {
-    ## TODO fix this once running a RedHat-based system
-    false
-}
-
-installRedHatPackage () {
-    isRedHatDerivative || return
-    if ! hasRedHatPackage "$1"
-    then
-        ## TODO add logic here to install package
-        g_error "Unable to install $1 - don't know how"
-    fi
-}
-
 installRedHatPackages () {
     isRedHatDerivative || return
-    g_bold "Installing Red Hat Packages"
-    ## TODO add packages here as needed
+    g_error "Unable to install Red Hat packages - don't know how"
+    # TODO add logic here as needed if I switch to Red Hat-based systems
 }
 
 installRvm () {
@@ -634,100 +719,6 @@ installRvm () {
     }
 }
 
-installTarball () {
-    # TODO prompt before installing!
-    tarball=$1
-    basepath=$2
-    tarpath=$3
-    url=$4
-    if [ -d "$basepath/$tarpath" ]
-    then
-        [[ $debug -eq 1 ]] && g_success "$tarball is already installed"
-    else
-        cd "$INSTALLDIR" && {
-            wget -q "$url" -O "$tarball"
-            if sudo tar -x -f "$tarball" -z -C "$basepath" --owner=root --group=root
-            then
-                sudo chown -R root:root "$basepath/$tarpath"
-                g_success "Installed tarball: $tarball"
-            else
-                g_error "Unable to install tarball: $tarball"
-            fi
-        }
-    fi
-}
-
-installTarballs () {
-    g_bold "Installing Tarballs"
-    installTarball "free42linux.tar.gz" "/opt" "Free42Linux" "https://thomasokken.com/free42/download/Free42Linux.tgz"
-    installTarball "postman-latest.tar.gz" "/opt" "Postman" "https://dl.pstmn.io/download/latest/linux64"
-}
-
-hasFlatpak () {
-    flatpak info "$1" &> /dev/null
-    return $?
-}
-
-installFlatpaks () {
-    g_bold "Installing Flatpaks"
-    declare -a flatpaks=(
-        "com.github.alexkdeveloper.desktop-files-creator"
-        "com.github.artemanufrij.regextester"
-        "com.github.gijsgoudzwaard.image-optimizer"
-        "com.google.AndroidStudio"
-        "com.jetbrains.IntelliJ-IDEA-Community"
-        "com.jetbrains.PyCharm-Community"
-        "io.github.seadve.Breathing"
-        "io.github.trytonvanmeer.DungeonJournal"
-        "re.sonny.OhMySVG"
-    )
-    # declare -a optionalFlatpaks=(
-    #     "us.zoom.Zoom"
-    # )
-    type flatpak &> /dev/null || {
-        g_info "Flatpack not installed. Skipping."
-    }
-    type flatpak &> /dev/null && {
-        flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-        local toInstall=()
-        for pkg in "${flatpaks[@]}"
-        do
-            if hasFlatpak "$pkg"
-            then
-                [[ $debug -eq 1 ]] && g_success "$pkg (flatpak) is already installed"
-                install=n
-            elif [[ $yes -eq 1 ]]
-            then
-                install=y
-            else
-                if [[ $gui -eq 0 ]]
-                then
-                    read -rp "Do you want to install flatpak ${C_FORE_BLUE}$pkg${C_RESET}? [y/${C_BOLD}n${C_RESET}]: " install
-                else
-                    zenity --question --text="Do you want to install flatpak ${pkg}?" \
-                        --window-icon=./installer.svg --width=300 --height=100 && install=y
-                fi
-            fi
-            if [[ $install == "y" ]]
-            then
-                toInstall+=( "${pkg}" )
-            fi
-        done
-        if [[ ${#toInstall[@]} -gt 0 ]]
-        then
-            for pkg in "${toInstall[@]}"
-            do
-                hasFlatpak "$pkg" || {
-                    g_info "Installing flatpak $pkg"
-                    flatpak install -y flathub "$pkg"
-                    hasFlatpak "$pkg"
-                    reportResult "$pkg flatpack successfully installed" "$pkg flatpak not installed"
-                }
-            done
-        fi
-    }
-}
-
 g_header "Linux Installer"
 
 if [[ $config -eq 1 ]]
@@ -743,8 +734,6 @@ then
     }
     isRedHatDerivative && installRedHatPackages
     installRvm
-    installTarballs
-    installFlatpaks
 fi
 if [[ $fonts -eq 1 ]]
 then

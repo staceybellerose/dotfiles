@@ -130,7 +130,7 @@ installOSBin () {
 
 installConfig () {
     g_bold "Installing configuration files"
-    cp $CPOPT editorconfig "${HOME}"
+    cp $CPOPT editorconfig "${HOME}/.editorconfig"
     reportResult "Installed editorconfig file" "Unable to install editorconfig file"
     cp $CPOPT dircolors "${HOME}/.dircolors"
     reportResult "Installed dircolors file" "Unable to install dircolors file"
