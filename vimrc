@@ -165,11 +165,11 @@ if has("gui_running")
 	set guitablabel=%M\ %t
 	if g:os == "Darwin"
 		winsize 160 60
-		set guifont=SourceCodeVariable-Roman:h14
+		set guifont=SourceCodePro-Roman:h14
 	elseif g:os == "Linux"
-		set guifont=Source\ Code\ Variable\ 11
+		set guifont=Source\ Code\ Pro\ 11
 	elseif g:os == "Windows"
-		set guifont=SourceCodeVariable-Roman:h14:cANSI
+		set guifont=SourceCodePro-Roman:h14:cANSI
 	endif
 endif
 
